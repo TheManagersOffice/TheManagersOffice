@@ -293,3 +293,27 @@ p{color:#eaeaea}
   .hero-media{height:200px}
   .event-slide{width:78vw}
 }
+
+/* --- MOBILE-ONLY HEADER CLEANUP (doesn't touch desktop) --- */
+@media (max-width: 768px){
+  /* hide the nav links */
+  .header .nav{
+    display: none !important;
+  }
+
+  /* center the title row */
+  .header .header-inner{
+    justify-content: center !important;
+  }
+
+  /* center the title + size it nicely on phones */
+  .header .logo{
+    text-align: center;
+    margin: 0 auto;
+    font-size: clamp(18px, 6vw, 24px);
+  }
+}
+
+/* optional: give anchors a natural offset under sticky header */
+:root{ scroll-padding-top: 64px; }
+
