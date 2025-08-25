@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- ========================================= -->
+  <!-- 0: HEAD — preload all images + css        -->
+  <!-- ========================================= -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Manager's Office</title>
-  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Cache-busted CSS -->
+  <link rel="stylesheet" href="styles.css?v=17" />
+
+  <!-- Non-blocking brand font -->
+  <link rel="preload" as="font" href="BenguiatProITC-Medium.otf" type="font/otf" crossorigin>
+
+  <!-- Preload all images -->
+  <link rel="preload" as="image" href="hero.webp">
+  <link rel="preload" as="image" href="tmostrip.webp">
+  <link rel="preload" as="image" href="solo.webp">
+  <link rel="preload" as="image" href="group.webp">
+  <link rel="preload" as="image" href="opendecks.webp">
+  <link rel="preload" as="image" href="rec.webp">
+  <link rel="preload" as="image" href="bassline.webp">
+
+  <!-- Force-paint HOTFIX -->
+  <style>
+    .hero, .logo-section, .offerings, .events, .open-decks, .footer{
+      content-visibility: visible !important;
+      contain-intrinsic-size: auto !important;
+    }
+    .fade-in, .fade-in.visible{
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -26,7 +56,7 @@
   <!-- ========================================= -->
   <!-- 1: HERO -->
   <!-- ========================================= -->
-  <section class="hero fade-in">
+  <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
         <h1>Immerse yourself in sonic elegance.</h1>
@@ -43,7 +73,8 @@
         <img 
           src="hero.webp"
           alt="The Manager's Office Studio"
-          loading="eager" decoding="async" fetchpriority="high">
+          width="1200" height="800"
+          loading="eager" decoding="sync" fetchpriority="high">
       </div>
     </div>
   </section>
@@ -51,18 +82,19 @@
   <!-- ========================================= -->
   <!-- 2: LOGO STRIP -->
   <!-- ========================================= -->
-  <section class="logo-section fade-in">
+  <section class="logo-section">
     <img
       src="tmostrip.webp"
       alt="The Manager's Office Strip Logo"
       class="studio-strip"
-      loading="lazy" decoding="async" fetchpriority="low">
+      width="1200" height="150"
+      loading="eager" decoding="async">
   </section>
 
   <!-- ========================================= -->
   <!-- 3: OFFERINGS (SOLO / GROUP) -->
   <!-- ========================================= -->
-  <section id="offerings" class="offerings fade-in">
+  <section id="offerings" class="offerings">
     <div class="container offerings-grid">
 
       <!-- Solo -->
@@ -71,7 +103,8 @@
           <img
             src="solo.webp"
             alt="Solo booth hire image"
-            loading="lazy" decoding="async">
+            width="1200" height="800"
+            loading="eager" decoding="async">
         </div>
         <div class="card-body">
           <div class="card-top">
@@ -101,14 +134,14 @@
           <img
             src="group.webp"
             alt="Group booth hire image"
-            loading="lazy" decoding="async">
+            width="1200" height="800"
+            loading="eager" decoding="async">
         </div>
         <div class="card-body">
           <div class="card-top">
             <h2>GROUP BOOTH HIRE</h2>
             <div class="price-badges">
-              <span class="badge">A$200 / 4hrs</span> 
-              <span class="badge badge-alt">A$200</span>
+              <span class="badge">A$200 / 4hrs</span>
             </div>
           </div>
           <p><strong>Group Booth Hire – $200/4hrs (You + up to 4 friends)</strong><br />A$200.00 ・ 4 hr</p>
@@ -131,7 +164,7 @@
   <!-- ========================================= -->
   <!-- 3.95: EVENTS -->
   <!-- ========================================= -->
-  <section id="events" class="events fade-in">
+  <section id="events" class="events">
     <div class="container events-inner">
       <div class="events-head">
         <h2>Events</h2>
@@ -143,49 +176,52 @@
             <img
               src="rec.webp"
               alt="Rectify event poster"
-              loading="lazy" decoding="async">
+              loading="eager" decoding="async">
           </a>
           <!-- Event 2 -->
           <a href="https://www.instagram.com/thebasslinemarket/" target="_blank" rel="noopener" class="event-slide">
             <img
               src="bassline.webp"
               alt="Bassline Market poster"
-              loading="lazy" decoding="async">
+              loading="eager" decoding="async">
           </a>
         </div>
       </div>
     </div>
   </section>
 
-<!-- ========================================= -->
-<!-- 3.9: OPEN DECKS                           -->
-<!-- ========================================= -->
-<section id="open-decks" class="open-decks fade-in">
-  <div class="container open-decks-inner">
-    <div class="open-decks-copy">
-      <h2>Open Decks Signup</h2>
-      <p>Want a slot on <strong>The Manager’s Office</strong> decks? Throw your name in and we’ll line you up for an upcoming session. All styles welcome — bring your flavour.</p>
-      <ul class="checklist">
-        <li>Quick form (5–10 mins)</li>
-        <li>Solo or B2B options</li>
-        <li>VODs + clips for socials</li>
-      </ul>
-      <a class="btn btn-primary" href="https://forms.gle/8T6VNbuAfLkKUZat5" target="_blank" rel="noopener noreferrer">
-        Apply on Google Form
-      </a>
-    </div>
+  <!-- ========================================= -->
+  <!-- 3.9: OPEN DECKS -->
+  <!-- ========================================= -->
+  <section id="open-decks" class="open-decks">
+    <div class="container open-decks-inner">
+      <div class="open-decks-copy">
+        <h2>Open Decks Signup</h2>
+        <p>Want a slot on <strong>The Manager’s Office</strong> decks? Throw your name in and we’ll line you up for an upcoming session. All styles welcome — bring your flavour.</p>
+        <ul class="checklist">
+          <li>Quick form (5–10 mins)</li>
+          <li>Solo or B2B options</li>
+          <li>VODs + clips for socials</li>
+        </ul>
+        <a class="btn btn-primary" href="https://forms.gle/8T6VNbuAfLkKUZat5" target="_blank" rel="noopener noreferrer">
+          Apply on Google Form
+        </a>
+      </div>
 
-    <div class="open-decks-art">
-      <img src="opendecks.webp" alt="Open Decks artwork" loading="lazy" decoding="async" />
+      <div class="open-decks-art">
+        <img 
+          src="opendecks.webp"
+          alt="Open Decks artwork"
+          width="1200" height="800"
+          loading="eager" decoding="async">
+      </div>
     </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- ========================================= -->
   <!-- 4: FOOTER -->
   <!-- ========================================= -->
-  <footer class="footer fade-in" id="contact">
+  <footer class="footer" id="contact">
     <div class="container footer-inner">
       <p>152 Ashley St, Underdale — Adelaide SA, Australia</p>
       <div class="footer-socials">
@@ -199,11 +235,6 @@
   <!-- ========================================= -->
   <!-- SCRIPTS -->
   <!-- ========================================= -->
-  <script>
-    document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
-  </script>
-
-  <!-- EVENTS MARQUEE SCRIPT (unchanged from your version) -->
   <script>
   (() => {
     const viewport = document.getElementById('evViewport');
