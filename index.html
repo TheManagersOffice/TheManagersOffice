@@ -2,31 +2,31 @@
 <html lang="en">
 <head>
   <!-- ========================================= -->
-  <!-- 0: HEAD — preload all images + css        -->
+  <!-- 0: HEAD — minimal preload + cache bust    -->
   <!-- ========================================= -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Manager's Office</title>
 
   <!-- Cache-busted CSS -->
-  <link rel="stylesheet" href="styles.css?v=17" />
+  <link rel="stylesheet" href="styles.css?v=21" />
+
+  
 
   <!-- Non-blocking brand font -->
-  <link rel="preload" as="font" href="BenguiatProITC-Medium.otf" type="font/otf" crossorigin>
+<link rel="preload" as="font"
+      href="BenguiatProITC-Medium.woff2"
+      type="font/woff2" crossorigin>
 
-  <!-- Preload all images -->
+
+  <!-- Preload the highest-impact images only -->
   <link rel="preload" as="image" href="hero.webp">
   <link rel="preload" as="image" href="tmostrip.webp">
-  <link rel="preload" as="image" href="solo.webp">
-  <link rel="preload" as="image" href="group.webp">
-  <link rel="preload" as="image" href="opendecks.webp">
-  <link rel="preload" as="image" href="rec.webp">
-  <link rel="preload" as="image" href="bassline.webp">
 
-  <!-- Force-paint HOTFIX -->
+  <!-- Force-paint HOTFIX (renders sections immediately) -->
   <style>
     .hero, .logo-section, .offerings, .events, .open-decks, .footer{
-      content-visibility: visible !important;
+      content-visibility: auto !important;
       contain-intrinsic-size: auto !important;
     }
     .fade-in, .fade-in.visible{
@@ -37,9 +37,27 @@
   </style>
 </head>
 <body>
+  <script>
+    // Force all images to load/paint immediately
+    for (const img of document.images) {
+      try {
+        img.loading = 'eager';
+        img.decoding = 'auto';
+        if (!img.hasAttribute('fetchpriority')) img.fetchPriority = 'high';
+      } catch {}
+    }
+  </script>
 
   <!-- ========================================= -->
-  <!-- 0: HEADER -->
+  <!-- AUTO-FADE INTRO OVERLAY (no click needed) -->
+  <!-- ========================================= -->
+  <div id="tmo-intro" class="tmo-intro" aria-hidden="true">
+    <!-- Optional: swap to your logo image or remove <img> for pure black -->
+    <img class="tmo-intro-logo" src="tmo.webp" alt="" />
+  </div>
+
+  <!-- ========================================= -->
+  <!-- 0: HEADER                                 -->
   <!-- ========================================= -->
   <header class="header">
     <div class="header-inner">
@@ -53,31 +71,84 @@
     </div>
   </header>
 
-  <!-- ========================================= -->
-  <!-- 1: HERO -->
-  <!-- ========================================= -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <h1>Immerse yourself in sonic elegance.</h1>
-        <p>Welcome to The Manager’s Office — your private sanctuary for creativity, focus, and flow.</p>
-        <p class="subtext">A professional recording/DJ studio designed for creators in Adelaide’s inner west.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#offerings">View Bookings</a>
-          <a class="btn btn-ghost" href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Watch Live</a>
-        </div>
-      </div>
-
-      <!-- HERO IMAGE -->
-      <div class="hero-media">
-        <img 
-          src="hero.webp"
-          alt="The Manager's Office Studio"
-          width="1200" height="800"
-          loading="eager" decoding="sync" fetchpriority="high">
+ <!-- ========================================= -->
+<!-- 1: HERO                                   -->
+<!-- ========================================= -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <h1>Immerse yourself in sonic elegance.</h1>
+      <p>Welcome to The Manager’s Office — your private sanctuary for creativity, focus, and flow.</p>
+      <p class="subtext">A professional recording/DJ studio designed for creators in Adelaide’s inner west.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#offerings">View Bookings</a>
+        <a class="btn btn-ghost" href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Watch Live</a>
       </div>
     </div>
-  </section>
+
+    <!-- HERO IMAGE -->
+    <div class="hero-media">
+      <img
+        src="hero.webp"
+        alt="The Manager's Office Studio"
+        width="1600" height="900"      
+        loading="eager" decoding="auto" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+
+  <!-- ========================================= -->
+  <!-- INTRO OVERLAY SCRIPT (auto-fade once)     -->
+  <!-- ========================================= -->
+<!-- replace your current intro script with this fixed version -->
+<script>
+(function () {
+  const intro = document.getElementById('tmo-intro');
+  if (!intro) return;
+
+  const SHOW_DELAY   = 300;
+  const HIDE_AFTER   = 1200;
+  const REMOVE_AFTER = 700;
+
+  // Skip overlay on refresh in this tab
+  if (sessionStorage.getItem('tmoIntroSeen') === '1') {
+    intro.style.display = 'none';
+    document.body.classList.remove('tmo-lock');
+    return;
+  }
+
+  document.body.classList.add('tmo-lock');
+
+  // Warm cache (property form, not attribute)
+  ['hero.webp','tmostrip.webp','solo.webp','group.webp','rec.webp','bassline.webp','opendecks.webp']
+    .forEach(src => {
+      const i = new Image();
+      i.decoding = 'auto';
+      i.loading  = 'eager';
+      i.fetchPriority = 'high';
+      i.src = src;
+    });
+
+  const start = () => {
+    setTimeout(() => {
+      setTimeout(() => {
+        intro.classList.add('is-out');
+        document.body.classList.remove('tmo-lock');
+        sessionStorage.setItem('tmoIntroSeen', '1');
+        setTimeout(() => { intro.remove(); }, REMOVE_AFTER);
+      }, HIDE_AFTER);
+    }, SHOW_DELAY);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
+</script>
+
 
   <!-- ========================================= -->
   <!-- 2: LOGO STRIP -->
@@ -88,7 +159,7 @@
       alt="The Manager's Office Strip Logo"
       class="studio-strip"
       width="1200" height="150"
-      loading="eager" decoding="async">
+      loading="eager" decoding="auto" fetchpriority="high">
   </section>
 
   <!-- ========================================= -->
@@ -103,8 +174,7 @@
           <img
             src="solo.webp"
             alt="Solo booth hire image"
-            width="1200" height="800"
-            loading="eager" decoding="async">
+            loading="eager" decoding="auto" fetchpriority="high">
         </div>
         <div class="card-body">
           <div class="card-top">
@@ -134,14 +204,15 @@
           <img
             src="group.webp"
             alt="Group booth hire image"
-            width="1200" height="800"
-            loading="eager" decoding="async">
+
+            loading="eager" decoding="auto" fetchpriority="high">
         </div>
         <div class="card-body">
           <div class="card-top">
             <h2>GROUP BOOTH HIRE</h2>
             <div class="price-badges">
               <span class="badge">A$200 / 4hrs</span>
+              <span class="badge badge-alt">A$200</span>
             </div>
           </div>
           <p><strong>Group Booth Hire – $200/4hrs (You + up to 4 friends)</strong><br />A$200.00 ・ 4 hr</p>
@@ -176,14 +247,14 @@
             <img
               src="rec.webp"
               alt="Rectify event poster"
-              loading="eager" decoding="async">
+              loading="lazy" decoding="auto" fetchpriority="high">
           </a>
           <!-- Event 2 -->
           <a href="https://www.instagram.com/thebasslinemarket/" target="_blank" rel="noopener" class="event-slide">
             <img
               src="bassline.webp"
               alt="Bassline Market poster"
-              loading="eager" decoding="async">
+              loading="eager" decoding="auto" fetchpriority="high">
           </a>
         </div>
       </div>
@@ -213,7 +284,7 @@
           src="opendecks.webp"
           alt="Open Decks artwork"
           width="1200" height="800"
-          loading="eager" decoding="async">
+          loading="eager" decoding="auto" fetchpriority="high">
       </div>
     </div>
   </section>
@@ -290,6 +361,66 @@
     build(); rafId = requestAnimationFrame(tick);
   })();
   </script>
+
+
+<script>
+/* Entry overlay logic + background preloading */
+(function () {
+  const entry = document.getElementById('tmo-entry');
+  const btn   = document.getElementById('tmo-enter-btn');
+
+  // Skip splash for returning visitors in this tab/session
+  if (sessionStorage.getItem('tmoEntered') === '1') {
+    entry.hidden = true;
+    document.body.classList.remove('tmo-lock');
+    return;
+  }
+
+  // Lock scroll while overlay is up
+  document.body.classList.add('tmo-lock');
+
+  // Preload a few key images quietly (they already exist in the DOM, this just warms the cache)
+  const preloadSrcs = [
+    'hero.webp',
+    'tmostrip.webp',
+    'solo.webp',
+    'group.webp',
+    'rec.webp',
+    'bassline.webp',
+    'opendecks.webp'
+  ];
+  const preload = src => new Promise(res => {
+    const img = new Image();
+    img.onload = img.onerror = () => res();
+    img.src = src;
+    img.decoding = 'auto';
+    img.loading  = 'eager';
+    img.fetchPriority = 'high'
+  });
+  // Fire and forget (don’t block the click)
+  Promise.all(preloadSrcs.map(preload)).catch(()=>{});
+
+  // Close handler
+  const closeOverlay = () => {
+    sessionStorage.setItem('tmoEntered', '1');
+    entry.classList.add('is-hide');
+    document.body.classList.remove('tmo-lock');
+    // Remove from DOM after fade so it never intercepts clicks
+    setTimeout(() => entry.hidden = true, 520);
+  };
+
+  btn.addEventListener('click', closeOverlay);
+  // Keyboard: Enter to continue
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') closeOverlay();
+  });
+
+  // Safety: auto-dismiss after 3 seconds if user does nothing
+  setTimeout(() => {
+    if (!entry.hidden) closeOverlay();
+  }, 3000);
+})();
+</script>
 
 </body>
 </html>
