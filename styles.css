@@ -1,23 +1,19 @@
 /* ========================================= */
 /* 0: FONT — Benguiat Pro ITC                */
 /* ========================================= */
-@font-face{
+@font-face {
   font-family: "BenguiatProITC";
-  src:
-    url("BenguiatProITC-Medium.woff2") format("woff2"),
-    url("BenguiatProITC-Medium.otf") format("opentype");
+  src: url("BenguiatProITC-Medium.woff2") format("woff2"),
+       url("BenguiatProITC-Medium.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
-
   /* Choose ONE of these depending on the behavior you want */
   /* 1) No swap (blocks briefly, usually <200–400ms with WOFF2+preload) */
   font-display: block;
-
   /* Or 2) Instant text now, never swaps to brand font if it’s late
      (good if you hate any pop at all) */
   /* font-display: optional; */
 }
-
 
 /* ========================================= */
 /* GLOBAL                                    */
@@ -120,6 +116,26 @@ p {
   background: #101010;
 }
 
+/* Accessibility: Visual feedback for aria-label on focus */
+.btn[aria-label] {
+  position: relative;
+}
+
+.btn[aria-label]:focus::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: 0;
+  bottom: -1.5rem;
+  font-size: 0.75rem;
+  color: #ccc;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.btn[aria-label]:focus::after {
+  opacity: 1;
+}
+
 /* Neutralize any fade classes (instant paint) */
 .fade-in,
 .fade-in.visible {
@@ -220,22 +236,23 @@ p {
   flex-wrap: wrap;
 }
 
-.hero-media{
-  height:360px;          /* your chosen fixed height for first paint */
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  background:#0f0f0f;
-  box-shadow:0 20px 40px rgba(0,0,0,.35);
-}
-.hero-media img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
+.hero-media {
+  height: 360px; /* your chosen fixed height for first paint */
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #0f0f0f;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
 
+.hero-media picture.img-wrap,
+.hero-media picture.img-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
 @media (max-width: 980px) {
   .hero-grid {
@@ -264,118 +281,35 @@ p {
   max-width: 92vw;
 }
 
-/* ========================================= */
-/* OFFERINGS                                 */
-/* ========================================= */
-.offerings {
-  background: linear-gradient(180deg, #020202 0%, #0a0a0a 100%);
-}
-
-.offerings-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-}
-
-.card {
-  border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-
-/* === Offerings card media — restore fixed crop === */
-.card-media{
-  height: 220px;           /* was 220px; bump if you want a bit taller */
-  overflow: hidden;
-  background: #0f0f0f;
-  border-bottom: 1px solid var(--line);
-}
-.card-media img{
+.logo-section picture.img-wrap,
+.logo-section picture.img-wrap img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* fills the box, nicely cropped */
+  object-fit: contain;
   object-position: center;
 }
 
-/* Mobile: slightly shorter like before */
-@media (max-width: 980px){
-  .card-media{ height: 200px; }
-}
-
-.card-body {
-  padding: 1.5rem;
-}
-
-.card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.8rem;
-}
-
-.price-badges {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.badge {
-  display: inline-block;
-  background: #fff;
-  color: #000;
-  padding: 0.3rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.badge-alt {
-  background: linear-gradient(135deg, #ff000d, #000);
-  color: #fff;
-  border: 1px solid #f7f7f7;
-}
-
-.card-body p {
-  margin: 0.65rem 0;
-}
-
-.checklist {
-  margin: 1rem 0 1.2rem 0;
-  list-style: none;
-}
-
-.checklist li {
-  position: relative;
-  padding-left: 1.4rem;
-  margin: 0.35rem 0;
-  color: #e8e8e8;
-}
-
-.checklist li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #86ffb3;
-  font-weight: 700;
-}
-
-.card-actions {
-  margin-top: 0.8rem;
-}
-
-@media (max-width: 980px) {
-  .offerings-grid {
-    grid-template-columns: 1fr;
-  }
-  .card-media {
-    height: 180px;
-  }
-}
+/* ========================================= */
+/* OFFERINGS                                 */
+/* ========================================= */
+.offerings{background:linear-gradient(180deg,#020202 0%,#0a0a0a 100%)}
+.offerings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
+.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.card-media{height:220px;overflow:hidden;background:#0f0f0f;border-bottom:1px solid var(--line)}
+.card-media picture.img-wrap,.card-media picture.img-wrap img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+@media (max-width:980px){.card-media{height:200px}}
+.card-body{padding:1.5rem}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.8rem}
+.price-badges{display:flex;gap:.4rem;flex-wrap:wrap}
+.badge{display:inline-block;background:#fff;color:#000;padding:.3rem .6rem;border-radius:999px;font-size:.85rem;font-weight:700}
+.badge-alt{background:linear-gradient(135deg,#ff000d,#000);color:#fff;border:1px solid #f7f7f7}
+.card-body p{margin:.65rem 0}
+.checklist{margin:1rem 0 1.2rem 0;list-style:none}
+.checklist li{position:relative;padding-left:1.4rem;margin:.35rem 0;color:#e8e8e8}
+.checklist li::before{content:"✓";position:absolute;left:0;top:0;color:#86ffb3;font-weight:700}
+.card-actions{margin-top:.8rem}
+@media (max-width:980px){.offerings-grid{grid-template-columns:1fr;gap:1.25rem}.card-media{height:180px}.card-body{padding:1.1rem}.price-badges{gap:.35rem}.badge{font-size:.8rem;padding:.25rem .5rem}}
 
 /* ========================================= */
 /* 3.95: EVENTS                              */
@@ -483,13 +417,15 @@ p {
   overflow: hidden;
   border: 1px solid var(--line);
   background: #0e0e0e;
-  aspect-ratio: 10/7;
+  height: 280px; /* Adjusted to approximate 10/7 ratio with 400px width (~628px ideal) */
+  aspect-ratio: 10 / 7; /* Ensure correct proportion */
 }
 
-.open-decks-art img {
+.open-decks-art picture.img-wrap,
+.open-decks-art picture.img-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Fill space, may crop */
   display: block;
 }
 
@@ -499,6 +435,8 @@ p {
   }
   .open-decks-art {
     order: -1;
+    height: 220px; /* Adjusted for mobile */
+    aspect-ratio: 10 / 7; /* Maintain ratio */
   }
 }
 
@@ -640,6 +578,8 @@ p {
 .img-wrap[data-ratio="4/3"] { aspect-ratio: 4/3; }
 .img-wrap[data-ratio="3/4"] { aspect-ratio: 3/4; }
 .img-wrap[data-ratio="10/7"] { aspect-ratio: 10/7; }
+.img-wrap[data-ratio="8/1"] { aspect-ratio: 8/1; }
+.img-wrap[data-ratio="16/9"] { aspect-ratio: 16/9; }
 
 .img-wrap > img {
   width: 100%;
@@ -663,3 +603,31 @@ p {
   transform: none;
 }
 
+/* Support for picture elements */
+picture.img-wrap {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+picture.img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .blur-up,
+  .img-wrap,
+  .event-slide img {
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .img-wrap.is-loaded > img {
+    opacity: 1;
+  }
+}

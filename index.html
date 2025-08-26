@@ -9,27 +9,24 @@
   <title>The Manager's Office</title>
 
   <!-- Cache-busted CSS -->
-  <link rel="stylesheet" href="styles.css?v=21" />
-
-  
+  <link rel="stylesheet" href="styles.css?v=30" />
 
   <!-- Non-blocking brand font -->
-<link rel="preload" as="font"
-      href="BenguiatProITC-Medium.woff2"
-      type="font/woff2" crossorigin>
-
+  <link rel="preload" as="font" href="BenguiatProITC-Medium.woff2" type="font/woff2" crossorigin />
 
   <!-- Preload the highest-impact images only -->
-  <link rel="preload" as="image" href="hero.webp">
-  <link rel="preload" as="image" href="tmostrip.webp">
+  <link rel="preload" as="image" href="hero.avif" />
+  <link rel="preload" as="image" href="hero.webp" />
+  <link rel="preload" as="image" href="tmostrip.avif" />
+  <link rel="preload" as="image" href="tmostrip.webp" />
 
   <!-- Force-paint HOTFIX (renders sections immediately) -->
   <style>
-    .hero, .logo-section, .offerings, .events, .open-decks, .footer{
+    .hero, .logo-section, .offerings, .events, .open-decks, .footer {
       content-visibility: auto !important;
       contain-intrinsic-size: auto !important;
     }
-    .fade-in, .fade-in.visible{
+    .fade-in, .fade-in.visible {
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
@@ -38,14 +35,21 @@
 </head>
 <body>
   <script>
-    // Force all images to load/paint immediately
-    for (const img of document.images) {
-      try {
-        img.loading = 'eager';
-        img.decoding = 'auto';
-        if (!img.hasAttribute('fetchpriority')) img.fetchPriority = 'high';
-      } catch {}
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.img-wrap img');
+      images.forEach(img => {
+        if (img.complete) {
+          img.parentElement.classList.add('is-loaded');
+        } else {
+          img.addEventListener('load', () => {
+            img.parentElement.classList.add('is-loaded');
+          });
+          img.addEventListener('error', () => {
+            console.warn(`Failed to load image: ${img.src}`);
+          });
+        }
+      });
+    });
   </script>
 
   <!-- ========================================= -->
@@ -57,7 +61,7 @@
   </div>
 
   <!-- ========================================= -->
-  <!-- 0: HEADER                                 -->
+  <!-- 0: HEADER                                -->
   <!-- ========================================= -->
   <header class="header">
     <div class="header-inner">
@@ -71,110 +75,95 @@
     </div>
   </header>
 
- <!-- ========================================= -->
-<!-- 1: HERO                                   -->
-<!-- ========================================= -->
-<section class="hero">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <h1>Immerse yourself in sonic elegance.</h1>
-      <p>Welcome to The Manager’s Office — your private sanctuary for creativity, focus, and flow.</p>
-      <p class="subtext">A professional recording/DJ studio designed for creators in Adelaide’s inner west.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#offerings">View Bookings</a>
-        <a class="btn btn-ghost" href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Watch Live</a>
+  <!-- ========================================= -->
+  <!-- 1: HERO                                  -->
+  <!-- ========================================= -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1>Immerse yourself in sonic elegance.</h1>
+        <p>Welcome to The Manager’s Office — your private sanctuary for creativity, focus, and flow.</p>
+        <p class="subtext">A professional recording/DJ studio designed for creators in Adelaide’s inner west.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#offerings" aria-label="View available booking options for The Manager's Office">View Bookings</a>
+          <a class="btn btn-ghost" href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener" aria-label="Watch live streams from The Manager's Office">Watch Live</a>
+        </div>
+      </div>
+      <!-- HERO IMAGE -->
+      <div class="hero-media">
+        <picture class="img-wrap" data-ratio="16/9">
+          <source srcset="hero.avif" type="image/avif" />
+          <source srcset="hero.webp" type="image/webp" />
+          <img src="hero.jpg" alt="The Manager's Office Studio" width="1600" height="900" loading="eager" decoding="auto" fetchpriority="high" />
+        </picture>
       </div>
     </div>
-
-    <!-- HERO IMAGE -->
-    <div class="hero-media">
-      <img
-        src="hero.webp"
-        alt="The Manager's Office Studio"
-        width="1600" height="900"      
-        loading="eager" decoding="auto" fetchpriority="high">
-    </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- ========================================= -->
   <!-- INTRO OVERLAY SCRIPT (auto-fade once)     -->
   <!-- ========================================= -->
-<!-- replace your current intro script with this fixed version -->
-<script>
-(function () {
-  const intro = document.getElementById('tmo-intro');
-  if (!intro) return;
-
-  const SHOW_DELAY   = 300;
-  const HIDE_AFTER   = 1200;
-  const REMOVE_AFTER = 700;
-
-  // Skip overlay on refresh in this tab
-  if (sessionStorage.getItem('tmoIntroSeen') === '1') {
-    intro.style.display = 'none';
-    document.body.classList.remove('tmo-lock');
-    return;
-  }
-
-  document.body.classList.add('tmo-lock');
-
-  // Warm cache (property form, not attribute)
-  ['hero.webp','tmostrip.webp','solo.webp','group.webp','rec.webp','bassline.webp','opendecks.webp']
-    .forEach(src => {
-      const i = new Image();
-      i.decoding = 'auto';
-      i.loading  = 'eager';
-      i.fetchPriority = 'high';
-      i.src = src;
-    });
-
-  const start = () => {
-    setTimeout(() => {
-      setTimeout(() => {
-        intro.classList.add('is-out');
+  <script>
+    (function () {
+      const intro = document.getElementById('tmo-intro');
+      if (!intro) return;
+      const SHOW_DELAY = 300;
+      const HIDE_AFTER = 1200;
+      const REMOVE_AFTER = 700;
+      // Skip overlay on refresh in this tab
+      if (sessionStorage.getItem('tmoIntroSeen') === '1') {
+        intro.style.display = 'none';
         document.body.classList.remove('tmo-lock');
-        sessionStorage.setItem('tmoIntroSeen', '1');
-        setTimeout(() => { intro.remove(); }, REMOVE_AFTER);
-      }, HIDE_AFTER);
-    }, SHOW_DELAY);
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
-  }
-})();
-</script>
-
+        return;
+      }
+      document.body.classList.add('tmo-lock');
+      // Warm cache (property form, not attribute)
+      ['hero.avif', 'hero.webp', 'tmostrip.avif', 'tmostrip.webp', 'solo.avif', 'solo.webp', 'group.avif', 'group.webp', 'rec.avif', 'rec.webp', 'bassline.avif', 'bassline.webp', 'opendecks.avif', 'opendecks.webp', 'ancient.png']
+        .forEach(src => {
+          const i = new Image();
+          i.decoding = 'auto';
+          i.loading = 'eager';
+          i.fetchPriority = 'high';
+          i.src = src;
+        });
+      const start = () => {
+        setTimeout(() => {
+          setTimeout(() => {
+            intro.classList.add('is-out');
+            document.body.classList.remove('tmo-lock');
+            sessionStorage.setItem('tmoIntroSeen', '1');
+            setTimeout(() => { intro.remove(); }, REMOVE_AFTER);
+          }, HIDE_AFTER);
+        }, SHOW_DELAY);
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+      } else {
+        start();
+      }
+    })();
+  </script>
 
   <!-- ========================================= -->
-  <!-- 2: LOGO STRIP -->
+  <!-- 2: LOGO STRIP                            -->
   <!-- ========================================= -->
   <section class="logo-section">
-    <img
-      src="tmostrip.webp"
-      alt="The Manager's Office Strip Logo"
-      class="studio-strip"
-      width="1200" height="150"
-      loading="eager" decoding="auto" fetchpriority="high">
+    <img src="tmostrip.webp" alt="The Manager's Office Strip Logo" class="studio-strip" width="1200" height="150" loading="eager" decoding="auto" fetchpriority="high" />
   </section>
 
   <!-- ========================================= -->
-  <!-- 3: OFFERINGS (SOLO / GROUP) -->
+  <!-- 3: OFFERINGS (SOLO / GROUP)              -->
   <!-- ========================================= -->
   <section id="offerings" class="offerings">
     <div class="container offerings-grid">
-
       <!-- Solo -->
       <article class="card">
         <div class="card-media">
-          <img
-            src="solo.webp"
-            alt="Solo booth hire image"
-            loading="eager" decoding="auto" fetchpriority="high">
+          <picture class="img-wrap" data-ratio="4/3">
+            <source srcset="solo.avif" type="image/avif" />
+            <source srcset="solo.webp" type="image/webp" />
+            <img src="solo.jpg" alt="Solo booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
+          </picture>
         </div>
         <div class="card-body">
           <div class="card-top">
@@ -192,20 +181,18 @@
             <li>Content-friendly setup</li>
           </ul>
           <div class="card-actions">
-            <a class="btn btn-primary" target="_blank" rel="noopener"
-               href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/FIGQ5RM6PAIIVYDHYSQTCNSX">Book Solo</a>
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/FIGQ5RM6PAIIVYDHYSQTCNSX" aria-label="Book a solo booth session at The Manager's Office">Book Solo</a>
           </div>
         </div>
       </article>
-
       <!-- Group -->
       <article class="card">
         <div class="card-media">
-          <img
-            src="group.webp"
-            alt="Group booth hire image"
-
-            loading="eager" decoding="auto" fetchpriority="high">
+          <picture class="img-wrap" data-ratio="4/3">
+            <source srcset="group.avif" type="image/avif" />
+            <source srcset="group.webp" type="image/webp" />
+            <img src="group.jpg" alt="Group booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
+          </picture>
         </div>
         <div class="card-body">
           <div class="card-top">
@@ -223,12 +210,10 @@
             <li>Lights, lounge & fridge access</li>
           </ul>
           <div class="card-actions">
-            <a class="btn btn-primary" target="_blank" rel="noopener"
-               href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/RIYKGVSGXXIY6O4LX4EVX7WV">Book Group</a>
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/RIYKGVSGXXIY6O4LX4EVX7WV" aria-label="Book a group booth session at The Manager's Office">Book Group</a>
           </div>
         </div>
       </article>
-
     </div>
   </section>
 
@@ -244,17 +229,23 @@
         <div class="events-track" id="evTrack">
           <!-- Event 1 -->
           <a href="https://www.instagram.com/rectify.clltv/" target="_blank" rel="noopener" class="event-slide">
-            <img
-              src="rec.webp"
-              alt="Rectify event poster"
-              loading="lazy" decoding="auto" fetchpriority="high">
+            <picture class="img-wrap" data-ratio="3/4" id="event-rec">
+              <source srcset="rec.avif" type="image/avif" />
+              <source srcset="rec.webp" type="image/webp" />
+              <img src="rec.jpg" alt="Rectify event poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
+            </picture>
           </a>
           <!-- Event 2 -->
           <a href="https://www.instagram.com/thebasslinemarket/" target="_blank" rel="noopener" class="event-slide">
-            <img
-              src="bassline.webp"
-              alt="Bassline Market poster"
-              loading="eager" decoding="auto" fetchpriority="high">
+            <picture class="img-wrap" data-ratio="3/4" id="event-bassline">
+              <source srcset="bassline.avif" type="image/avif" />
+              <source srcset="bassline.webp" type="image/webp" />
+              <img src="bassline.jpg" alt="Bassline Market poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
+          <!-- Event 3 -->
+          <a href="https://www.instagram.com/ancientworld.5000/" target="_blank" rel="noopener" class="event-slide">
+            <picture class="img-wrap" data-ratio="3/4" id="event-ancient">
+              <img src="ancient.png" alt="Ancient World poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
+            </picture>
           </a>
         </div>
       </div>
@@ -262,7 +253,7 @@
   </section>
 
   <!-- ========================================= -->
-  <!-- 3.9: OPEN DECKS -->
+  <!-- 3.9: OPEN DECKS                          -->
   <!-- ========================================= -->
   <section id="open-decks" class="open-decks">
     <div class="container open-decks-inner">
@@ -274,23 +265,20 @@
           <li>Solo or B2B options</li>
           <li>VODs + clips for socials</li>
         </ul>
-        <a class="btn btn-primary" href="https://forms.gle/8T6VNbuAfLkKUZat5" target="_blank" rel="noopener noreferrer">
-          Apply on Google Form
-        </a>
+        <a class="btn btn-primary" href="https://forms.gle/8T6VNbuAfLkKUZat5" target="_blank" rel="noopener noreferrer" aria-label="Apply for an open decks session at The Manager's Office">Apply on Google Form</a>
       </div>
-
       <div class="open-decks-art">
-        <img 
-          src="opendecks.webp"
-          alt="Open Decks artwork"
-          width="1200" height="800"
-          loading="eager" decoding="auto" fetchpriority="high">
+        <picture class="img-wrap" data-ratio="10/7" id="opendecks-image">
+          <source srcset="opendecks.avif" type="image/avif" />
+          <source srcset="opendecks.webp" type="image/webp" />
+          <img src="opendecks.jpg" alt="Open Decks artwork" width="900" height="630" loading="eager" decoding="auto" fetchpriority="high" />
+        </picture>
       </div>
     </div>
   </section>
 
   <!-- ========================================= -->
-  <!-- 4: FOOTER -->
+  <!-- 4: FOOTER                                -->
   <!-- ========================================= -->
   <footer class="footer" id="contact">
     <div class="container footer-inner">
@@ -304,123 +292,129 @@
   </footer>
 
   <!-- ========================================= -->
-  <!-- SCRIPTS -->
+  <!-- SCRIPTS                                  -->
   <!-- ========================================= -->
   <script>
-  (() => {
-    const viewport = document.getElementById('evViewport');
-    const track    = document.getElementById('evTrack');
-    if (!viewport || !track) return;
-    let speed   = 0.6, running = true, x = 0, loopW = 0, rafId = null;
-    const mqr = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mqr.matches) speed = 0;
+    (() => {
+      const viewport = document.getElementById('evViewport');
+      const track = document.getElementById('evTrack');
+      if (!viewport || !track) return;
+      let speed = 0.6, running = true, x = 0, loopW = 0, rafId = null;
+      const mqr = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mqr.matches) speed = 0;
 
-    function build() {
-      cancelAnimationFrame(rafId); x = 0;
-      track.style.transform = 'translate3d(0,0,0)';
-      const originals = Array.from(track.children).filter(n => !n.dataset.clone);
-      if (!originals.length) return;
-      const measurer = document.createElement('div');
-      measurer.className = 'events-strip';
-      originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
-      track.innerHTML = '';
-      measurer.style.position = 'absolute'; measurer.style.visibility = 'hidden'; measurer.style.pointerEvents = 'none';
-      track.appendChild(measurer);
-      const targetWidth = Math.max(viewport.clientWidth * 2, 1);
-      let guard = 0;
-      while (measurer.scrollWidth < targetWidth && guard < 50) {
-        originals.forEach(src => measurer.appendChild(src.cloneNode(true)));
-        guard++;
+      function build() {
+        cancelAnimationFrame(rafId);
+        x = 0;
+        track.style.transform = 'translate3d(0,0,0)';
+        const originals = Array.from(track.children).filter(n => !n.dataset.clone);
+        if (!originals.length) return;
+        const measurer = document.createElement('div');
+        measurer.className = 'events-strip';
+        originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
+        track.innerHTML = '';
+        measurer.style.position = 'absolute';
+        measurer.style.visibility = 'hidden';
+        measurer.style.pointerEvents = 'none';
+        track.appendChild(measurer);
+        const targetWidth = Math.max(viewport.clientWidth * 2, 1);
+        let guard = 0;
+        while (measurer.scrollWidth < targetWidth && guard < 50) {
+          originals.forEach(src => measurer.appendChild(src.cloneNode(true)));
+          guard++;
+        }
+        const strip = document.createElement('div');
+        strip.className = 'events-strip';
+        Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
+        const cloneStrip = strip.cloneNode(true);
+        cloneStrip.dataset.clone = '1';
+        track.innerHTML = '';
+        track.appendChild(strip);
+        track.appendChild(cloneStrip);
+        loopW = strip.scrollWidth;
       }
-      const strip = document.createElement('div');
-      strip.className = 'events-strip';
-      Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
-      const cloneStrip = strip.cloneNode(true); cloneStrip.dataset.clone = '1';
-      track.innerHTML = ''; track.appendChild(strip); track.appendChild(cloneStrip);
-      loopW = strip.scrollWidth;
-    }
 
-    function tick() {
-      if (running && loopW > 0 && speed > 0) {
-        x -= speed; if (-x >= loopW) x += loopW;
-        track.style.transform = `translate3d(${x}px,0,0)`;
+      function tick() {
+        if (running && loopW > 0 && speed > 0) {
+          x -= speed;
+          if (-x >= loopW) x += loopW;
+          track.style.transform = `translate3d(${x}px,0,0)`;
+        }
+        rafId = requestAnimationFrame(tick);
       }
+
+      const pause = () => { running = false; };
+      const resume = () => { running = true; };
+
+      viewport.addEventListener('mouseenter', pause);
+      viewport.addEventListener('mouseleave', resume);
+      viewport.addEventListener('focusin', pause);
+      viewport.addEventListener('focusout', resume);
+      document.addEventListener('visibilitychange', () => { running = !document.hidden; });
+
+      let resizeT;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeT);
+        resizeT = setTimeout(() => {
+          build();
+          x = 0;
+          track.style.transform = 'translate3d(0,0,0)';
+        }, 120);
+      });
+
+      build();
       rafId = requestAnimationFrame(tick);
-    }
-
-    const pause  = () => { running = false; };
-    const resume = () => { running = true;  };
-    viewport.addEventListener('mouseenter', pause);
-    viewport.addEventListener('mouseleave', resume);
-    viewport.addEventListener('focusin',  pause);
-    viewport.addEventListener('focusout', resume);
-    document.addEventListener('visibilitychange', () => { running = !document.hidden; });
-    let resizeT; window.addEventListener('resize', () => {
-      clearTimeout(resizeT); resizeT = setTimeout(() => { build(); x = 0; track.style.transform = 'translate3d(0,0,0)'; }, 120);
-    });
-    build(); rafId = requestAnimationFrame(tick);
-  })();
+    })();
   </script>
 
-
-<script>
-/* Entry overlay logic + background preloading */
-(function () {
-  const entry = document.getElementById('tmo-entry');
-  const btn   = document.getElementById('tmo-enter-btn');
-
-  // Skip splash for returning visitors in this tab/session
-  if (sessionStorage.getItem('tmoEntered') === '1') {
-    entry.hidden = true;
-    document.body.classList.remove('tmo-lock');
-    return;
-  }
-
-  // Lock scroll while overlay is up
-  document.body.classList.add('tmo-lock');
-
-  // Preload a few key images quietly (they already exist in the DOM, this just warms the cache)
-  const preloadSrcs = [
-    'hero.webp',
-    'tmostrip.webp',
-    'solo.webp',
-    'group.webp',
-    'rec.webp',
-    'bassline.webp',
-    'opendecks.webp'
-  ];
-  const preload = src => new Promise(res => {
-    const img = new Image();
-    img.onload = img.onerror = () => res();
-    img.src = src;
-    img.decoding = 'auto';
-    img.loading  = 'eager';
-    img.fetchPriority = 'high'
-  });
-  // Fire and forget (don’t block the click)
-  Promise.all(preloadSrcs.map(preload)).catch(()=>{});
-
-  // Close handler
-  const closeOverlay = () => {
-    sessionStorage.setItem('tmoEntered', '1');
-    entry.classList.add('is-hide');
-    document.body.classList.remove('tmo-lock');
-    // Remove from DOM after fade so it never intercepts clicks
-    setTimeout(() => entry.hidden = true, 520);
-  };
-
-  btn.addEventListener('click', closeOverlay);
-  // Keyboard: Enter to continue
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') closeOverlay();
-  });
-
-  // Safety: auto-dismiss after 3 seconds if user does nothing
-  setTimeout(() => {
-    if (!entry.hidden) closeOverlay();
-  }, 3000);
-})();
-</script>
-
+  <script>
+    /* Entry overlay logic + background preloading */
+    (function () {
+      const entry = document.getElementById('tmo-entry');
+      const btn = document.getElementById('tmo-enter-btn');
+      // Skip splash for returning visitors in this tab/session
+      if (sessionStorage.getItem('tmoEntered') === '1') {
+        entry.hidden = true;
+        document.body.classList.remove('tmo-lock');
+        return;
+      }
+      // Lock scroll while overlay is up
+      document.body.classList.add('tmo-lock');
+      // Preload a few key images quietly (they already exist in the DOM, this just warms the cache)
+      const preloadSrcs = [
+        'hero.avif', 'hero.webp', 'tmostrip.avif', 'tmostrip.webp',
+        'solo.avif', 'solo.webp', 'group.avif', 'group.webp',
+        'rec.avif', 'rec.webp', 'bassline.avif', 'bassline.webp',
+        'opendecks.avif', 'opendecks.webp'
+      ];
+      const preload = src => new Promise(res => {
+        const img = new Image();
+        img.onload = img.onerror = () => res();
+        img.src = src;
+        img.decoding = 'auto';
+        img.loading = 'eager';
+        img.fetchPriority = 'high';
+      });
+      // Fire and forget (don’t block the click)
+      Promise.all(preloadSrcs.map(preload)).catch(() => {});
+      // Close handler
+      const closeOverlay = () => {
+        sessionStorage.setItem('tmoEntered', '1');
+        entry.classList.add('is-hide');
+        document.body.classList.remove('tmo-lock');
+        // Remove from DOM after fade so it never intercepts clicks
+        setTimeout(() => entry.hidden = true, 520);
+      };
+      btn.addEventListener('click', closeOverlay);
+      // Keyboard: Enter to continue
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') closeOverlay();
+      });
+      // Safety: auto-dismiss after 3 seconds if user does nothing
+      setTimeout(() => {
+        if (!entry.hidden) closeOverlay();
+      }, 3000);
+    })();
+  </script>
 </body>
 </html>
