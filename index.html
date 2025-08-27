@@ -321,61 +321,41 @@
   </footer>
 
   <!-- ========================================= -->
-  <!-- 5: scripts                               -->
-  <!-- ========================================= -->
+<!-- 3.95: EVENTS — SCRIPT (SELF-HEALING)      -->
+<!-- ========================================= -->
 <script>
   (function () {
     const viewport = document.getElementById('evViewport');
     const track = document.getElementById('evTrack');
     if (!viewport || !track) return;
 
-    const BASE = 0.6; // subtle scroll speed
+    // Subtle scroll speed
+    const BASE = 0.6;
 
-    // Robust touch detection
-    const isTouch =
-      ('ontouchstart' in window) ||
-      (navigator.maxTouchPoints > 0) ||
-      window.matchMedia('(pointer: coarse)').matches;
+    // Robust touch detection; mobile should always animate
+    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
 
     // Respect reduced motion on non-touch only
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let speed = BASE;
-    if (!isTouch && prefersReduce) speed = 0;
+    let speed = (!isTouch && prefersReduce) ? 0 : BASE;
 
     let running = true, x = 0, loopW = 0, rafId = null;
 
-    function markImagesLoaded(root) {
-      // Ensure cloned images aren't hidden by the blur-up CSS
-      const wraps = root.querySelectorAll('.img-wrap');
-      wraps.forEach(wrap => {
-        wrap.classList.add('is-loaded');
-        const img = wrap.querySelector('img');
-        if (img) {
-          img.style.opacity = '1';
-          img.style.filter = 'none';
-          img.style.transform = 'none';
-        }
-      });
-    }
-
+    // ---- Build the two-strip loop ----------------------------------------
     function build() {
       cancelAnimationFrame(rafId);
       x = 0;
       track.style.transform = 'translate3d(0,0,0)';
 
-      // Keep only originals (anchors) to clone from
       const originals = Array.from(track.children).filter(n => !n.dataset || !n.dataset.clone);
       if (!originals.length) return;
 
-      // Hidden measurer to compute how many slides we need
       const measurer = document.createElement('div');
       measurer.className = 'events-strip';
       originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
 
       track.innerHTML = '';
-      measurer.style.position = 'absolute';
-      measurer.style.visibility = 'hidden';
-      measurer.style.pointerEvents = 'none';
+      Object.assign(measurer.style, { position:'absolute', visibility:'hidden', pointerEvents:'none' });
       track.appendChild(measurer);
 
       const targetWidth = Math.max(viewport.clientWidth * 2, 1);
@@ -385,11 +365,9 @@
         guard++;
       }
 
-      // Build two identical strips for seamless loop
       const strip = document.createElement('div');
       strip.className = 'events-strip';
       Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
-
       const cloneStrip = strip.cloneNode(true);
       cloneStrip.dataset.clone = '1';
 
@@ -397,52 +375,83 @@
       track.appendChild(strip);
       track.appendChild(cloneStrip);
 
-      // 🔧 Ensure all (original + cloned) images are visible (no opacity:0)
-      markImagesLoaded(track);
+      // Ensure cloned images aren’t hidden by blur-up styles
+      track.querySelectorAll('.img-wrap').forEach(wrap => {
+        wrap.classList.add('is-loaded');
+        const img = wrap.querySelector('img');
+        if (img) { img.style.opacity = '1'; img.style.filter = 'none'; img.style.transform = 'none'; }
+      });
 
-      loopW = strip.scrollWidth || 1; // avoid div-by-zero
+      loopW = strip.scrollWidth || 1;
     }
 
-    function tick() {
+    // ---- Animate and watchdog --------------------------------------------
+    let lastX = 0;
+    let lastProgressAt = performance.now();
+
+    function tick(now) {
       if (running && loopW > 0 && speed > 0) {
         x -= speed;
         if (-x >= loopW) x += loopW;
         track.style.transform = `translate3d(${x}px,0,0)`;
+
+        // movement detection
+        if (x !== lastX) {
+          lastX = x;
+          lastProgressAt = now || performance.now();
+        }
       }
+
+      // Watchdog: if no movement for 1500ms, rebuild & restart
+      if ((now || performance.now()) - lastProgressAt > 1500) {
+        rebuild(true); // force
+        return;        // tick will be rescheduled by rebuild()
+      }
+
       rafId = requestAnimationFrame(tick);
     }
 
-    // Pause only for fine pointers (desktop hover/focus)
+    // ---- Controls & lifecycle -------------------------------------------
     const finePtr = window.matchMedia('(pointer: fine)').matches;
     if (finePtr) {
       const pause = () => { running = false; };
-      const resume = () => { running = true; };
+      const resume = () => { running = true; lastProgressAt = performance.now(); };
       viewport.addEventListener('mouseenter', pause);
       viewport.addEventListener('mouseleave', resume);
       viewport.addEventListener('focusin', pause);
       viewport.addEventListener('focusout', resume);
     }
 
-    document.addEventListener('visibilitychange', () => { running = !document.hidden; });
+    // Wake up on user interaction (mobile sometimes throttles)
+    ['touchstart','pointerdown','scroll'].forEach(ev =>
+      window.addEventListener(ev, () => { running = true; lastProgressAt = performance.now(); }, { passive: true })
+    );
+
+    document.addEventListener('visibilitychange', () => { running = !document.hidden; lastProgressAt = performance.now(); });
 
     let resizeT;
-    const rebuild = () => {
+    function rebuild(force = false) {
       clearTimeout(resizeT);
-      resizeT = setTimeout(() => {
+      const doBuild = () => {
         build();
         x = 0;
         track.style.transform = 'translate3d(0,0,0)';
-      }, 150);
-    };
-    window.addEventListener('resize', rebuild, { passive: true });
-    window.addEventListener('orientationchange', rebuild, { passive: true });
-
-    // Delay init slightly so Edge/Mobile layout is ready
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        build();
+        lastProgressAt = performance.now();
+        cancelAnimationFrame(rafId);
         rafId = requestAnimationFrame(tick);
-      }, 50);
+      };
+      if (force) { doBuild(); }
+      else {
+        resizeT = setTimeout(doBuild, 160);
+      }
+    }
+
+    window.addEventListener('resize', () => rebuild(false), { passive: true });
+    window.addEventListener('orientationchange', () => rebuild(true), { passive: true });
+
+    // ---- Init (slight delay helps Edge/iOS layout settle) ----------------
+    window.addEventListener('load', () => {
+      setTimeout(() => { rebuild(true); }, 60);
     });
   })();
 </script>
