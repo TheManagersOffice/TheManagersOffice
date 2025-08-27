@@ -321,7 +321,7 @@
   </footer>
 
   <!-- ========================================= -->
-  <!-- 5: Scriptzzz Yo                           -->
+  <!-- 5: scripts                               -->
   <!-- ========================================= -->
 <script>
   (function () {
@@ -329,30 +329,45 @@
     const track = document.getElementById('evTrack');
     if (!viewport || !track) return;
 
-    const BASE = 0.6; // scroll speed
+    const BASE = 0.6; // subtle scroll speed
 
-    // Touch detection (robust)
-    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+    // Robust touch detection
+    const isTouch =
+      ('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0) ||
+      window.matchMedia('(pointer: coarse)').matches;
 
-    // Motion preferences
+    // Respect reduced motion on non-touch only
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // ✅ Always animate on touch devices
     let speed = BASE;
-    if (!isTouch && prefersReduce) {
-      speed = 0;
-    }
+    if (!isTouch && prefersReduce) speed = 0;
 
     let running = true, x = 0, loopW = 0, rafId = null;
+
+    function markImagesLoaded(root) {
+      // Ensure cloned images aren't hidden by the blur-up CSS
+      const wraps = root.querySelectorAll('.img-wrap');
+      wraps.forEach(wrap => {
+        wrap.classList.add('is-loaded');
+        const img = wrap.querySelector('img');
+        if (img) {
+          img.style.opacity = '1';
+          img.style.filter = 'none';
+          img.style.transform = 'none';
+        }
+      });
+    }
 
     function build() {
       cancelAnimationFrame(rafId);
       x = 0;
       track.style.transform = 'translate3d(0,0,0)';
 
+      // Keep only originals (anchors) to clone from
       const originals = Array.from(track.children).filter(n => !n.dataset || !n.dataset.clone);
       if (!originals.length) return;
 
+      // Hidden measurer to compute how many slides we need
       const measurer = document.createElement('div');
       measurer.className = 'events-strip';
       originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
@@ -370,6 +385,7 @@
         guard++;
       }
 
+      // Build two identical strips for seamless loop
       const strip = document.createElement('div');
       strip.className = 'events-strip';
       Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
@@ -381,8 +397,10 @@
       track.appendChild(strip);
       track.appendChild(cloneStrip);
 
-      loopW = strip.scrollWidth || 1;
-      console.log("Loop width:", loopW);
+      // 🔧 Ensure all (original + cloned) images are visible (no opacity:0)
+      markImagesLoaded(track);
+
+      loopW = strip.scrollWidth || 1; // avoid div-by-zero
     }
 
     function tick() {
@@ -394,6 +412,7 @@
       rafId = requestAnimationFrame(tick);
     }
 
+    // Pause only for fine pointers (desktop hover/focus)
     const finePtr = window.matchMedia('(pointer: fine)').matches;
     if (finePtr) {
       const pause = () => { running = false; };
@@ -415,10 +434,10 @@
         track.style.transform = 'translate3d(0,0,0)';
       }, 150);
     };
-
     window.addEventListener('resize', rebuild, { passive: true });
     window.addEventListener('orientationchange', rebuild, { passive: true });
 
+    // Delay init slightly so Edge/Mobile layout is ready
     window.addEventListener('load', () => {
       setTimeout(() => {
         build();
