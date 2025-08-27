@@ -320,6 +320,9 @@
     </div>
   </footer>
 
+  <!-- ========================================= -->
+  <!-- 5: Scriptzzz Yo                           -->
+  <!-- ========================================= -->
 <script>
   (function () {
     const viewport = document.getElementById('evViewport');
@@ -328,17 +331,17 @@
 
     const BASE = 0.6; // scroll speed
 
-    // Detect if user prefers reduced motion
+    // Touch detection (robust)
+    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+
+    // Motion preferences
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Detect touch devices more robustly
-    const isTouch = window.matchMedia('(pointer: coarse)').matches || 
-                    ('ontouchstart' in window) || 
-                    navigator.maxTouchPoints > 0;
-
-    // Always animate on touch, respect reduced-motion on desktop only
+    // ✅ Always animate on touch devices
     let speed = BASE;
-    if (prefersReduce && !isTouch) speed = 0;
+    if (!isTouch && prefersReduce) {
+      speed = 0;
+    }
 
     let running = true, x = 0, loopW = 0, rafId = null;
 
@@ -347,11 +350,9 @@
       x = 0;
       track.style.transform = 'translate3d(0,0,0)';
 
-      // Original slides only
       const originals = Array.from(track.children).filter(n => !n.dataset || !n.dataset.clone);
       if (!originals.length) return;
 
-      // Measurer
       const measurer = document.createElement('div');
       measurer.className = 'events-strip';
       originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
@@ -369,7 +370,6 @@
         guard++;
       }
 
-      // Two strips for seamless loop
       const strip = document.createElement('div');
       strip.className = 'events-strip';
       Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
@@ -382,7 +382,7 @@
       track.appendChild(cloneStrip);
 
       loopW = strip.scrollWidth || 1;
-      console.log("Loop width:", loopW); // keep for debugging
+      console.log("Loop width:", loopW);
     }
 
     function tick() {
@@ -394,7 +394,6 @@
       rafId = requestAnimationFrame(tick);
     }
 
-    // Pause only on desktop hover/focus
     const finePtr = window.matchMedia('(pointer: fine)').matches;
     if (finePtr) {
       const pause = () => { running = false; };
@@ -420,7 +419,6 @@
     window.addEventListener('resize', rebuild, { passive: true });
     window.addEventListener('orientationchange', rebuild, { passive: true });
 
-    // ✅ FIX: Delay the very first build so Edge & Mobile layout is ready
     window.addEventListener('load', () => {
       setTimeout(() => {
         build();
