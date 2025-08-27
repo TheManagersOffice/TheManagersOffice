@@ -9,7 +9,7 @@
   <title>The Manager's Office</title>
 
   <!-- Cache-busted CSS -->
-  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="styles.css?v=30" />
 
   <!-- Non-blocking brand font -->
   <link rel="preload" as="font" href="BenguiatProITC-Medium.woff2" type="font/woff2" crossorigin />
@@ -114,71 +114,6 @@
     </div>
   </div>
 </section>
-
-<!-- ========================================= -->
-<!-- 1.26: MOBILE — HEADER HAMBURGER (HTML)    -->
-<!-- ========================================= -->
-<!-- ADD THIS *INSIDE* <header> .header-inner AS THE FIRST CHILD -->
-<button class="mobile-menu-btn" id="mMenuBtn"
-        aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-  <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-</button>
-
-<!-- ========================================= -->
-<!-- 1.26: MOBILE — HEADER HAMBURGER (HTML)    -->
-<!-- ========================================= -->
-<!-- ADD THIS RIGHT AFTER YOUR </header> (ONCE) -->
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <div class="panel" role="dialog" aria-label="Site menu">
-    <nav class="mm-links">
-      <a class="mm-link" href="#offerings">View Bookings</a>
-      <a class="mm-link" href="#open-decks">Open Decks</a>
-      <a class="mm-link" href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Watch Live</a>
-      <a class="mm-link" href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener">Instagram</a>
-    </nav>
-  </div>
-  <button class="mm-scrim" id="mMenuScrim" aria-label="Close menu"></button>
-</div>
-
-<!-- ========================================= -->
-<!-- 1.28: MOBILE — HEADER HAMBURGER (JS)      -->
-<!-- ========================================= -->
-<!-- ADD THIS JUST BEFORE </body> -->
-<script>
-  (function(){
-    const btn   = document.getElementById('mMenuBtn');
-    const menu  = document.getElementById('mobileMenu');
-    const scrim = document.getElementById('mMenuScrim');
-    if(!btn || !menu || !scrim) return;
-
-    const open = () => {
-      menu.classList.add('is-open');
-      document.body.classList.add('menu-open');
-      btn.setAttribute('aria-expanded','true');
-      menu.setAttribute('aria-hidden','false');
-    };
-    const close = () => {
-      menu.classList.remove('is-open');
-      document.body.classList.remove('menu-open');
-      btn.setAttribute('aria-expanded','false');
-      menu.setAttribute('aria-hidden','true');
-    };
-
-    btn.addEventListener('click', () => {
-      menu.classList.contains('is-open') ? close() : open();
-    });
-    scrim.addEventListener('click', close);
-    window.addEventListener('keydown', (e) => { if(e.key === 'Escape') close(); });
-
-    /* Close when a link is tapped */
-    menu.addEventListener('click', (e) => {
-      const a = e.target.closest('a.mm-link');
-      if(a) close();
-    });
-  })();
-</script>
-
-
 
   <!-- ========================================= -->
   <!-- INTRO OVERLAY SCRIPT (auto-fade once)     -->
