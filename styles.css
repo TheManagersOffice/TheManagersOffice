@@ -438,102 +438,69 @@ p {
 /* ========================================= */
 /* 3.95: EVENTS — IMAGE VISIBILITY SAFETY    */
 /* ========================================= */
-/* Guarantees posters are visible even if blur-up classes don't flip */
-.events .img-wrap { 
-  animation: none !important;
-  background-image: none !important;
-}
-.events .img-wrap > img {
-  opacity: 1 !important;
-  filter: none !important;
-  transform: none !important;
-  transition: none !important; /* prevents flicker on fast refresh */
-}
-
-/* Keep sizing tidy just in case */
-.events .event-slide img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: 14px;              /* mirrors your existing style */
-  border: 1px solid var(--line);    /* mirrors your existing style */
-  box-shadow: 0 10px 24px rgba(0,0,0,.25);
-}
 .events {
-  background: linear-gradient(180deg, #050505 0%, #020202 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg,#050505 0%,#020202 100%);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.events-inner {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
+.events-inner { padding: 2rem 0; }
+.events-head { display:flex; align-items:center; justify-content:space-between; margin-bottom: 1rem; }
 
-.events-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
+.events-viewport { overflow: hidden; position: relative; width: 100%; }
+.events-track { display: inline-flex; gap: 16px; width: max-content; }
 
-.events-viewport {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
+/* Two strips side-by-side, then animate the parent left by 50% */
+.events-strip { display: inline-flex; gap: 16px; }
 
-.events-track {
-  display: flex;
-  gap: 16px;
-  will-change: transform;
-}
-
-.events-strip {
-  display: flex;
-  gap: 16px;
-}
-
-.event-slide {
-  flex: 0 0 auto;
-  width: clamp(220px, 26vw, 320px);
-  cursor: pointer;
-}
-
+.event-slide { flex: 0 0 auto; width: clamp(220px, 26vw, 320px); cursor: pointer; }
 .event-slide img {
   width: 100%;
   aspect-ratio: 3/4;
   object-fit: cover;
   border-radius: 14px;
   border: 1px solid var(--line);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  transition: transform .25s ease;
+}
+.event-slide img:hover { transform: scale(1.04); }
+
+/* 💡 CSS-only marquee animation */
+@keyframes ev-marquee {
+  0%   { transform: translateX(0);     }
+  100% { transform: translateX(-50%); } /* move exactly one strip width */
+}
+.events-viewport .events-track {
+  animation: ev-marquee 40s linear infinite;
+  will-change: transform;
 }
 
-.event-slide img:hover {
-  transform: scale(1.04);
+/* Pause animation on hover/focus for mouse/trackpad users */
+@media (hover:hover) and (pointer:fine) {
+  .events-viewport:hover .events-track,
+  .events-viewport:focus-within .events-track {
+    animation-play-state: paused;
+  }
 }
 
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .events-viewport .events-track { animation: none; }
+}
+
+/* Mobile spacing tweaks */
 @media (max-width: 980px) {
-  .events-inner {
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-  }
-  .events-track {
-    gap: 12px;
-  }
-  .events-strip {
-    gap: 12px;
-  }
-  .event-slide {
-    width: 72vw;
-  }
-  .event-slide img {
-    border-radius: 12px;
-  }
+  .events-inner { padding: 1.25rem 0; }
+  .events-track, .events-strip { gap: 12px; }
+  .event-slide { width: 70vw; } /* nice peek of next poster */
 }
+
+/* Safety: ensure posters are never invisible due to blur-up loaders */
+.events .img-wrap { animation: none !important; background-image: none !important; }
+.events .img-wrap > img {
+  opacity: 1 !important; filter: none !important; transform: none !important; transition: none !important;
+}
+
 /* ========================================= */
 /* 3.951: EVENTS — CSS MARQUEE FALLBACK (opt)*/
 /* ========================================= */

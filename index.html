@@ -9,7 +9,7 @@
   <title>The Manager's Office</title>
 
   <!-- Cache-busted CSS -->
-  <link rel="stylesheet" href="styles.css?v=30" />
+  <link rel="stylesheet" href="styles.css?v=31" />
 
   <!-- Non-blocking brand font -->
   <link rel="preload" as="font" href="BenguiatProITC-Medium.woff2" type="font/woff2" crossorigin />
@@ -238,47 +238,88 @@
       <h2>Events</h2>
     </div>
 
-    <div class="events-viewport" id="evViewport">
-      <div class="events-track" id="evTrack">
-        <!-- Event 1 -->
-        <a href="https://www.instagram.com/rectify.clltv/" target="_blank" rel="noopener" class="event-slide" aria-label="Open Rectify Instagram">
-          <picture class="img-wrap" data-ratio="3/4" id="event-rec">
-            <source srcset="rec.avif" type="image/avif" />
-            <source srcset="rec.webp" type="image/webp" />
-            <img src="rec.jpg" alt="Rectify event poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
-          </picture>
-        </a>
+    <div class="events-viewport">
+      <!-- The track contains TWO identical strips for seamless looping -->
+      <div class="events-track">
+        <!-- STRIP A -->
+        <div class="events-strip">
+          <!-- Event 1 -->
+          <a href="https://www.instagram.com/rectify.clltv/" target="_blank" rel="noopener" class="event-slide" aria-label="Open Rectify Instagram">
+            <picture class="img-wrap" data-ratio="3/4" id="event-rec">
+              <source srcset="rec.avif" type="image/avif" />
+              <source srcset="rec.webp" type="image/webp" />
+              <img src="rec.jpg" alt="Rectify event poster" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
 
-        <!-- Event 2 -->
-        <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" aria-label="Open FrontRoom tickets">
-          <picture class="img-wrap" data-ratio="3/4" id="event-frontroom">
-            <source srcset="frontroom.avif" type="image/avif" />
-            <source srcset="frontroom.webp" type="image/webp" />
-            <img src="frontroom.jpg" alt="frontroom" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
-          </picture>
-        </a>
+          <!-- Event 2 -->
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" aria-label="Open Soluna tickets">
+            <picture class="img-wrap" data-ratio="3/4" id="event-soluna">
+              <source srcset="frontroom.avif" type="image/avif" />
+              <source srcset="frontroom.webp" type="image/webp" />
+              <img src="frontroom.jpg" alt="Soluna: Yotto + guests poster" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
 
-        <!-- Event 3 -->
-        <a href="https://triniq.com/DoofTechnoNikkiSig?fbclid=PAZXh0bgNhZW0CMTEAAadh66EVOzw8QQqIVzLZGuAlCFOOr7zsV7qEgrbjF_OX4gOvv9RSEfizrAHZ7A_aem_bIWT4gEGCoO1RtuQYU9CMg" target="_blank" rel="noopener" class="event-slide" aria-label="Open Ancient World Instagram">
-          <picture class="img-wrap" data-ratio="3/4" id="event-ancient">
-            <source srcset="ancient.avif" type="image/avif" />
-            <source srcset="ancient.webp" type="image/webp" />
-            <img src="ancient.png" alt="Ancient World poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
-          </picture>
-        </a>
+          <!-- Event 3 -->
+          <a href="https://triniq.com/DoofTechnoNikkiSig" target="_blank" rel="noopener" class="event-slide" aria-label="Open Doof Techno tickets">
+            <picture class="img-wrap" data-ratio="3/4" id="event-doof">
+              <source srcset="ancient.avif" type="image/avif" />
+              <source srcset="ancient.webp" type="image/webp" />
+              <img src="ancient.png" alt="Doof Techno: Nikki Sig poster" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
 
-        <!-- Event 4 -->
-        <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" aria-label="Open audiojack-uk-gala-room">
-          <picture class="img-wrap" data-ratio="3/4" id="event-audio">
-            <source srcset="backroom.avif" type="image/avif" />
-            <source srcset="backroom.webp" type="image/webp" />
-            <img src="backroom.jpg" alt="audiojack-uk-gala-room poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
-          </picture>
-        </a>
+          <!-- Event 4 -->
+          <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" aria-label="Open Audiojack tickets">
+            <picture class="img-wrap" data-ratio="3/4" id="event-audiojack">
+              <source srcset="backroom.avif" type="image/avif" />
+              <source srcset="backroom.webp" type="image/webp" />
+              <img src="backroom.jpg" alt="Audiojack at Gala Room poster" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+        </div>
+
+        <!-- STRIP B (exact duplicate of Strip A) -->
+        <div class="events-strip" aria-hidden="true">
+          <!-- Duplicate the same 4 slides for seamless loop -->
+          <a href="https://www.instagram.com/rectify.clltv/" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="rec.avif" type="image/avif" />
+              <source srcset="rec.webp" type="image/webp" />
+              <img src="rec.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="frontroom.avif" type="image/avif" />
+              <source srcset="frontroom.webp" type="image/webp" />
+              <img src="frontroom.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <a href="https://triniq.com/DoofTechnoNikkiSig" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="ancient.avif" type="image/avif" />
+              <source srcset="ancient.webp" type="image/webp" />
+              <img src="ancient.png" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="backroom.avif" type="image/avif" />
+              <source srcset="backroom.webp" type="image/webp" />
+              <img src="backroom.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
 
 
   <!-- ========================================= -->
