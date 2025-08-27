@@ -530,6 +530,50 @@ p {
   }
 }
 
+/* ================================================ /
+/ MOBILE FRIENDLY VERSION — HEADER + QUICK ACTIONS /
+/ (MOBILE ONLY; paste near end of your CSS file) /
+/ ================================================ */
+
+/* Hide the header nav on small screens and keep only the site title visible */
+@media (max-width: 640px) {
+  .header .nav { display: none !important; }
+  .header .header-inner {
+    justify-content: center; /* center the title for a clean mobile look */
+  }
+}
+
+/* Mobile-only quick actions section (hidden on desktop by default) */
+.mobile-quick { display: none; }
+
+@media (max-width: 640px) {
+  .mobile-quick {
+    display: block;
+    background: linear-gradient(180deg, #0b0b0b 0%, #060606 100%);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .mobile-quick-inner {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    text-align: center;
+  }
+  .mobile-quick h2 {
+    font-size: clamp(1.2rem, 4.5vw, 1.45rem);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+  .mobile-quick-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    justify-items: center;
+  }
+  .mobile-quick .btn {
+    width: min(520px, 100%);
+    text-align: center;
+  }
+}
 /* ========================================= */
 /* FORCE PAINT OVERRIDES (NO DEFER)          */
 /* ========================================= */
