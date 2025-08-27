@@ -379,7 +379,8 @@
       track.appendChild(cloneStrip);
 
       loopW = strip.scrollWidth || 1; // avoid div-by-zero
-    }
+      console.log("Loop width:", loopW);
+      }
 
     function tick() {
       if (running && loopW > 0 && speed > 0) {
