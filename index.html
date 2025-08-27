@@ -269,10 +269,10 @@
 
         <!-- Event 4 -->
         <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" aria-label="Open audiojack-uk-gala-room">
-          <picture class="img-wrap" data-ratio="3/4" id="event-ancient">
+          <picture class="img-wrap" data-ratio="3/4" id="event-audio">
             <source srcset="backroom.avif" type="image/avif" />
             <source srcset="backroom.webp" type="image/webp" />
-            <img src="backroom.jpg" alt="Ancient World poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
+            <img src="backroom.jpg" alt="audiojack-uk-gala-room poster" width="320" height="427" loading="eager" decoding="auto" fetchpriority="low" />
           </picture>
         </a>
       </div>
@@ -329,10 +329,11 @@
     // Base speed; keep subtle so posters are readable
     const BASE = 0.6;
 
-    // Respect reduced motion on desktop, but ALWAYS loop on touch devices
+    // FIXED: Always animate on touch devices (don’t zero speed accidentally)
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    let speed = (prefersReduce && !isTouch) ? 0 : BASE;
+    let speed = BASE;
+    if (prefersReduce && !isTouch) speed = 0; // only stop if reduced-motion is set AND not on touch
 
     let running = true, x = 0, loopW = 0, rafId = null;
 
@@ -357,6 +358,7 @@
       measurer.style.pointerEvents = 'none';
       track.appendChild(measurer);
 
+      // FIXED: Delay measurement slightly so Edge/Mobile calculates correct width
       const targetWidth = Math.max(viewport.clientWidth * 2, 1);
       let guard = 0;
       while (measurer.scrollWidth < targetWidth && guard < 50) {
@@ -408,13 +410,16 @@
         build();
         x = 0;
         track.style.transform = 'translate3d(0,0,0)';
-      }, 120);
+      }, 150); // slightly longer debounce for mobile
     };
 
     window.addEventListener('resize', rebuild);
     window.addEventListener('orientationchange', rebuild);
 
-    build();
-    rafId = requestAnimationFrame(tick);
+    // FIXED: run build inside setTimeout to ensure widths are ready in Edge/Mobile
+    setTimeout(() => {
+      build();
+      rafId = requestAnimationFrame(tick);
+    }, 50);
   })();
 </script>
