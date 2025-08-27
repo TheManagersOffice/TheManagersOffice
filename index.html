@@ -326,37 +326,32 @@
     const track = document.getElementById('evTrack');
     if (!viewport || !track) return;
 
-    /* -----------------------------------------
-       CONFIG
-    ----------------------------------------- */
-    const BASE = 0.6; // pixels per frame (subtle so posters are readable)
+    const BASE = 0.6; // scroll speed
 
-    // More robust touch detection (works on iOS/Android/Edge)
-    const isTouch =
-      window.matchMedia('(pointer: coarse)').matches ||
-      ('ontouchstart' in window) ||
-      (navigator.maxTouchPoints > 0);
-
-    // Respect reduced-motion ONLY on non-touch devices
+    // Detect if user prefers reduced motion
     const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Detect touch devices more robustly
+    const isTouch = window.matchMedia('(pointer: coarse)').matches || 
+                    ('ontouchstart' in window) || 
+                    navigator.maxTouchPoints > 0;
+
+    // Always animate on touch, respect reduced-motion on desktop only
     let speed = BASE;
     if (prefersReduce && !isTouch) speed = 0;
 
     let running = true, x = 0, loopW = 0, rafId = null;
 
-    /* -----------------------------------------
-       BUILD STRIPS
-    ----------------------------------------- */
     function build() {
       cancelAnimationFrame(rafId);
       x = 0;
       track.style.transform = 'translate3d(0,0,0)';
 
-      // Keep only the originals (anchors)
+      // Original slides only
       const originals = Array.from(track.children).filter(n => !n.dataset || !n.dataset.clone);
       if (!originals.length) return;
 
-      // Hidden measurer to decide how many slides we need
+      // Measurer
       const measurer = document.createElement('div');
       measurer.className = 'events-strip';
       originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
@@ -374,7 +369,7 @@
         guard++;
       }
 
-      // Two identical strips for seamless looping
+      // Two strips for seamless loop
       const strip = document.createElement('div');
       strip.className = 'events-strip';
       Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
@@ -386,28 +381,10 @@
       track.appendChild(strip);
       track.appendChild(cloneStrip);
 
-      loopW = strip.scrollWidth || 1; // avoid div-by-zero
-
-      // ----- Mobile watchdog: if width is still 0 (images/layout not ready), rebuild once more
-      if (loopW <= 1) {
-        setTimeout(() => {
-          // second attempt after paint
-          const again = document.createElement('div');
-          again.className = 'events-strip';
-          Array.from(strip.children).forEach(n => again.appendChild(n.cloneNode(true)));
-          track.innerHTML = '';
-          track.appendChild(again);
-          const againClone = again.cloneNode(true);
-          againClone.dataset.clone = '1';
-          track.appendChild(againClone);
-          loopW = again.scrollWidth || 1;
-        }, 90);
-      }
+      loopW = strip.scrollWidth || 1;
+      console.log("Loop width:", loopW); // keep for debugging
     }
 
-    /* -----------------------------------------
-       ANIMATE
-    ----------------------------------------- */
     function tick() {
       if (running && loopW > 0 && speed > 0) {
         x -= speed;
@@ -417,10 +394,7 @@
       rafId = requestAnimationFrame(tick);
     }
 
-    /* -----------------------------------------
-       INTERACTION / LIFECYCLE
-    ----------------------------------------- */
-    // Pause on hover/focus only for fine pointers (desktop mouse)
+    // Pause only on desktop hover/focus
     const finePtr = window.matchMedia('(pointer: fine)').matches;
     if (finePtr) {
       const pause = () => { running = false; };
@@ -431,10 +405,8 @@
       viewport.addEventListener('focusout', resume);
     }
 
-    // Page visibility (mobile browsers can throttle rAF)
     document.addEventListener('visibilitychange', () => { running = !document.hidden; });
 
-    // Rebuild on resize/orientation (debounced a bit more for mobile)
     let resizeT;
     const rebuild = () => {
       clearTimeout(resizeT);
@@ -442,22 +414,18 @@
         build();
         x = 0;
         track.style.transform = 'translate3d(0,0,0)';
-      }, 160);
+      }, 150);
     };
+
     window.addEventListener('resize', rebuild, { passive: true });
     window.addEventListener('orientationchange', rebuild, { passive: true });
 
-    /* -----------------------------------------
-       INIT (delayed to let mobile/Edge finish layout)
-    ----------------------------------------- */
-    setTimeout(() => {
-      // Double-rAF to ensure a painted frame before measuring on mobile WebKit
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          build();
-          rafId = requestAnimationFrame(tick);
-        });
-      });
-    }, 60);
+    // ✅ FIX: Delay the very first build so Edge & Mobile layout is ready
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        build();
+        rafId = requestAnimationFrame(tick);
+      }, 50);
+    });
   })();
 </script>
