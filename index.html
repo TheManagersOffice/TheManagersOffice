@@ -76,6 +76,23 @@
   </header>
 
   <!-- ========================================= -->
+<!-- 1.26: MOBILE — HEADER HAMBURGER (HTML)    -->
+<!-- ========================================= -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="panel" role="dialog" aria-label="Site menu">
+    <nav class="mm-links">
+      <a class="mm-link" href="#offerings">View Bookings</a>
+      <a class="mm-link" href="#open-decks">Open Decks</a>
+      <a class="mm-link" href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Watch Live</a>
+      <a class="mm-link" href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </div>
+  <!-- Tap anywhere to close -->
+  <label class="mm-scrim" for="mMenuToggle" aria-label="Close menu"></label>
+</div>
+
+
+  <!-- ========================================= -->
   <!-- 1: HERO                                  -->
   <!-- ========================================= -->
   <section class="hero">
@@ -113,6 +130,17 @@
     </div>
   </div>
 </section>
+
+<!-- ========================================= -->
+<!-- 1.26: MOBILE — HEADER HAMBURGER (HTML)    -->
+<!-- ========================================= -->
+<input type="checkbox" id="mMenuToggle" class="m-menu-toggle" hidden />
+
+<label class="mobile-menu-btn" for="mMenuToggle"
+       aria-label="Open menu">
+  <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+</label>
+
 
   <!-- ========================================= -->
   <!-- INTRO OVERLAY SCRIPT (auto-fade once)     -->
