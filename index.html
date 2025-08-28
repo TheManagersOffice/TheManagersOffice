@@ -23,19 +23,26 @@
   <!-- ========================================= -->
   <!-- SOCIAL EMBED META (tmoembed.png)          -->
   <!-- ========================================= -->
-  <meta name="description" content="The Manager’s Office — private DJ/recording studio in Adelaide’s inner west. Book solo practice, group sessions, and open-decks.">
-  <meta property="og:title" content="The Manager’s Office">
-  <meta property="og:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://themanagersoffice.org/">
-  <meta property="og:site_name" content="The Manager’s Office">
-  <meta property="og:image" content="/tmoembed.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Manager’s Office">
-  <meta name="twitter:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks.">
-  <meta name="twitter:image" content="/tmoembed.png">
+  <meta name="description" content="The Manager’s Office — private DJ/recording studio in Adelaide’s inner west. Book solo practice, group sessions, and open-decks." />
+  <link rel="canonical" href="https://themanagersoffice.org/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Manager’s Office" />
+  <meta property="og:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://themanagersoffice.org/" />
+  <meta property="og:site_name" content="The Manager’s Office" />
+  <meta property="og:image" content="https://themanagersoffice.org/tmoembed.png" />
+  <meta property="og:image:secure_url" content="https://themanagersoffice.org/tmoembed.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="TMO — The Manager’s Office" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Manager’s Office" />
+  <meta name="twitter:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks." />
+  <meta name="twitter:image" content="https://themanagersoffice.org/tmoembed.png" />
 
   <!-- Force-paint HOTFIX (renders sections immediately) -->
   <style>
@@ -51,13 +58,16 @@
   </style>
 </head>
 <body>
-
-  <body>
   <!-- ========================================= -->
   <!-- 0.1: IG PREVIEW HINT (forces first image) -->
   <!-- ========================================= -->
-  <img src="tmoembed.png" alt="The Manager’s Office" width="1200" height="630" style="display:none;" />
-
+  <img
+    src="https://themanagersoffice.org/tmoembed.png"
+    alt="The Manager’s Office"
+    width="1200"
+    height="630"
+    style="position:absolute;left:-9999px;top:-9999px;border:0;"
+  />
 
   <!-- ========================================= -->
   <!-- 0.7: IMG LOADER — ROBUST BLUR-UP RELEASE  -->
@@ -75,7 +85,6 @@
         }
       };
 
-      // Normal path
       wraps.forEach(wrap => {
         const img = wrap.querySelector('img');
         if (!img) return;
@@ -87,12 +96,13 @@
         }, { once: true });
       });
 
-      // Belt & suspenders
       setTimeout(() => {
         document.querySelectorAll('.img-wrap:not(.is-loaded)').forEach(markLoaded);
       }, 400);
     });
   </script>
+
+
 
   <!-- ========================================= -->
   <!-- 0: HEAD — minimal preload + cache bust    -->
