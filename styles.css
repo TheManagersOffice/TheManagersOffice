@@ -963,3 +963,22 @@ picture.img-wrap img {
   transform: none !important;
   transition: none !important;
 }
+
+/* ========================================= */
+/* IG PREVIEW HINT (forces embed image)      */
+/* ========================================= */
+.ig-thumb-hint {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.ig-thumb-hint img {
+  display: block;
+  width: 1200px;   /* expose full size to scrapers */
+  height: 630px;
+}

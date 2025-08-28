@@ -9,7 +9,7 @@
   <title>The Manager's Office</title>
 
   <!-- Cache-busted CSS -->
-  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="styles.css?v=32" />
 
   <!-- Non-blocking brand font -->
   <link rel="preload" as="font" href="BenguiatProITC-Medium.woff2" type="font/woff2" crossorigin />
@@ -55,19 +55,32 @@
       transform: none !important;
       transition: none !important;
     }
+
+    /* ========================================= */
+    /* IG PREVIEW HINT (present but invisible)   */
+    /* ========================================= */
+    .ig-thumb-hint{
+      position:absolute;
+      left:0; top:0;
+      width:1px; height:1px;
+      overflow:hidden;
+      z-index:-1;
+    }
+    .ig-thumb-hint img{
+      display:block;
+      width:1200px; height:630px; /* expose real size to scrapers */
+    }
   </style>
 </head>
 <body>
   <!-- ========================================= -->
   <!-- 0.1: IG PREVIEW HINT (forces first image) -->
   <!-- ========================================= -->
-  <img
-    src="https://themanagersoffice.org/tmoembed.png"
-    alt="The Manager’s Office"
-    width="1200"
-    height="630"
-    style="position:absolute;left:-9999px;top:-9999px;border:0;"
-  />
+  <div class="ig-thumb-hint" aria-hidden="true">
+    <img src="https://themanagersoffice.org/tmoembed.png"
+         alt="The Manager’s Office"
+         width="1200" height="630" />
+  </div>
 
   <!-- ========================================= -->
   <!-- 0.7: IMG LOADER — ROBUST BLUR-UP RELEASE  -->
@@ -101,6 +114,8 @@
       }, 400);
     });
   </script>
+
+  <!-- …your existing content continues here (intro overlay, header, hero, etc.) … -->
 
 
 
