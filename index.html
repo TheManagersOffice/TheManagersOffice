@@ -9,124 +9,6 @@
   <title>The Manager's Office</title>
 
   <!-- Cache-busted CSS -->
-  <link rel="stylesheet" href="styles.css?v=32" />
-
-  <!-- Non-blocking brand font -->
-  <link rel="preload" as="font" href="BenguiatProITC-Medium.woff2" type="font/woff2" crossorigin />
-
-  <!-- Preload the highest-impact images only -->
-  <link rel="preload" as="image" href="hero.avif" />
-  <link rel="preload" as="image" href="hero.webp" />
-  <link rel="preload" as="image" href="tmostrip.avif" />
-  <link rel="preload" as="image" href="tmostrip.webp" />
-
-  <!-- ========================================= -->
-  <!-- SOCIAL EMBED META (tmoembed.png)          -->
-  <!-- ========================================= -->
-  <meta name="description" content="The Manager’s Office — private DJ/recording studio in Adelaide’s inner west. Book solo practice, group sessions, and open-decks." />
-  <link rel="canonical" href="https://themanagersoffice.org/" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="The Manager’s Office" />
-  <meta property="og:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://themanagersoffice.org/" />
-  <meta property="og:site_name" content="The Manager’s Office" />
-  <meta property="og:image" content="https://themanagersoffice.org/tmoembed.png" />
-  <meta property="og:image:secure_url" content="https://themanagersoffice.org/tmoembed.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="TMO — The Manager’s Office" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Manager’s Office" />
-  <meta name="twitter:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks." />
-  <meta name="twitter:image" content="https://themanagersoffice.org/tmoembed.png" />
-
-  <!-- Force-paint HOTFIX (renders sections immediately) -->
-  <style>
-    .hero, .logo-section, .offerings, .events, .open-decks, .footer {
-      content-visibility: auto !important;
-      contain-intrinsic-size: auto !important;
-    }
-    .fade-in, .fade-in.visible {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
-    }
-
-    /* ========================================= */
-    /* IG PREVIEW HINT (present but invisible)   */
-    /* ========================================= */
-    .ig-thumb-hint{
-      position:absolute;
-      left:0; top:0;
-      width:1px; height:1px;
-      overflow:hidden;
-      z-index:-1;
-    }
-    .ig-thumb-hint img{
-      display:block;
-      width:1200px; height:630px; /* expose real size to scrapers */
-    }
-  </style>
-</head>
-<body>
-  <!-- ========================================= -->
-  <!-- 0.1: IG PREVIEW HINT (forces first image) -->
-  <!-- ========================================= -->
-  <div class="ig-thumb-hint" aria-hidden="true">
-    <img src="https://themanagersoffice.org/tmoembed.png"
-         alt="The Manager’s Office"
-         width="1200" height="630" />
-  </div>
-
-  <!-- ========================================= -->
-  <!-- 0.7: IMG LOADER — ROBUST BLUR-UP RELEASE  -->
-  <!-- ========================================= -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const wraps = document.querySelectorAll('.img-wrap');
-      const markLoaded = wrap => {
-        wrap.classList.add('is-loaded');
-        const img = wrap.querySelector('img');
-        if (img) {
-          img.style.opacity = '1';
-          img.style.filter = 'none';
-          img.style.transform = 'none';
-        }
-      };
-
-      wraps.forEach(wrap => {
-        const img = wrap.querySelector('img');
-        if (!img) return;
-        if (img.complete) { markLoaded(wrap); return; }
-        img.addEventListener('load', () => markLoaded(wrap), { once: true });
-        img.addEventListener('error', () => {
-          console.warn('Failed to load image:', img.src);
-          markLoaded(wrap);
-        }, { once: true });
-      });
-
-      setTimeout(() => {
-        document.querySelectorAll('.img-wrap:not(.is-loaded)').forEach(markLoaded);
-      }, 400);
-    });
-  </script>
-
-  <!-- …your existing content continues here (intro overlay, header, hero, etc.) … -->
-
-
-
-  <!-- ========================================= -->
-  <!-- 0: HEAD — minimal preload + cache bust    -->
-  <!-- ========================================= -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Manager's Office</title>
-
-  <!-- Cache-busted CSS -->
   <link rel="stylesheet" href="styles.css?v=31" />
 
   <!-- Non-blocking brand font -->
@@ -152,27 +34,46 @@
   </style>
 </head>
 <body>
+
+  <!-- ========================================= -->
+  <!-- 0.7: IMG LOADER — ROBUST BLUR-UP RELEASE  -->
+  <!-- ========================================= -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const images = document.querySelectorAll('.img-wrap img');
-      images.forEach(img => {
-        if (img.complete) {
-          img.parentElement.classList.add('is-loaded');
-        } else {
-          img.addEventListener('load', () => {
-            img.parentElement.classList.add('is-loaded');
-          });
-          img.addEventListener('error', () => {
-            console.warn(`Failed to load image: ${img.src}`);
-          });
+      const wraps = document.querySelectorAll('.img-wrap');
+      const markLoaded = wrap => {
+        wrap.classList.add('is-loaded');
+        const img = wrap.querySelector('img');
+        if (img) {
+          img.style.opacity = '1';
+          img.style.filter = 'none';
+          img.style.transform = 'none';
         }
+      };
+
+      // Normal path
+      wraps.forEach(wrap => {
+        const img = wrap.querySelector('img');
+        if (!img) return;
+        if (img.complete) { markLoaded(wrap); return; }
+        img.addEventListener('load', () => markLoaded(wrap), { once: true });
+        img.addEventListener('error', () => {
+          console.warn('Failed to load image:', img.src);
+          markLoaded(wrap);
+        }, { once: true });
       });
+
+      // Belt & suspenders
+      setTimeout(() => {
+        document.querySelectorAll('.img-wrap:not(.is-loaded)').forEach(markLoaded);
+      }, 400);
     });
   </script>
 
   <!-- ========================================= -->
   <!-- AUTO-FADE INTRO OVERLAY (no click needed) -->
   <!-- ========================================= -->
+
   <div id="tmo-intro" class="tmo-intro" aria-hidden="true">
     <!-- Optional: swap to your logo image or remove <img> for pure black -->
     <img class="tmo-intro-logo" src="tmo.webp" alt="" />
