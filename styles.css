@@ -948,3 +948,18 @@ picture.img-wrap img {
   }
 }
 
+
+/* ========================================= */
+/* 0.6: GLOBAL — IMAGE VISIBILITY SAFETY     */
+/* ========================================= */
+/* Guarantees images become visible even if the blur-up class doesn't flip */
+.img-wrap { 
+  animation: none !important;
+  background-image: none !important;
+}
+.img-wrap > img {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}

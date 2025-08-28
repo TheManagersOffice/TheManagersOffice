@@ -1,6 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const wraps = document.querySelectorAll('.img-wrap');
+    const markLoaded = wrap => {
+      wrap.classList.add('is-loaded');
+      const img = wrap.querySelector('img');
+      if (img) {
+        img.style.opacity = '1';
+        img.style.filter = 'none';
+        img.style.transform = 'none';
+      }
+    };
+
+    // 1) Normal path: when <img> fires load
+    wraps.forEach(wrap => {
+      const img = wrap.querySelector('img');
+      if (!img) return;
+      if (img.complete) { markLoaded(wrap); return; }
+      img.addEventListener('load', () => markLoaded(wrap), { once: true });
+      img.addEventListener('error', () => {
+        console.warn('Failed to load image:', img.src);
+        // Even on error, don't leave it invisible
+        markLoaded(wrap);
+      }, { once: true });
+    });
+
+    // 2) Belt & suspenders: after a short delay, force-show any stragglers
+    setTimeout(() => {
+      document.querySelectorAll('.img-wrap:not(.is-loaded)').forEach(markLoaded);
+    }, 400);
+  });
+</script>
   <!-- ========================================= -->
   <!-- 0: HEAD — minimal preload + cache bust    -->
   <!-- ========================================= -->
