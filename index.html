@@ -20,27 +20,6 @@
   <link rel="preload" as="image" href="tmostrip.avif" />
   <link rel="preload" as="image" href="tmostrip.webp" />
 
-  <!-- ========================================= -->
-  <!-- SOCIAL EMBED META                         -->
-  <!-- ========================================= -->
-  <meta name="description" content="The Manager’s Office — private DJ/recording studio in Adelaide’s inner west. Book solo practice, group sessions, and open-decks." />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="The Manager’s Office" />
-  <meta property="og:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://themanagersoffice.org/" />
-  <meta property="og:site_name" content="The Manager’s Office" />
-  <meta property="og:image" content="https://themanagersoffice.org/tmoembed.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Manager’s Office" />
-  <meta name="twitter:description" content="Private DJ/recording studio in Adelaide. Solo booth, group sessions, and open-decks." />
-  <meta name="twitter:image" content="https://themanagersoffice.org/tmoembed.png" />
-
   <!-- Force-paint HOTFIX (renders sections immediately) -->
   <style>
     .hero, .logo-section, .offerings, .events, .open-decks, .footer {
@@ -54,6 +33,24 @@
     }
   </style>
 </head>
+<body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.img-wrap img');
+      images.forEach(img => {
+        if (img.complete) {
+          img.parentElement.classList.add('is-loaded');
+        } else {
+          img.addEventListener('load', () => {
+            img.parentElement.classList.add('is-loaded');
+          });
+          img.addEventListener('error', () => {
+            console.warn(`Failed to load image: ${img.src}`);
+          });
+        }
+      });
+    });
+  </script>
 
   <!-- ========================================= -->
   <!-- AUTO-FADE INTRO OVERLAY (no click needed) -->
