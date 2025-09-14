@@ -986,3 +986,15 @@ picture.img-wrap img {
   width: 1200px;   /* expose full size to scrapers */
   height: 630px;
 }
+/* ========================================= */
+/* 2.9: FIX — EVENTS SPACING (CLOSER TO HERO)*/
+/* ========================================= */
+.events {
+  margin-top: -32px;   /* pull section closer */
+  min-height: auto;    /* remove forced height */
+  padding-top: 0;      /* reset section padding */
+}
+
+.events .container.events-inner {
+  padding-top: 0;      /* kill extra space inside container */
+}
