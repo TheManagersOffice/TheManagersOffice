@@ -189,65 +189,64 @@
 <!-- 3: EVENTS                                -->
 <!-- ========================================= -->
 <section id="events" class="events">
-  <div class="container events-inner">
+  <div class="container events-inner" id="evViewport">
     <div class="events-head">
       <h2>Events</h2>
     </div>
 
     <div class="events-viewport">
-      <div class="events-track">
+      <!-- Track (JS will take over the animation) -->
+      <div class="events-track" id="evTrack">
+        <!-- STRIP A -->
         <div class="events-strip">
-          <!-- Event 2 -->
-          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" aria-label="Open Soluna tickets">
-            <picture class="img-wrap" data-ratio="3/4" id="event-soluna">
-              <source srcset="frontroom.avif" type="image/avif" />
-              <source srcset="frontroom.webp" type="image/webp" />
-              <img src="frontroom.jpg" alt="Soluna: Yotto + guests poster" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <!-- Event 3 -->
-          <a href="https://events.humanitix.com/the-story-so-far" target="_blank" rel="noopener" class="event-slide" aria-label="SO FAR RAVE PROMO">
-            <picture class="img-wrap" data-ratio="3/4" id="event-doof">
-              <source srcset="SOFAR.avif" type="image/avif" />
-              <source srcset="SOFAR.webp" type="image/webp" />
-              <img src="SOFAR.jpg" alt="SO FAR" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <!-- Event 4 -->
           <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" aria-label="Open Audiojack tickets">
             <picture class="img-wrap" data-ratio="3/4" id="event-audiojack">
               <source srcset="backroom.avif" type="image/avif" />
               <source srcset="backroom.webp" type="image/webp" />
-              <img src="backroom.jpg" alt="Audiojack at Gala Room poster" width="320" height="427" loading="lazy" decoding="async" />
+              <img src="backroom.jpg" alt="Audiojack at Gala Room poster" width="320" height="427" loading="eager" decoding="auto" />
             </picture>
           </a>
-        </div>
 
-        <!-- STRIP B (duplicate for loop) -->
-        <div class="events-strip" aria-hidden="true">
-          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" aria-label="Open Soluna tickets">
+            <picture class="img-wrap" data-ratio="3/4" id="event-soluna">
               <source srcset="frontroom.avif" type="image/avif" />
               <source srcset="frontroom.webp" type="image/webp" />
-              <img src="frontroom.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+              <img src="frontroom.jpg" alt="Soluna: Yotto + guests poster" width="320" height="427" loading="eager" decoding="auto" />
             </picture>
           </a>
 
           <a href="https://events.humanitix.com/the-story-so-far" target="_blank" rel="noopener" class="event-slide" aria-label="SO FAR RAVE PROMO">
-            <picture class="img-wrap" data-ratio="3/4">
+            <picture class="img-wrap" data-ratio="3/4" id="event-doof">
               <source srcset="SOFAR.avif" type="image/avif" />
               <source srcset="SOFAR.webp" type="image/webp" />
-              <img src="SOFAR.jpg" alt="SO FAR" width="320" height="427" loading="lazy" decoding="async" />
+              <img src="SOFAR.jpg" alt="SO FAR" width="320" height="427" loading="eager" decoding="auto" />
             </picture>
           </a>
+        </div>
 
+        <!-- STRIP B (duplicate for seamless loop; JS will rely on this) -->
+        <div class="events-strip" aria-hidden="true">
           <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
             <picture class="img-wrap" data-ratio="3/4">
               <source srcset="backroom.avif" type="image/avif" />
               <source srcset="backroom.webp" type="image/webp" />
-              <img src="backroom.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+              <img src="backroom.jpg" alt="" width="320" height="427" loading="eager" decoding="auto" />
+            </picture>
+          </a>
+
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="frontroom.avif" type="image/avif" />
+              <source srcset="frontroom.webp" type="image/webp" />
+              <img src="frontroom.jpg" alt="" width="320" height="427" loading="eager" decoding="auto" />
+            </picture>
+          </a>
+
+          <a href="https://events.humanitix.com/the-story-so-far" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="SOFAR.avif" type="image/avif" />
+              <source srcset="SOFAR.webp" type="image/webp" />
+              <img src="SOFAR.jpg" alt="" width="320" height="427" loading="eager" decoding="auto" />
             </picture>
           </a>
         </div>
@@ -255,6 +254,7 @@
     </div>
   </div>
 </section>
+
 
 <!-- ========================================= -->
 <!-- 3.5: OFFERINGS (SOLO / GROUP)            -->
@@ -322,6 +322,146 @@
     </article>
   </div>
 </section>
+
+<!-- ========================================= -->
+<!-- 3.95: EVENTS — SCRIPT (SELF-HEALING)      -->
+<!-- ========================================= -->
+<script>
+  (function () {
+    const viewport = document.getElementById('evViewport');
+    const track = document.getElementById('evTrack');
+    if (!viewport || !track) return;
+
+    /* IMPORTANT: disable any CSS marquee on the track */
+    track.style.animation = 'none';
+
+    /* Slower scroll speed (px per frame @ ~60fps) 
+       0.6 ≈ 36px/s (fast). Try 0.18 ≈ 11px/s (calmer). */
+    const BASE = 0.18;
+
+    // Robust touch detection; mobile should always animate
+    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+
+    // Respect reduced motion on non-touch only
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let speed = (!isTouch && prefersReduce) ? 0 : BASE;
+
+    let running = true, x = 0, loopW = 0, rafId = null;
+
+    // ---- Build the two-strip loop ----------------------------------------
+    function build() {
+      cancelAnimationFrame(rafId);
+      x = 0;
+      track.style.transform = 'translate3d(0,0,0)';
+
+      const originals = Array.from(track.children).filter(n => !n.dataset || !n.dataset.clone);
+      if (!originals.length) return;
+
+      const measurer = document.createElement('div');
+      measurer.className = 'events-strip';
+      originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
+
+      track.innerHTML = '';
+      Object.assign(measurer.style, { position:'absolute', visibility:'hidden', pointerEvents:'none' });
+      track.appendChild(measurer);
+
+      const targetWidth = Math.max(viewport.clientWidth * 2, 1);
+      let guard = 0;
+      while (measurer.scrollWidth < targetWidth && guard < 50) {
+        originals.forEach(src => measurer.appendChild(src.cloneNode(true)));
+        guard++;
+      }
+
+      const strip = document.createElement('div');
+      strip.className = 'events-strip';
+      Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
+      const cloneStrip = strip.cloneNode(true);
+      cloneStrip.dataset.clone = '1';
+
+      track.innerHTML = '';
+      track.appendChild(strip);
+      track.appendChild(cloneStrip);
+
+      // Ensure cloned images aren’t hidden by blur-up styles
+      track.querySelectorAll('.img-wrap').forEach(wrap => {
+        wrap.classList.add('is-loaded');
+        const img = wrap.querySelector('img');
+        if (img) { img.style.opacity = '1'; img.style.filter = 'none'; img.style.transform = 'none'; }
+      });
+
+      loopW = strip.scrollWidth || 1;
+    }
+
+    // ---- Animate and watchdog --------------------------------------------
+    let lastX = 0;
+    let lastProgressAt = performance.now();
+
+    function tick(now) {
+      if (running && loopW > 0 && speed > 0) {
+        x -= speed;
+        if (-x >= loopW) x += loopW;
+        track.style.transform = `translate3d(${x}px,0,0)`;
+
+        // movement detection
+        if (x !== lastX) {
+          lastX = x;
+          lastProgressAt = now || performance.now();
+        }
+      }
+
+      // Watchdog: if no movement for 1500ms, rebuild & restart
+      if ((now || performance.now()) - lastProgressAt > 1500) {
+        rebuild(true); // force
+        return;        // tick will be rescheduled by rebuild()
+      }
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    // ---- Controls & lifecycle -------------------------------------------
+    const finePtr = window.matchMedia('(pointer: fine)').matches;
+    if (finePtr) {
+      const pause = () => { running = false; };
+      const resume = () => { running = true; lastProgressAt = performance.now(); };
+      viewport.addEventListener('mouseenter', pause);
+      viewport.addEventListener('mouseleave', resume);
+      viewport.addEventListener('focusin', pause);
+      viewport.addEventListener('focusout', resume);
+    }
+
+    // Wake up on user interaction (mobile sometimes throttles)
+    ['touchstart','pointerdown','scroll'].forEach(ev =>
+      window.addEventListener(ev, () => { running = true; lastProgressAt = performance.now(); }, { passive: true })
+    );
+
+    document.addEventListener('visibilitychange', () => { running = !document.hidden; lastProgressAt = performance.now(); });
+
+    let resizeT;
+    function rebuild(force = false) {
+      clearTimeout(resizeT);
+      const doBuild = () => {
+        build();
+        x = 0;
+        track.style.transform = 'translate3d(0,0,0)';
+        lastProgressAt = performance.now();
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(tick);
+      };
+      if (force) { doBuild(); }
+      else {
+        resizeT = setTimeout(doBuild, 160);
+      }
+    }
+
+    window.addEventListener('resize', () => rebuild(false), { passive: true });
+    window.addEventListener('orientationchange', () => rebuild(true), { passive: true });
+
+    window.addEventListener('load', () => {
+      setTimeout(() => { rebuild(true); }, 60);
+    });
+  })();
+</script>
+
 
 
   <!-- ========================================= -->
