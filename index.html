@@ -86,14 +86,12 @@
     <div class="header-inner">
       <div class="logo">The Manager's Office</div>
       <nav class="nav">
-  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener">Contact</a>
-  <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Live</a>
-  <a href="https://www.tiktok.com/@_themanagersoffice" target="_blank" rel="noopener">TikTok</a>
-  <a href="https://www.youtube.com/@TheManagersOffice" target="_blank" rel="noopener">YouTube</a>
-</nav>
-
-
-
+        <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener">Contact</a>
+        <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Live</a>
+        <a href="#events">Events</a>
+        <a href="#open-decks">Open Decks</a>
+      </nav>
+    </div>
   </header>
 
   <!-- ========================================= -->
@@ -185,283 +183,141 @@
      style="position:absolute;left:-9999px;top:-9999px;" />
   </section>
 
+  <!-- ========================================= -->
+  <!-- 3: OFFERINGS (SOLO / GROUP)              -->
+  <!-- ========================================= -->
+  <section id="offerings" class="offerings">
+    <div class="container offerings-grid">
+      <!-- Solo -->
+      <article class="card">
+        <div class="card-media">
+          <picture class="img-wrap" data-ratio="4/3">
+            <source srcset="solo.avif" type="image/avif" />
+            <source srcset="solo.webp" type="image/webp" />
+            <img src="solo.jpg" alt="Solo booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
+          </picture>
+        </div>
+        <div class="card-body">
+          <div class="card-top">
+            <h2>SOLO BOOTH HIRE</h2>
+            <div class="price-badges">
+              <span class="badge">A$40/hr</span>
+              <span class="badge badge-alt">A$70 / 2hrs</span>
+            </div>
+          </div>
+          <p><strong>Solo Booth Hire – $40/hr or $70/2hrs</strong><br />Price varies ・ 1 hr+</p>
+          <p>Looking for a space to sharpen your skills, create content, or just zone out and mix? Welcome to The Manager’s Office — your own private DJ booth...</p>
+          <ul class="checklist">
+            <li>Pioneer CDJ-3000s + Xone:92 + Technics turntables</li>
+            <li>Ambience lighting & climate control</li>
+            <li>Content-friendly setup</li>
+          </ul>
+          <div class="card-actions">
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/FIGQ5RM6PAIIVYDHYSQTCNSX" aria-label="Book a solo booth session at The Manager's Office">Book Solo</a>
+          </div>
+        </div>
+      </article>
+      <!-- Group -->
+      <article class="card">
+        <div class="card-media">
+          <picture class="img-wrap" data-ratio="4/3">
+            <source srcset="group.avif" type="image/avif" />
+            <source srcset="group.webp" type="image/webp" />
+            <img src="group.jpg" alt="Group booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
+          </picture>
+        </div>
+        <div class="card-body">
+          <div class="card-top">
+            <h2>GROUP BOOTH HIRE</h2>
+            <div class="price-badges">
+              <span class="badge">A$200 / 4hrs</span>
+              <span class="badge badge-alt">A$200</span>
+            </div>
+          </div>
+          <p><strong>Group Booth Hire – $200/4hrs (You + up to 4 friends)</strong><br />A$200.00 ・ 4 hr</p>
+          <p>Grab your crew and take over The Manager’s Office for your own private session...</p>
+          <ul class="checklist">
+            <li>Private access for up to 5 people</li>
+            <li>CDJ-3000s + pro monitoring</li>
+            <li>Lights, lounge & fridge access</li>
+          </ul>
+          <div class="card-actions">
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/RIYKGVSGXXIY6O4LX4EVX7WV" aria-label="Book a group booth session at The Manager's Office">Book Group</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
 <!-- ========================================= -->
-<!-- 3: EVENTS                                -->
+<!-- 3.95: EVENTS                             -->
 <!-- ========================================= -->
 <section id="events" class="events">
-  <div class="container events-inner" id="evViewport">
+  <div class="container events-inner">
     <div class="events-head">
       <h2>Events</h2>
     </div>
 
-    <div class="events-viewport">
-      <!-- Track (JS will take over the animation) -->
+    <div class="events-viewport" id="evViewport">
+      <!-- Track (JS/CSS marquee will animate this) -->
       <div class="events-track" id="evTrack">
+
         <!-- STRIP A -->
         <div class="events-strip">
-          <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" aria-label="Open Audiojack tickets">
-            <picture class="img-wrap" data-ratio="3/4" id="event-audiojack">
-              <source srcset="backroom.avif" type="image/avif" />
-              <source srcset="backroom.webp" type="image/webp" />
-              <img src="backroom.jpg" alt="Audiojack at Gala Room poster" width="320" height="427" loading="eager" decoding="auto" />
-            </picture>
-          </a>
-
-          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" aria-label="Open Soluna tickets">
+          <!-- Event 1 -->
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl"
+             target="_blank" rel="noopener"
+             class="event-slide" aria-label="Open Soluna tickets">
             <picture class="img-wrap" data-ratio="3/4" id="event-soluna">
               <source srcset="frontroom.avif" type="image/avif" />
               <source srcset="frontroom.webp" type="image/webp" />
-              <img src="frontroom.jpg" alt="Soluna: Yotto + guests poster" width="320" height="427" loading="eager" decoding="auto" />
+              <img src="frontroom.jpg" alt="Soluna: Yotto + guests poster"
+                   width="320" height="427" loading="lazy" decoding="async" />
             </picture>
           </a>
 
-          <a href="https://events.humanitix.com/the-story-so-far" target="_blank" rel="noopener" class="event-slide" aria-label="SO FAR RAVE PROMO">
+          <!-- Event 2 -->
+          <a href="https://events.humanitix.com/tmo-takeover-ancient-world?fbclid=PAZXh0bgNhZW0CMTEAAadUU3PEppBIGXla4O4i52aYingDqP_fApNuQtNjZ6fpPGf6zXXfy47MOTGIxQ_aem_J1X9b33LYKRXMTNKozTV0Q"
+             target="_blank" rel="noopener"
+             class="event-slide" aria-label="SO FAR RAVE PROMO">
             <picture class="img-wrap" data-ratio="3/4" id="event-doof">
               <source srcset="SOFAR.avif" type="image/avif" />
               <source srcset="SOFAR.webp" type="image/webp" />
-              <img src="SOFAR.jpg" alt="SO FAR" width="320" height="427" loading="eager" decoding="auto" />
+              <img src="SOFAR.jpg" alt="SO FAR"
+                   width="320" height="427" loading="lazy" decoding="async" />
             </picture>
           </a>
-        </div>
+        </div><!-- /STRIP A -->
 
-        <!-- STRIP B (duplicate for seamless loop; JS will rely on this) -->
+        <!-- STRIP B (exact duplicate of Strip A for seamless loop) -->
         <div class="events-strip" aria-hidden="true">
-          <a href="https://events.humanitix.com/audiojack-uk-gala-room" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="backroom.avif" type="image/avif" />
-              <source srcset="backroom.webp" type="image/webp" />
-              <img src="backroom.jpg" alt="" width="320" height="427" loading="eager" decoding="auto" />
-            </picture>
-          </a>
-
-          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl"
+             target="_blank" rel="noopener"
+             class="event-slide" tabindex="-1">
             <picture class="img-wrap" data-ratio="3/4">
               <source srcset="frontroom.avif" type="image/avif" />
               <source srcset="frontroom.webp" type="image/webp" />
-              <img src="frontroom.jpg" alt="" width="320" height="427" loading="eager" decoding="auto" />
+              <img src="frontroom.jpg" alt="" width="320" height="427"
+                   loading="lazy" decoding="async" />
             </picture>
           </a>
 
-          <a href="https://events.humanitix.com/the-story-so-far" target="_blank" rel="noopener" class="event-slide" tabindex="-1">
+          <a href="https://events.humanitix.com/tmo-takeover-ancient-world?fbclid=PAZXh0bgNhZW0CMTEAAadUU3PEppBIGXla4O4i52aYingDqP_fApNuQtNjZ6fpPGf6zXXfy47MOTGIxQ_aem_J1X9b33LYKRXMTNKozTV0Q"
+             target="_blank" rel="noopener"
+             class="event-slide" tabindex="-1">
             <picture class="img-wrap" data-ratio="3/4">
               <source srcset="SOFAR.avif" type="image/avif" />
               <source srcset="SOFAR.webp" type="image/webp" />
-              <img src="SOFAR.jpg" alt="" width="320" height="427" loading="eager" decoding="auto" />
+              <img src="SOFAR.jpg" alt="" width="320" height="427"
+                   loading="lazy" decoding="async" />
             </picture>
           </a>
-        </div>
-      </div>
-    </div>
+        </div><!-- /STRIP B -->
+
+      </div><!-- /events-track -->
+    </div><!-- /events-viewport -->
   </div>
 </section>
-
-
-<!-- ========================================= -->
-<!-- 3.5: OFFERINGS (SOLO / GROUP)            -->
-<!-- ========================================= -->
-<section id="offerings" class="offerings">
-  <div class="container offerings-grid">
-    <!-- Solo -->
-    <article class="card">
-      <div class="card-media">
-        <picture class="img-wrap" data-ratio="4/3">
-          <source srcset="solo.avif" type="image/avif" />
-          <source srcset="solo.webp" type="image/webp" />
-          <img src="solo.jpg" alt="Solo booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
-        </picture>
-      </div>
-      <div class="card-body">
-        <div class="card-top">
-          <h2>SOLO BOOTH HIRE</h2>
-          <div class="price-badges">
-            <span class="badge">A$40/hr</span>
-            <span class="badge badge-alt">A$70 / 2hrs</span>
-          </div>
-        </div>
-        <p><strong>Solo Booth Hire – $40/hr or $70/2hrs</strong><br />Price varies ・ 1 hr+</p>
-        <p>Looking for a space to sharpen your skills, create content, or just zone out and mix? Welcome to The Manager’s Office — your own private DJ booth...</p>
-        <ul class="checklist">
-          <li>Pioneer CDJ-3000s + Xone:92 + Technics turntables</li>
-          <li>Ambience lighting & climate control</li>
-          <li>Content-friendly setup</li>
-        </ul>
-        <div class="card-actions">
-          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/FIGQ5RM6PAIIVYDHYSQTCNSX" aria-label="Book a solo booth session at The Manager's Office">Book Solo</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Group -->
-    <article class="card">
-      <div class="card-media">
-        <picture class="img-wrap" data-ratio="4/3">
-          <source srcset="group.avif" type="image/avif" />
-          <source srcset="group.webp" type="image/webp" />
-          <img src="group.jpg" alt="Group booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
-        </picture>
-      </div>
-      <div class="card-body">
-        <div class="card-top">
-          <h2>GROUP BOOTH HIRE</h2>
-          <div class="price-badges">
-            <span class="badge">A$200 / 4hrs</span>
-            <span class="badge badge-alt">A$200</span>
-          </div>
-        </div>
-        <p><strong>Group Booth Hire – $200/4hrs (You + up to 4 friends)</strong><br />A$200.00 ・ 4 hr</p>
-        <p>Grab your crew and take over The Manager’s Office for your own private session...</p>
-        <ul class="checklist">
-          <li>Private access for up to 5 people</li>
-          <li>CDJ-3000s + pro monitoring</li>
-          <li>Lights, lounge & fridge access</li>
-        </ul>
-        <div class="card-actions">
-          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/RIYKGVSGXXIY6O4LX4EVX7WV" aria-label="Book a group booth session at The Manager's Office">Book Group</a>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ========================================= -->
-<!-- 3.95: EVENTS — SCRIPT (SELF-HEALING)      -->
-<!-- ========================================= -->
-<script>
-  (function () {
-    const viewport = document.getElementById('evViewport');
-    const track = document.getElementById('evTrack');
-    if (!viewport || !track) return;
-
-    /* IMPORTANT: disable any CSS marquee on the track */
-    track.style.animation = 'none';
-
-    /* Slower scroll speed (px per frame @ ~60fps) 
-       0.6 ≈ 36px/s (fast). Try 0.18 ≈ 11px/s (calmer). */
-    const BASE = 0.18;
-
-    // Robust touch detection; mobile should always animate
-    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
-
-    // Respect reduced motion on non-touch only
-    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let speed = (!isTouch && prefersReduce) ? 0 : BASE;
-
-    let running = true, x = 0, loopW = 0, rafId = null;
-
-    // ---- Build the two-strip loop ----------------------------------------
-    function build() {
-      cancelAnimationFrame(rafId);
-      x = 0;
-      track.style.transform = 'translate3d(0,0,0)';
-
-      const originals = Array.from(track.children).filter(n => !n.dataset || !n.dataset.clone);
-      if (!originals.length) return;
-
-      const measurer = document.createElement('div');
-      measurer.className = 'events-strip';
-      originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
-
-      track.innerHTML = '';
-      Object.assign(measurer.style, { position:'absolute', visibility:'hidden', pointerEvents:'none' });
-      track.appendChild(measurer);
-
-      const targetWidth = Math.max(viewport.clientWidth * 2, 1);
-      let guard = 0;
-      while (measurer.scrollWidth < targetWidth && guard < 50) {
-        originals.forEach(src => measurer.appendChild(src.cloneNode(true)));
-        guard++;
-      }
-
-      const strip = document.createElement('div');
-      strip.className = 'events-strip';
-      Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
-      const cloneStrip = strip.cloneNode(true);
-      cloneStrip.dataset.clone = '1';
-
-      track.innerHTML = '';
-      track.appendChild(strip);
-      track.appendChild(cloneStrip);
-
-      // Ensure cloned images aren’t hidden by blur-up styles
-      track.querySelectorAll('.img-wrap').forEach(wrap => {
-        wrap.classList.add('is-loaded');
-        const img = wrap.querySelector('img');
-        if (img) { img.style.opacity = '1'; img.style.filter = 'none'; img.style.transform = 'none'; }
-      });
-
-      loopW = strip.scrollWidth || 1;
-    }
-
-    // ---- Animate and watchdog --------------------------------------------
-    let lastX = 0;
-    let lastProgressAt = performance.now();
-
-    function tick(now) {
-      if (running && loopW > 0 && speed > 0) {
-        x -= speed;
-        if (-x >= loopW) x += loopW;
-        track.style.transform = `translate3d(${x}px,0,0)`;
-
-        // movement detection
-        if (x !== lastX) {
-          lastX = x;
-          lastProgressAt = now || performance.now();
-        }
-      }
-
-      // Watchdog: if no movement for 1500ms, rebuild & restart
-      if ((now || performance.now()) - lastProgressAt > 1500) {
-        rebuild(true); // force
-        return;        // tick will be rescheduled by rebuild()
-      }
-
-      rafId = requestAnimationFrame(tick);
-    }
-
-    // ---- Controls & lifecycle -------------------------------------------
-    const finePtr = window.matchMedia('(pointer: fine)').matches;
-    if (finePtr) {
-      const pause = () => { running = false; };
-      const resume = () => { running = true; lastProgressAt = performance.now(); };
-      viewport.addEventListener('mouseenter', pause);
-      viewport.addEventListener('mouseleave', resume);
-      viewport.addEventListener('focusin', pause);
-      viewport.addEventListener('focusout', resume);
-    }
-
-    // Wake up on user interaction (mobile sometimes throttles)
-    ['touchstart','pointerdown','scroll'].forEach(ev =>
-      window.addEventListener(ev, () => { running = true; lastProgressAt = performance.now(); }, { passive: true })
-    );
-
-    document.addEventListener('visibilitychange', () => { running = !document.hidden; lastProgressAt = performance.now(); });
-
-    let resizeT;
-    function rebuild(force = false) {
-      clearTimeout(resizeT);
-      const doBuild = () => {
-        build();
-        x = 0;
-        track.style.transform = 'translate3d(0,0,0)';
-        lastProgressAt = performance.now();
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(tick);
-      };
-      if (force) { doBuild(); }
-      else {
-        resizeT = setTimeout(doBuild, 160);
-      }
-    }
-
-    window.addEventListener('resize', () => rebuild(false), { passive: true });
-    window.addEventListener('orientationchange', () => rebuild(true), { passive: true });
-
-    window.addEventListener('load', () => {
-      setTimeout(() => { rebuild(true); }, 60);
-    });
-  })();
-</script>
-
 
 
   <!-- ========================================= -->
