@@ -31,6 +31,10 @@
       transform: none !important;
       transition: none !important;
     }
+.header {
+  border-bottom: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* subtle separation instead of a line */
+}
   </style>
 </head>
 <body>
@@ -88,8 +92,6 @@
       <nav class="nav">
         <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener">Contact</a>
         <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Live</a>
-        <a href="#events">Events</a>
-        <a href="#open-decks">Open Decks</a>
       </nav>
     </div>
   </header>
@@ -126,7 +128,6 @@
   <div class="container mobile-quick-inner">
     <div class="mobile-quick-buttons">
       <a class="btn btn-primary" href="#open-decks" aria-label="Go to Open Decks signup">Open Decks</a>
-      <a class="btn btn-ghost" href="#events" aria-label="Go to Events">Events</a>
       <a class="btn btn-ghost" href="#contact" aria-label="Contact The Manager's Office">Contact</a>
     </div>
   </div>
@@ -182,6 +183,117 @@
      width="1" height="1"
      style="position:absolute;left:-9999px;top:-9999px;" />
   </section>
+
+<!-- ========================================= -->
+<!-- 2.5: EVENTS                              -->
+<!-- ========================================= -->
+<section id="events" class="events">
+  <div class="container events-inner">
+    <div class="events-head">
+      <h2>Events</h2>
+    </div>
+
+    <div class="events-viewport" id="evViewport">
+      <div class="events-track" id="evTrack">
+
+        <!-- STRIP A -->
+        <div class="events-strip">
+          <!-- Event 1 -->
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl"
+             target="_blank" rel="noopener"
+             class="event-slide" aria-label="Open Soluna tickets">
+            <picture class="img-wrap" data-ratio="3/4" id="event-soluna">
+              <source srcset="frontroom.avif" type="image/avif" />
+              <source srcset="frontroom.webp" type="image/webp" />
+              <img src="frontroom.jpg" alt="Soluna: Yotto + guests poster" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <!-- Event 2 -->
+          <a href="https://events.humanitix.com/tmo-takeover-ancient-world"
+             target="_blank" rel="noopener"
+             class="event-slide" aria-label="TMO Takeover at Ancient World">
+            <picture class="img-wrap" data-ratio="3/4" id="event-ancient">
+              <source srcset="SOFAR.avif" type="image/avif" />
+              <source srcset="SOFAR.webp" type="image/webp" />
+              <img src="SOFAR.jpg" alt="TMO Takeover — Ancient World" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <!-- Event 3 -->
+          <a href="https://moshtix.com.au/v2/event/new-year%E2%80%99s-day-party/187111?skin=LAF20"
+             target="_blank" rel="noopener"
+             class="event-slide" aria-label="Shapeshifter New Year’s Day">
+            <picture class="img-wrap" data-ratio="3/4" id="event-shapeshifter">
+              <source srcset="shapeshifter.avif" type="image/avif" />
+              <source srcset="shapeshifter.webp" type="image/webp" />
+              <img src="shapeshifter.JPG" alt="Shapeshifter — New Year’s Day" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <!-- Event 4 (NEW: Expressions) -->
+          <a href="https://www.twitch.tv/videos/2595813136"
+             target="_blank" rel="noopener"
+             class="event-slide" aria-label="Expressions livestream event">
+            <picture class="img-wrap" data-ratio="3/4" id="event-expressions">
+              <source srcset="expressions.avif" type="image/avif" />
+              <source srcset="expressions.webp" type="image/webp" />
+              <img src="expressions.jpg" alt="Expressions — Live on Twitch" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+        </div><!-- /STRIP A -->
+
+        <!-- STRIP B (duplicate of Strip A for seamless loop) -->
+        <div class="events-strip" aria-hidden="true">
+          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl"
+             target="_blank" rel="noopener"
+             class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="frontroom.avif" type="image/avif" />
+              <source srcset="frontroom.webp" type="image/webp" />
+              <img src="frontroom.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <a href="https://events.humanitix.com/tmo-takeover-ancient-world"
+             target="_blank" rel="noopener"
+             class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="SOFAR.avif" type="image/avif" />
+              <source srcset="SOFAR.webp" type="image/webp" />
+              <img src="SOFAR.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <a href="https://moshtix.com.au/v2/event/new-year%E2%80%99s-day-party/187111?skin=LAF20"
+             target="_blank" rel="noopener"
+             class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="shapeshifter.avif" type="image/avif" />
+              <source srcset="shapeshifter.webp" type="image/webp" />
+              <img src="shapeshifter.JPG" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+
+          <!-- Duplicate Event 4 (Expressions) -->
+          <a href="https://www.twitch.tv/videos/2595813136"
+             target="_blank" rel="noopener"
+             class="event-slide" tabindex="-1">
+            <picture class="img-wrap" data-ratio="3/4">
+              <source srcset="expressions.avif" type="image/avif" />
+              <source srcset="expressions.webp" type="image/webp" />
+              <img src="expressions.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+        </div><!-- /STRIP B -->
+
+      </div><!-- /events-track -->
+    </div><!-- /events-viewport -->
+  </div>
+</section>
+
+
+
 
   <!-- ========================================= -->
   <!-- 3: OFFERINGS (SOLO / GROUP)              -->
@@ -249,101 +361,6 @@
     </div>
   </section>
 
-<!-- ========================================= -->
-<!-- 3.95: EVENTS                             -->
-<!-- ========================================= -->
-<section id="events" class="events">
-  <div class="container events-inner">
-    <div class="events-head">
-      <h2>Events</h2>
-    </div>
-
-    <div class="events-viewport" id="evViewport">
-      <!-- Track (JS/CSS marquee will animate this) -->
-      <div class="events-track" id="evTrack">
-
-        <!-- STRIP A -->
-        <div class="events-strip">
-          <!-- Event 1 -->
-          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="Open Soluna tickets">
-            <picture class="img-wrap" data-ratio="3/4" id="event-soluna">
-              <source srcset="frontroom.avif" type="image/avif" />
-              <source srcset="frontroom.webp" type="image/webp" />
-              <img src="frontroom.jpg" alt="Soluna: Yotto + guests poster"
-                   width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <!-- Event 2 -->
-          <a href="https://events.humanitix.com/tmo-takeover-ancient-world?fbclid=PAZXh0bgNhZW0CMTEAAadUU3PEppBIGXla4O4i52aYingDqP_fApNuQtNjZ6fpPGf6zXXfy47MOTGIxQ_aem_J1X9b33LYKRXMTNKozTV0Q"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="SO FAR RAVE PROMO">
-            <picture class="img-wrap" data-ratio="3/4" id="event-doof">
-              <source srcset="SOFAR.avif" type="image/avif" />
-              <source srcset="SOFAR.webp" type="image/webp" />
-              <img src="SOFAR.jpg" alt="SO FAR"
-                   width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-        </div><!-- /STRIP A -->
-
-        <!-- STRIP B (exact duplicate of Strip A for seamless loop) -->
-        <div class="events-strip" aria-hidden="true">
-          <a href="https://events.ticketbooth.com.au/tickets/soluna-adl"
-             target="_blank" rel="noopener"
-             class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="frontroom.avif" type="image/avif" />
-              <source srcset="frontroom.webp" type="image/webp" />
-              <img src="frontroom.jpg" alt="" width="320" height="427"
-                   loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <a href="https://events.humanitix.com/tmo-takeover-ancient-world?fbclid=PAZXh0bgNhZW0CMTEAAadUU3PEppBIGXla4O4i52aYingDqP_fApNuQtNjZ6fpPGf6zXXfy47MOTGIxQ_aem_J1X9b33LYKRXMTNKozTV0Q"
-             target="_blank" rel="noopener"
-             class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="SOFAR.avif" type="image/avif" />
-              <source srcset="SOFAR.webp" type="image/webp" />
-              <img src="SOFAR.jpg" alt="" width="320" height="427"
-                   loading="lazy" decoding="async" />
-            </picture>
-          </a>
-        </div><!-- /STRIP B -->
-
-      </div><!-- /events-track -->
-    </div><!-- /events-viewport -->
-  </div>
-</section>
-
-
-  <!-- ========================================= -->
-  <!-- 3.9: OPEN DECKS                          -->
-  <!-- ========================================= -->
-  <section id="open-decks" class="open-decks">
-    <div class="container open-decks-inner">
-      <div class="open-decks-copy">
-        <h2>Open Decks Signup</h2>
-        <p>Want a slot on <strong>The Manager’s Office</strong> Opendecks? Throw your name in and we’ll line you up for an upcoming session. All styles welcome — bring your flavour.</p>
-        <ul class="checklist">
-          <li>Quick form (5–10 mins)</li>
-          <li>Solo or B2B options</li>
-          <li>VODs + clips for socials</li>
-        </ul>
-        <a class="btn btn-primary" href="https://forms.gle/8T6VNbuAfLkKUZat5" target="_blank" rel="noopener noreferrer" aria-label="Apply for an open decks session at The Manager's Office">Apply on Google Form</a>
-      </div>
-      <div class="open-decks-art">
-        <picture class="img-wrap" data-ratio="10/7" id="opendecks-image">
-          <source srcset="opendecks.avif" type="image/avif" />
-          <source srcset="opendecks.webp" type="image/webp" />
-          <img src="opendecks.jpg" alt="Open Decks artwork" width="900" height="630" loading="eager" decoding="auto" fetchpriority="high" />
-        </picture>
-      </div>
-    </div>
-  </section>
 
   <!-- ========================================= -->
   <!-- 4: FOOTER                                -->
