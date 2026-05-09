@@ -1,554 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- ========================================= -->
-  <!-- 0: HEAD — minimal preload + cache bust    -->
-  <!-- ========================================= -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Manager's Office</title>
-
-  <!-- Cache-busted CSS -->
-  <link rel="stylesheet" href="styles.css?v=31" />
-
-  <!-- Non-blocking brand font -->
-  <link rel="preload" as="font" href="BenguiatProITC-Medium.woff2" type="font/woff2" crossorigin />
-
-  <!-- Preload the highest-impact images only -->
-  <link rel="preload" as="image" href="hero.avif" />
-  <link rel="preload" as="image" href="hero.webp" />
-  <link rel="preload" as="image" href="tmostrip.avif" />
-  <link rel="preload" as="image" href="tmostrip.webp" />
-
-  <!-- Force-paint HOTFIX (renders sections immediately) -->
   <style>
-    .hero, .logo-section, .offerings, .events, .open-decks, .footer {
-      content-visibility: auto !important;
-      contain-intrinsic-size: auto !important;
+    @font-face {
+      font-family: "BenguiatProITC";
+      src: url("BenguiatProITC-Medium.otf") format("opentype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: block;
     }
-    .fade-in, .fade-in.visible {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
+
+    html { scroll-behavior: smooth; }
+    body { background: #000; color: #f5f5f5; }
+    .brand-serif { font-family: "BenguiatProITC", serif; }
+
+    .glow-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      background: radial-gradient(circle, rgba(255,77,0,0.38) 0%, rgba(255,77,0,0.18) 36%, rgba(255,77,0,0) 72%);
+      z-index: 0;
+      filter: blur(18px);
+      pointer-events: none;
+    }
+    /* Booking card glow: outside shadow only, lighter than blurred pseudo layers */
+
+    .marquee-viewport {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 16px;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .marquee-strip {
+      display: inline-flex;
+      gap: 16px;
+    }
+
+    .marquee-card {
+      flex: 0 0 auto;
+      width: clamp(220px, 26vw, 320px);
+    }
+
+    @media (max-width: 980px) {
+      .marquee-card { width: 70vw; }
+      .marquee-track, .marquee-strip { gap: 12px; }
     }
   </style>
+
+  <style id="tw-compiled">
+*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.top-0{top:0}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.-mr-2{margin-right:-.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-10{margin-top:2.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[3\/4\]{aspect-ratio:3/4}.aspect-video{aspect-ratio:16/9}.h-10{height:2.5rem}.h-24{height:6rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-\[520px\]{height:520px}.h-full{height:100%}.w-10{width:2.5rem}.w-6{width:1.5rem}.w-auto{width:auto}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-4xl{max-width:56rem}.max-w-7xl{max-width:80rem}.max-w-\[36rem\]{max-width:36rem}.max-w-lg{max-width:32rem}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.resize{resize:both}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-\[1\.4rem\]{border-radius:1.4rem}.rounded-\[2rem\]{border-radius:2rem}.rounded-full{border-radius:9999px}.rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-y{border-top-width:1px}.border-b,.border-y{border-bottom-width:1px}.border-t{border-top-width:1px}.border-black\/5{border-color:rgba(0,0,0,.05)}.border-white\/60{border-color:hsla(0,0%,100%,.6)}.border-zinc-100{--tw-border-opacity:1;border-color:rgb(244 244 245/var(--tw-border-opacity,1))}.border-zinc-200{--tw-border-opacity:1;border-color:rgb(228 228 231/var(--tw-border-opacity,1))}.border-zinc-500{--tw-border-opacity:1;border-color:rgb(113 113 122/var(--tw-border-opacity,1))}.border-zinc-700{--tw-border-opacity:1;border-color:rgb(63 63 70/var(--tw-border-opacity,1))}.border-zinc-800{--tw-border-opacity:1;border-color:rgb(39 39 42/var(--tw-border-opacity,1))}.border-zinc-900{--tw-border-opacity:1;border-color:rgb(24 24 27/var(--tw-border-opacity,1))}.bg-\[\#050505\]{--tw-bg-opacity:1;background-color:rgb(5 5 5/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-zinc-950{--tw-bg-opacity:1;background-color:rgb(9 9 11/var(--tw-bg-opacity,1))}.bg-zinc-950\/60{background-color:rgba(9,9,11,.6)}.bg-\[linear-gradient\(135deg\2c \#ff000d\2c \#000\)\]{background-image:linear-gradient(135deg,#ff000d,#000)}.bg-\[linear-gradient\(180deg\2c \#020202_0\%\2c \#0a0a0a_100\%\)\]{background-image:linear-gradient(180deg,#020202,#0a0a0a)}.bg-\[linear-gradient\(180deg\2c \#050505_0\%\2c \#020202_100\%\)\]{background-image:linear-gradient(180deg,#050505,#020202)}.bg-\[linear-gradient\(180deg\2c rgba\(255\2c 255\2c 255\2c 0\.04\)\2c rgba\(255\2c 255\2c 255\2c 0\.02\)\)\]{background-image:linear-gradient(180deg,hsla(0,0%,100%,.04),hsla(0,0%,100%,.02))}.bg-\[radial-gradient\(circle_at_78\%_14\%\2c rgba\(255\2c 68\2c 0\2c 0\.22\)\2c transparent_38\%\)\2c radial-gradient\(circle_at_18\%_12\%\2c rgba\(26\2c 60\2c 255\2c 0\.12\)\2c transparent_28\%\)\]{background-image:radial-gradient(circle at 78% 14%,rgba(255,68,0,.22),transparent 38%),radial-gradient(circle at 18% 12%,rgba(26,60,255,.12),transparent 28%)}.object-cover{-o-object-fit:cover;object-fit:cover}.object-center{-o-object-position:center;object-position:center}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-14{padding-top:3.5rem;padding-bottom:3.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-bottom:1.5rem}.pt-6,.py-6{padding-top:1.5rem}.text-center{text-align:center}.font-brand{font-family:Inter,ui-sans-serif,system-ui,sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.uppercase{text-transform:uppercase}.leading-7{line-height:1.75rem}.leading-8{line-height:2rem}.tracking-\[0\.35em\]{letter-spacing:.35em}.tracking-\[0\.3em\]{letter-spacing:.3em}.tracking-\[0\.45em\]{letter-spacing:.45em}.tracking-\[0\.4em\]{letter-spacing:.4em}.tracking-tight{letter-spacing:-.025em}.text-\[\#8ba8ff\]{--tw-text-opacity:1;color:rgb(139 168 255/var(--tw-text-opacity,1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-zinc-100{--tw-text-opacity:1;color:rgb(244 244 245/var(--tw-text-opacity,1))}.text-zinc-200{--tw-text-opacity:1;color:rgb(228 228 231/var(--tw-text-opacity,1))}.text-zinc-300{--tw-text-opacity:1;color:rgb(212 212 216/var(--tw-text-opacity,1))}.text-zinc-500{--tw-text-opacity:1;color:rgb(113 113 122/var(--tw-text-opacity,1))}.text-zinc-600{--tw-text-opacity:1;color:rgb(82 82 91/var(--tw-text-opacity,1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.shadow,.shadow-\[0_20px_45px_rgba\(0\2c 0\2c 0\2c 0\.35\)\]{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_20px_45px_rgba\(0\2c 0\2c 0\2c 0\.35\)\]{--tw-shadow:0 20px 45px rgba(0,0,0,.35);--tw-shadow-colored:0 20px 45px var(--tw-shadow-color)}.shadow-\[inset_0_-1px_0_\#eaeaea\]{--tw-shadow:inset 0 -1px 0 #eaeaea;--tw-shadow-colored:inset 0 -1px 0 var(--tw-shadow-color)}.shadow-\[inset_0_-1px_0_\#eaeaea\],.shadow-card{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-card{--tw-shadow:0 20px 45px rgba(0,0,0,.35);--tw-shadow-colored:0 20px 45px var(--tw-shadow-color)}.shadow-ember{--tw-shadow:0 0 45px rgba(255,77,0,.38);--tw-shadow-colored:0 0 45px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);--tw-shadow-color:#ff4d00;--tw-shadow:var(--tw-shadow-colored)}.blur{--tw-blur:blur(8px)}.blur,.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.duration-700{transition-duration:.7s}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem}.hover\:-translate-y-0\.5:hover,.hover\:-translate-y-1:hover{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:-translate-y-1:hover{--tw-translate-y:-0.25rem}.hover\:scale-\[1\.02\]:hover{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-zinc-300:hover{--tw-border-opacity:1;border-color:rgb(212 212 216/var(--tw-border-opacity,1))}.hover\:border-zinc-400:hover{--tw-border-opacity:1;border-color:rgb(161 161 170/var(--tw-border-opacity,1))}.hover\:bg-zinc-100:hover{--tw-bg-opacity:1;background-color:rgb(244 244 245/var(--tw-bg-opacity,1))}.hover\:bg-zinc-950:hover{--tw-bg-opacity:1;background-color:rgb(9 9 11/var(--tw-bg-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:opacity-100:hover{opacity:1}.hover\:opacity-70:hover{opacity:.7}.group:hover .group-hover\:scale-\[1\.02\]{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width:640px){.sm\:flex{display:flex}.sm\:inline-flex{display:inline-flex}.sm\:hidden{display:none}.sm\:h-32{height:8rem}.sm\:h-\[600px\]{height:600px}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:justify-between{justify-content:space-between}.sm\:p-7{padding:1.75rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}.sm\:text-xs{font-size:.75rem;line-height:1rem}}@media (min-width:768px){.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:h-44{height:11rem}.lg\:h-\[620px\]{height:620px}.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}.lg\:py-14{padding-top:3.5rem;padding-bottom:3.5rem}}@media (min-width:1280px){.xl\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  </style>
 </head>
-<body>
+<body class="bg-black text-white antialiased font-brand">
 
-  <!-- ========================================= -->
-  <!-- 0.7: IMG LOADER — ROBUST BLUR-UP RELEASE  -->
-  <!-- ========================================= -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const wraps = document.querySelectorAll('.img-wrap');
-      const markLoaded = wrap => {
-        wrap.classList.add('is-loaded');
-        const img = wrap.querySelector('img');
-        if (img) {
-          img.style.opacity = '1';
-          img.style.filter = 'none';
-          img.style.transform = 'none';
-        }
-      };
-
-      // Normal path
-      wraps.forEach(wrap => {
-        const img = wrap.querySelector('img');
-        if (!img) return;
-        if (img.complete) { markLoaded(wrap); return; }
-        img.addEventListener('load', () => markLoaded(wrap), { once: true });
-        img.addEventListener('error', () => {
-          console.warn('Failed to load image:', img.src);
-          markLoaded(wrap);
-        }, { once: true });
-      });
-
-      // Belt & suspenders
-      setTimeout(() => {
-        document.querySelectorAll('.img-wrap:not(.is-loaded)').forEach(markLoaded);
-      }, 400);
-    });
-  </script>
-
-  <!-- ========================================= -->
-  <!-- AUTO-FADE INTRO OVERLAY (no click needed) -->
-  <!-- ========================================= -->
-
-  <div id="tmo-intro" class="tmo-intro" aria-hidden="true">
-    <!-- Optional: swap to your logo image or remove <img> for pure black -->
-    <img class="tmo-intro-logo" src="tmo.webp" alt="" />
-  </div>
-
-  <!-- ========================================= -->
-  <!-- 0: HEADER                                -->
-  <!-- ========================================= -->
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo">The Manager's Office</div>
-      <nav class="nav">
-        <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener">Contact</a>
-        <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener">Live</a>
+  <!-- ===================================================== -->
+  <!-- 1. HEADER / NAVIGATION                                -->
+  <!-- ===================================================== -->
+  <header class="sticky top-0 z-50 border-b border-black/5 bg-white text-black shadow-[inset_0_-1px_0_#eaeaea]">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3"><div class="text-lg font-black tracking-tight sm:text-xl">The Manager's Office</div>
+      </div>
+      <nav class="hidden items-center gap-5 text-sm font-bold sm:flex">
+        <a href="#current-events" class="transition hover:opacity-70">Events</a>
+        <a href="#bookings" class="transition hover:opacity-70">Bookings</a>
+        <a href="#contact" class="transition hover:opacity-70">Contact</a>
+        <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener" class="transition hover:opacity-70">Live</a>
+      </nav>
+      <button id="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-zinc-100 sm:hidden">
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" hidden class="border-t border-zinc-200 bg-white sm:hidden">
+      <nav class="mx-auto flex max-w-7xl flex-col px-4 text-base font-bold">
+        <a href="#current-events" class="border-b border-zinc-100 py-3">Events</a>
+        <a href="#bookings" class="border-b border-zinc-100 py-3">Bookings</a>
+        <a href="#contact" class="border-b border-zinc-100 py-3">Contact</a>
+        <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener" class="py-3">Live</a>
       </nav>
     </div>
   </header>
 
-  <!-- ========================================= -->
-  <!-- 1: HERO                                  -->
-  <!-- ========================================= -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <h1>Immerse yourself in sonic elegance.</h1>
-        <p>Welcome to The Manager’s Office — your private sanctuary for creativity, focus, and flow.</p>
-        <p class="subtext">A professional recording/DJ studio designed for creators in Adelaide’s inner west.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#offerings" aria-label="View available booking options for The Manager's Office">View Bookings</a>
-          <a class="btn btn-ghost" href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener" aria-label="Watch live streams from The Manager's Office">Watch Live</a>
+  <main>
+    <!-- ===================================================== -->
+    <!-- 2. HERO SECTION                                      -->
+    <!-- ===================================================== -->
+    <section class="relative overflow-hidden bg-black">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_78%_14%,rgba(255,68,0,0.22),transparent_38%),radial-gradient(circle_at_18%_12%,rgba(26,60,255,0.12),transparent_28%)]"></div>
+      <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div class="mb-6"></div>
+        <div class="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p class="mb-5 text-[11px] uppercase tracking-[0.45em] text-[#8ba8ff] sm:text-xs">Creative Studio • Adelaide</p>
+            <h1 class="max-w-4xl">
+              <img src="tmo_logo.png" alt="TMO" class="block h-24 w-auto sm:h-32 lg:h-44" />
+            </h1>
+            <p class="mt-6 max-w-2xl text-lg leading-8 text-zinc-200 sm:text-xl">
+              A space for practice, progression, and connection.
+            </p>
+
+            <p class="mt-6 text-zinc-300">
+              No distractions.<br>
+              No pressure.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href="#bookings" class="inline-flex items-center rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition hover:-translate-y-0.5 hover:bg-zinc-100">View bookings</a>
+              <a href="#current-events" class="inline-flex items-center rounded-full border border-zinc-500 px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:border-zinc-300 hover:bg-zinc-950">Explore events</a>
+            </div>
+
+            <div class="mt-10 grid gap-4 md:grid-cols-2">
+<div class="rounded-3xl border border-zinc-800 bg-zinc-950/60 p-5 shadow-card">
+                <div class="mb-3 text-[11px] uppercase tracking-[0.35em] text-zinc-500">Equipment</div>
+                <p class="text-lg leading-7 text-zinc-200">CDJ-3000s with a DJM-V5 setup and full system.</p>
+              </div>
+              <div class="rounded-3xl border border-zinc-800 bg-zinc-950/60 p-5 shadow-card">
+                <div class="mb-3 text-[11px] uppercase tracking-[0.35em] text-zinc-500">Studio</div>
+                <p class="text-lg leading-7 text-zinc-200">Soundproof. Climate controlled. All yours.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="glow-wrap relative mx-auto max-w-[36rem]">
+              <div class="relative z-10 overflow-hidden rounded-[2rem] border border-zinc-800 bg-black shadow-ember">
+                <picture>
+                  <source srcset="hero.avif" type="image/avif" />
+                  <source srcset="hero.webp" type="image/webp" />
+                  <img src="hero.jpg" alt="Warm dark DJ setup at The Manager's Office" class="h-[520px] w-full object-cover sm:h-[600px] lg:h-[620px]" />
+                </picture>
+                
+              </div>
+            </div>
+          </div>
+          
+</div>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 3. CURRENT EVENTS                                    -->
+    <!-- ===================================================== -->
+    <section id="current-events" style="scroll-margin-top:88px" class="border-y border-zinc-900 bg-[linear-gradient(180deg,#050505_0%,#020202_100%)]">
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="mb-8 flex items-center justify-between gap-4">
+          <p class="text-xs uppercase tracking-[0.4em] text-zinc-500">Events</p>
+          <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" class="hidden rounded-full border border-zinc-700 px-5 py-2.5 text-sm font-bold text-white transition hover:border-zinc-400 hover:bg-zinc-950 sm:inline-flex">See updates</a>
+        </div>
+
+        <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+  <!-- THIRD event -->
+  <a href="https://www.prestix.com.au/event/thirdbass-tmo" target="_blank" rel="noopener"
+     class="group block overflow-hidden rounded-[2rem] border border-zinc-800 bg-zinc-950 shadow-card transition hover:-translate-y-1">
+    <img src="THIRD.PNG" alt="THIRD Bass TMO event poster"
+         class="aspect-[3/4] w-full object-cover object-center transition duration-300 group-hover:scale-[1.02]" />
+  </a>
+
+  <!-- JAMES event -->
+  <a href="https://www.ticketfairy.com/r/pnlw4pb2" target="_blank" rel="noopener"
+     class="group block overflow-hidden rounded-[2rem] border border-zinc-800 bg-zinc-950 shadow-card transition hover:-translate-y-1">
+    <img src="JAMES.JPG" alt="James Corbett event poster"
+         class="aspect-[3/4] w-full object-cover object-center transition duration-300 group-hover:scale-[1.02]" />
+  </a>
+
+  <!-- DOOF event -->
+  <a href="https://triniq.com/dooftechnofirstbirthday" target="_blank" rel="noopener"
+     class="group block overflow-hidden rounded-[2rem] border border-zinc-800 bg-zinc-950 shadow-card transition hover:-translate-y-1">
+    <img src="doof.jpeg" alt="Doof Techno event poster"
+         class="aspect-[3/4] w-full object-cover object-center transition duration-300 group-hover:scale-[1.02]" />
+  </a>
+</div>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 4. BOOKINGS                                          -->
+    <!-- ===================================================== -->
+    <section id="bookings" style="scroll-margin-top:88px" class="bg-[linear-gradient(180deg,#020202_0%,#0a0a0a_100%)]">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div class="mb-8">
+          <p class="text-xs uppercase tracking-[0.4em] text-zinc-500">Bookings</p>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <article class="relative overflow-hidden rounded-[1.4rem] border border-zinc-800 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] shadow-[0_20px_45px_rgba(0,0,0,0.35)]">
+            <picture>
+              <source srcset="solo.avif" type="image/avif" />
+              <source srcset="solo.webp" type="image/webp" />
+              <img src="solo.jpg" alt="Solo booth hire image" class="h-56 w-full object-cover object-center" />
+            </picture>
+            <div class="p-6 sm:p-7">
+              <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
+                <h3 class="text-2xl font-black tracking-tight text-white">Solo booth hire</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="rounded-full bg-white px-3 py-1 text-sm font-bold text-black">A$40/hr</span>
+                  <span class="rounded-full border border-white/60 bg-[#ff4d00] px-3 py-1 text-sm font-bold text-white">A$70 / 2hrs</span>
+                </div>
+              </div>
+              <p class="text-base leading-7 text-zinc-200"><strong>Solo Booth Hire – $40/hr or $70/2hrs</strong><br />Price varies ・ 1 hr+</p>
+              <p class="mt-3 text-base leading-7 text-zinc-200">Looking for a space to sharpen your skills, create content, or just zone out and mix? Welcome to The Manager’s Office — your own private DJ booth.</p>
+              <ul class="mt-5 space-y-2 text-zinc-100">
+                <li class="flex gap-3"><span class="font-black text-emerald-300">✓</span><span>Pioneer CDJ-3000s + DJM-V5 + Technics turntables</span></li>
+                <li class="flex gap-3"><span class="font-black text-emerald-300">✓</span><span>Ambience lighting & climate control</span></li>
+                <li class="flex gap-3"><span class="font-black text-emerald-300">✓</span><span>Content-friendly setup</span></li>
+              </ul>
+              <a class="mt-6 inline-flex rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition hover:-translate-y-0.5 hover:bg-zinc-100" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/FIGQ5RM6PAIIVYDHYSQTCNSX">Book solo</a>
+            </div>
+          </article>
+
+          <article class="relative overflow-hidden rounded-[1.4rem] border border-zinc-800 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] shadow-[0_20px_45px_rgba(0,0,0,0.35)]">
+            <picture>
+              <source srcset="group.avif" type="image/avif" />
+              <source srcset="group.webp" type="image/webp" />
+              <img src="group.jpg" alt="Group booth hire image" class="h-56 w-full object-cover object-center" />
+            </picture>
+            <div class="p-6 sm:p-7">
+              <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
+                <h3 class="text-2xl font-black tracking-tight text-white">Group booth hire</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="rounded-full bg-white px-3 py-1 text-sm font-bold text-black">A$200 / 4hrs</span>
+                  <span class="rounded-full border border-white/60 bg-[#ff4d00] px-3 py-1 text-sm font-bold text-white">Up to 5 people</span>
+                </div>
+              </div>
+              <p class="text-base leading-7 text-zinc-200"><strong>Group Booth Hire – $200/4hrs (You + up to 4 friends)</strong><br />A$200.00 ・ 4 hr</p>
+              <p class="mt-3 text-base leading-7 text-zinc-200">Grab your crew and take over The Manager’s Office for your own private session, with room to record, practice, vibe, and build content together.</p>
+              <ul class="mt-5 space-y-2 text-zinc-100">
+                <li class="flex gap-3"><span class="font-black text-emerald-300">✓</span><span>Private access for up to 5 people</span></li>
+                <li class="flex gap-3"><span class="font-black text-emerald-300">✓</span><span>CDJ-3000s + pro monitoring</span></li>
+                <li class="flex gap-3"><span class="font-black text-emerald-300">✓</span><span>Lights, lounge & fridge access</span></li>
+              </ul>
+              <a class="mt-6 inline-flex rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition hover:-translate-y-0.5 hover:bg-zinc-100" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/RIYKGVSGXXIY6O4LX4EVX7WV">Book group</a>
+            </div>
+          </article>
         </div>
       </div>
-      <!-- HERO IMAGE -->
-      <div class="hero-media">
-        <picture class="img-wrap" data-ratio="16/9">
-          <source srcset="hero.avif" type="image/avif" />
-          <source srcset="hero.webp" type="image/webp" />
-          <img src="hero.jpg" alt="The Manager's Office Studio" width="1600" height="900" loading="eager" decoding="auto" fetchpriority="high" />
-        </picture>
-      </div>
-    </div>
-  </section>
+    </section>
 
-<!-- ========================================= -->
-<!-- 1.25: MOBILE — QUICK ACTIONS (MOBILE ONLY) -->
-<!-- ========================================= -->
-<section class="mobile-quick" aria-label="Mobile quick actions">
-  <div class="container mobile-quick-inner">
-    <div class="mobile-quick-buttons">
-      <a class="btn btn-primary" href="#open-decks" aria-label="Go to Open Decks signup">Open Decks</a>
-      <a class="btn btn-ghost" href="#contact" aria-label="Contact The Manager's Office">Contact</a>
-    </div>
-  </div>
-</section>
-  <!-- ========================================= -->
-  <!-- INTRO OVERLAY SCRIPT (auto-fade once)     -->
-  <!-- ========================================= -->
+    <!-- ===================================================== -->
+    <!-- 5. PAST EVENTS ARCHIVE / SCROLLING POSTERS           -->
+    <!-- ===================================================== -->
+    <section id="archive" style="scroll-margin-top:88px" class="border-y border-zinc-900 bg-[linear-gradient(180deg,#050505_0%,#020202_100%)]">
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="mb-6 flex items-center gap-3"><div>
+            <p class="text-xs uppercase tracking-[0.4em] text-zinc-500">Events Archive</p>
+          </div>
+        </div>
+
+        <div class="marquee-viewport" id="archiveViewport">
+          <div class="marquee-track" id="archiveTrack">
+            <div class="marquee-strip">
+              <!-- moved EC1 to archive -->
+              <a href="https://ra.co/events/2425415" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card transition hover:scale-[1.02]"><img src="EC1.jpeg" alt="Electric Circus poster" class="aspect-[3/4] w-full object-cover" /></a>
+              
+              <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card transition hover:scale-[1.02]"><img src="frontroom.jpg" alt="Soluna event poster" class="aspect-[3/4] w-full object-cover" /></a>
+              <a href="https://events.humanitix.com/tmo-takeover-ancient-world" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card transition hover:scale-[1.02]"><img src="SOFAR.jpg" alt="TMO Takeover Ancient World event poster" class="aspect-[3/4] w-full object-cover" /></a>
+              <a href="https://www.instagram.com/wickid_lickwid/" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card transition hover:scale-[1.02]"><img src="WKD.png" alt="WKD event poster" class="aspect-[3/4] w-full object-cover" /></a>
+              <a href="#" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card transition hover:scale-[1.02]"><img src="REVOLUTION_.png" alt="Nightshade La Revolution poster" class="aspect-[3/4] w-full object-cover" /></a>
+              
+              <a href="#" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card transition hover:scale-[1.02]"><img src="TMOTKO2.png" alt="TMO Takeover Vol 2 poster" class="aspect-[3/4] w-full object-cover object-center" /></a>
+              <a href="https://www.twitch.tv/videos/2595813136" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card transition hover:scale-[1.02]"><img src="expressions.jpg" alt="Expressions livestream poster" class="aspect-[3/4] w-full object-cover" /></a>
+            </div>
+            <div class="marquee-strip" aria-hidden="true">
+              <a href="https://events.ticketbooth.com.au/tickets/soluna-adl" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card"><img src="frontroom.jpg" alt="" class="aspect-[3/4] w-full object-cover" /></a>
+              <a href="https://events.humanitix.com/tmo-takeover-ancient-world" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card"><img src="SOFAR.jpg" alt="" class="aspect-[3/4] w-full object-cover" /></a>
+              <a href="https://www.instagram.com/wickid_lickwid/" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card"><img src="WKD.png" alt="" class="aspect-[3/4] w-full object-cover" /></a>
+              <a href="#" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card"><img src="REVOLUTION_.png" alt="" class="aspect-[3/4] w-full object-cover" /></a>
+              
+              <a href="#" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card"><img src="TMOTKO2.png" alt="" class="aspect-[3/4] w-full object-cover object-center" /></a>
+              <a href="https://www.twitch.tv/videos/2595813136" target="_blank" rel="noopener" class="marquee-card block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-card"><img src="expressions.jpg" alt="" class="aspect-[3/4] w-full object-cover" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 6. CONTACT                                           -->
+    <!-- ===================================================== -->
+    <section id="contact" style="scroll-margin-top:88px" class="border-t border-zinc-900 bg-[#050505]">
+      <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="mb-5 flex items-center gap-3"><div>
+            <p class="text-xs uppercase tracking-[0.4em] text-zinc-500">Contact</p>
+          </div>
+        </div>
+        <div class="rounded-[1.4rem] border border-zinc-800 bg-zinc-950/60 p-6 shadow-card sm:p-8">
+          <p class="text-zinc-200">152 Ashley St, Underdale — Adelaide SA, Australia</p>
+          <div class="mt-4 flex flex-wrap items-center gap-4 text-zinc-300">
+            <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" class="hover:text-white">Instagram</a>
+            <a href="https://www.tiktok.com/@_themanagersoffice" target="_blank" rel="noopener" class="hover:text-white">TikTok</a>
+            <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener" class="hover:text-white">Twitch</a>
+            <a href="https://www.facebook.com/TheManagersOffice" target="_blank" rel="noopener" class="hover:text-white">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 7. FOOTER / COPYRIGHT                                -->
+    <!-- ===================================================== -->
+    <section class="bg-black">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-3 border-t border-zinc-900 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex items-center gap-3"><p class="text-sm text-zinc-500">© 2025 The Manager's Office. All Rights Reserved.</p>
+          </div>
+          <p class="text-sm text-zinc-600">Built for DJs, producers, and community energy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- 8. SECRET MIX (HIDDEN)                               -->
+    <!-- ===================================================== -->
+    <section id="secret-mix" style="scroll-margin-top:88px" class="opacity-0 hover:opacity-100 transition duration-700 text-center py-4">
+      <p class="text-[10px] tracking-[0.4em] text-zinc-600 cursor-pointer" onclick="document.getElementById('mix-player').classList.toggle('hidden')">
+        late signal
+      </p>
+
+      <div id="mix-player" class="hidden mt-3 max-w-lg mx-auto">
+        <p class="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-3">Mix of the Month</p>
+        <div class="aspect-video w-full rounded-xl overflow-hidden border border-zinc-800 bg-black shadow-card">
+          <video class="h-full w-full object-cover" controls preload="metadata" playsinline>
+            <source src="MOTM.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
   <script>
     (function () {
-      const intro = document.getElementById('tmo-intro');
-      if (!intro) return;
-      const SHOW_DELAY = 300;
-      const HIDE_AFTER = 1200;
-      const REMOVE_AFTER = 700;
-      // Skip overlay on refresh in this tab
-      if (sessionStorage.getItem('tmoIntroSeen') === '1') {
-        intro.style.display = 'none';
-        document.body.classList.remove('tmo-lock');
-        return;
-      }
-      document.body.classList.add('tmo-lock');
-      // Warm cache (property form, not attribute)
-      ['hero.avif', 'hero.webp', 'tmostrip.avif', 'tmostrip.webp', 'solo.avif', 'solo.webp', 'group.avif', 'group.webp', 'rec.avif', 'rec.webp', 'bassline.avif', 'bassline.webp', 'opendecks.avif', 'opendecks.webp', 'ancient.png']
-        .forEach(src => {
-          const i = new Image();
-          i.decoding = 'auto';
-          i.loading = 'eager';
-          i.fetchPriority = 'high';
-          i.src = src;
-        });
-      const start = () => {
-        setTimeout(() => {
-          setTimeout(() => {
-            intro.classList.add('is-out');
-            document.body.classList.remove('tmo-lock');
-            sessionStorage.setItem('tmoIntroSeen', '1');
-            setTimeout(() => { intro.remove(); }, REMOVE_AFTER);
-          }, HIDE_AFTER);
-        }, SHOW_DELAY);
-      };
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', start);
-      } else {
-        start();
-      }
-    })();
-  </script>
+      const viewport = document.getElementById('archiveViewport');
+      const track = document.getElementById('archiveTrack');
+      if (!viewport || !track) return;
 
-  <!-- ========================================= -->
-  <!-- 2: LOGO STRIP                            -->
-  <!-- ========================================= -->
-    <img src="tmoembed.png" alt="The Manager’s Office"
-     width="1" height="1"
-     style="position:absolute;left:-9999px;top:-9999px;" />
-  </section>
+      const BASE = 0.6;
+      let speed = BASE;
+      let running = true, x = 0, loopW = 0, rafId = null;
+      let lastX = 0;
+      let lastProgressAt = performance.now();
 
-<!-- ========================================= -->
-<!-- 2.5: EVENTS                              -->
-<!-- ========================================= -->
-<section id="events" class="events">
-  <div class="container events-inner">
-    <div class="events-head">
-      <h2>Events</h2>
-    </div>
-
-    <div class="events-viewport" id="evViewport">
-      <div class="events-track" id="evTrack">
-
-        <!-- STRIP A -->
-        <div class="events-strip">
-          <!-- Event 1 -->
-          <a href="https://triniq.com/dooftechnodec27"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="Open Soluna tickets">
-            <picture class="img-wrap" data-ratio="3/4" id="event-soluna">
-              <source srcset="techno.avif" type="image/avif" />
-              <source srcset="techno.webp" type="image/webp" />
-              <img src="techno.jpg" alt="Dooftechno" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <!-- Event 2 -->
-          <a href="https://www.instagram.com/nightshade_bar/"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="TMO Takeover at Ancient World">
-            <picture class="img-wrap" data-ratio="3/4" id="event-ancient">
-              <source srcset="nightshade.avif" type="image/avif" />
-              <source srcset="nightshade.webp" type="image/webp" />
-              <img src="nightshade.jpg" alt="nightshade" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <!-- Event 3 -->
-          <a href="https://moshtix.com.au/v2/event/new-year%E2%80%99s-day-party/187111?skin=LAF20"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="Shapeshifter New Year’s Day">
-            <picture class="img-wrap" data-ratio="3/4" id="event-shapeshifter">
-              <source srcset="shapeshifter.avif" type="image/avif" />
-              <source srcset="shapeshifter.webp" type="image/webp" />
-              <img src="shapeshifter.JPG" alt="frontroom" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <!-- Event 4 (NEW: Expressions) -->
-          <a href="https://www.twitch.tv/videos/2595813136"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="Expressions livestream event">
-            <picture class="img-wrap" data-ratio="3/4" id="event-expressions">
-              <source srcset="expressions.avif" type="image/avif" />
-              <source srcset="expressions.webp" type="image/webp" />
-              <img src="expressions.jpg" alt="expressions" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-                  <!-- Event 5 (NEW: NYE) -->
-          <a href="https://events.humanitix.com/limoncello-lounge-nye-ambra-spirits-distillery"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="Expressions livestream event">
-            <picture class="img-wrap" data-ratio="3/4" id="event-expressions">
-              <source srcset="nye.avif" type="image/avif" />
-              <source srcset="nye.webp" type="image/webp" />
-              <img src="nye.jpg" alt="nye" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-                            <!-- Event 6 (NEW: tech) -->
-          <a href="https://events.humanitix.com/tech?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnnKtLQoP2AcduSSifey7wLxbnLzVe33iO4I_AK9tHFZziEdSDN0WudjsTbJc_aem__hT0-v6HNVcFjobnUZfnpw"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="Expressions livestream event">
-            <picture class="img-wrap" data-ratio="3/4" id="event-expressions">
-              <source srcset="tech.avif" type="image/avif" />
-              <source srcset="tech.webp" type="image/webp" />
-              <img src="tech.jpg" alt="nye" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-        </div>
-        <!-- /STRIP A -->
-
-        <!-- STRIP B (duplicate of Strip A for seamless loop) -->
-        <div class="events-strip" aria-hidden="true">
-          <a href="https://triniq.com/dooftechnodec27"
-             target="_blank" rel="noopener"
-             class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="techno.avif" type="image/avif" />
-              <source srcset="techno.webp" type="image/webp" />
-              <img src="techno.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <a href="https://www.instagram.com/nightshade_bar/"
-             target="_blank" rel="noopener"
-             class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="nightshade.avif" type="image/avif" />
-              <source srcset="nightshade.webp" type="image/webp" />
-              <img src="nightshade.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <a href="https://moshtix.com.au/v2/event/new-year%E2%80%99s-day-party/187111?skin=LAF20"
-             target="_blank" rel="noopener"
-             class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="shapeshifter.avif" type="image/avif" />
-              <source srcset="shapeshifter.webp" type="image/webp" />
-              <img src="shapeshifter.JPG" alt="" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-          <!-- Duplicate Event 4 (Expressions) -->
-          <a href="https://www.twitch.tv/videos/2595813136"
-             target="_blank" rel="noopener"
-             class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="expressions.avif" type="image/avif" />
-              <source srcset="expressions.webp" type="image/webp" />
-              <img src="expressions.jpg" alt="" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-        
-          <!-- Duplicate Event 4 (nye) -->
-          <a href="https://events.humanitix.com/limoncello-lounge-nye-ambra-spirits-distillery"
-             target="_blank" rel="noopener"
-             class="event-slide" tabindex="-1">
-            <picture class="img-wrap" data-ratio="3/4">
-              <source srcset="nye.avif" type="image/avif" />
-              <source srcset="nye.webp" type="image/webp" />
-              <img src="nye.jpg" alt="nye" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-
-                                      <!-- Event 6 (NEW: tech) -->
-          <a href="https://events.humanitix.com/tech?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnnKtLQoP2AcduSSifey7wLxbnLzVe33iO4I_AK9tHFZziEdSDN0WudjsTbJc_aem__hT0-v6HNVcFjobnUZfnpw"
-             target="_blank" rel="noopener"
-             class="event-slide" aria-label="Expressions livestream event">
-            <picture class="img-wrap" data-ratio="3/4" id="event-expressions">
-              <source srcset="tech.avif" type="image/avif" />
-              <source srcset="tech.webp" type="image/webp" />
-              <img src="tech.jpg" alt="nye" width="320" height="427" loading="lazy" decoding="async" />
-            </picture>
-          </a>
-        </div><!-- /STRIP B -->
-
-      </div><!-- /events-track -->
-    </div><!-- /events-viewport -->
-  </div>
-</section>
-
-
-
-
-  <!-- ========================================= -->
-  <!-- 3: OFFERINGS (SOLO / GROUP)              -->
-  <!-- ========================================= -->
-  <section id="offerings" class="offerings">
-    <div class="container offerings-grid">
-      <!-- Solo -->
-      <article class="card">
-        <div class="card-media">
-          <picture class="img-wrap" data-ratio="4/3">
-            <source srcset="solo.avif" type="image/avif" />
-            <source srcset="solo.webp" type="image/webp" />
-            <img src="solo.jpg" alt="Solo booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
-          </picture>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <h2>SOLO BOOTH HIRE</h2>
-            <div class="price-badges">
-              <span class="badge">A$40/hr</span>
-              <span class="badge badge-alt">A$70 / 2hrs</span>
-            </div>
-          </div>
-          <p><strong>Solo Booth Hire – $40/hr or $70/2hrs</strong><br />Price varies ・ 1 hr+</p>
-          <p>Looking for a space to sharpen your skills, create content, or just zone out and mix? Welcome to The Manager’s Office — your own private DJ booth...</p>
-          <ul class="checklist">
-            <li>Pioneer CDJ-3000s + Xone:92 + Technics turntables</li>
-            <li>Ambience lighting & climate control</li>
-            <li>Content-friendly setup</li>
-          </ul>
-          <div class="card-actions">
-            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/FIGQ5RM6PAIIVYDHYSQTCNSX" aria-label="Book a solo booth session at The Manager's Office">Book Solo</a>
-          </div>
-        </div>
-      </article>
-      <!-- Group -->
-      <article class="card">
-        <div class="card-media">
-          <picture class="img-wrap" data-ratio="4/3">
-            <source srcset="group.avif" type="image/avif" />
-            <source srcset="group.webp" type="image/webp" />
-            <img src="group.jpg" alt="Group booth hire image" width="400" height="300" loading="eager" decoding="auto" fetchpriority="high" />
-          </picture>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <h2>GROUP BOOTH HIRE</h2>
-            <div class="price-badges">
-              <span class="badge">A$200 / 4hrs</span>
-              <span class="badge badge-alt">A$200</span>
-            </div>
-          </div>
-          <p><strong>Group Booth Hire – $200/4hrs (You + up to 4 friends)</strong><br />A$200.00 ・ 4 hr</p>
-          <p>Grab your crew and take over The Manager’s Office for your own private session...</p>
-          <ul class="checklist">
-            <li>Private access for up to 5 people</li>
-            <li>CDJ-3000s + pro monitoring</li>
-            <li>Lights, lounge & fridge access</li>
-          </ul>
-          <div class="card-actions">
-            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/RIYKGVSGXXIY6O4LX4EVX7WV" aria-label="Book a group booth session at The Manager's Office">Book Group</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-
-  <!-- ========================================= -->
-  <!-- 4: FOOTER                                -->
-  <!-- ========================================= -->
-  <footer class="footer" id="contact">
-    <div class="container footer-inner">
-      <p>152 Ashley St, Underdale — Adelaide SA, Australia</p>
-      <div class="footer-socials">
-        <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.tiktok.com/@_themanagersoffice" target="_blank" rel="noopener">TikTok</a>
-      </div>
-      <p>© 2025 The Manager's Office. All Rights Reserved.</p>
-    </div>
-  </footer>
-
-  <!-- ========================================= -->
-<!-- 3.95: EVENTS — SCRIPT (SELF-HEALING)      -->
-<!-- ========================================= -->
-<script>
-  (function () {
-    const viewport = document.getElementById('evViewport');
-    const track = document.getElementById('evTrack');
-    if (!viewport || !track) return;
-
-    // Subtle scroll speed
-    const BASE = 0.6;
-
-    // Robust touch detection; mobile should always animate
-    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
-
-    // Respect reduced motion on non-touch only
-    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let speed = (!isTouch && prefersReduce) ? 0 : BASE;
-
-    let running = true, x = 0, loopW = 0, rafId = null;
-
-    // ---- Build the two-strip loop ----------------------------------------
-    function build() {
-      cancelAnimationFrame(rafId);
-      x = 0;
-      track.style.transform = 'translate3d(0,0,0)';
-
-      const originals = Array.from(track.children).filter(n => !n.dataset || !n.dataset.clone);
-      if (!originals.length) return;
-
-      const measurer = document.createElement('div');
-      measurer.className = 'events-strip';
-      originals.forEach(el => measurer.appendChild(el.cloneNode(true)));
-
-      track.innerHTML = '';
-      Object.assign(measurer.style, { position:'absolute', visibility:'hidden', pointerEvents:'none' });
-      track.appendChild(measurer);
-
-      const targetWidth = Math.max(viewport.clientWidth * 2, 1);
-      let guard = 0;
-      while (measurer.scrollWidth < targetWidth && guard < 50) {
-        originals.forEach(src => measurer.appendChild(src.cloneNode(true)));
-        guard++;
-      }
-
-      const strip = document.createElement('div');
-      strip.className = 'events-strip';
-      Array.from(measurer.children).forEach(n => strip.appendChild(n.cloneNode(true)));
-      const cloneStrip = strip.cloneNode(true);
-      cloneStrip.dataset.clone = '1';
-
-      track.innerHTML = '';
-      track.appendChild(strip);
-      track.appendChild(cloneStrip);
-
-      // Ensure cloned images aren’t hidden by blur-up styles
-      track.querySelectorAll('.img-wrap').forEach(wrap => {
-        wrap.classList.add('is-loaded');
-        const img = wrap.querySelector('img');
-        if (img) { img.style.opacity = '1'; img.style.filter = 'none'; img.style.transform = 'none'; }
-      });
-
-      loopW = strip.scrollWidth || 1;
-    }
-
-    // ---- Animate and watchdog --------------------------------------------
-    let lastX = 0;
-    let lastProgressAt = performance.now();
-
-    function tick(now) {
-      if (running && loopW > 0 && speed > 0) {
-        x -= speed;
-        if (-x >= loopW) x += loopW;
-        track.style.transform = `translate3d(${x}px,0,0)`;
-
-        // movement detection
-        if (x !== lastX) {
-          lastX = x;
-          lastProgressAt = now || performance.now();
-        }
-      }
-
-      // Watchdog: if no movement for 1500ms, rebuild & restart
-      if ((now || performance.now()) - lastProgressAt > 1500) {
-        rebuild(true); // force
-        return;        // tick will be rescheduled by rebuild()
-      }
-
-      rafId = requestAnimationFrame(tick);
-    }
-
-    // ---- Controls & lifecycle -------------------------------------------
-    const finePtr = window.matchMedia('(pointer: fine)').matches;
-    if (finePtr) {
-      const pause = () => { running = false; };
-      const resume = () => { running = true; lastProgressAt = performance.now(); };
-      viewport.addEventListener('mouseenter', pause);
-      viewport.addEventListener('mouseleave', resume);
-      viewport.addEventListener('focusin', pause);
-      viewport.addEventListener('focusout', resume);
-    }
-
-    // Wake up on user interaction (mobile sometimes throttles)
-    ['touchstart','pointerdown','scroll'].forEach(ev =>
-      window.addEventListener(ev, () => { running = true; lastProgressAt = performance.now(); }, { passive: true })
-    );
-
-    document.addEventListener('visibilitychange', () => { running = !document.hidden; lastProgressAt = performance.now(); });
-
-    let resizeT;
-    function rebuild(force = false) {
-      clearTimeout(resizeT);
-      const doBuild = () => {
-        build();
+      function build() {
+        cancelAnimationFrame(rafId);
         x = 0;
         track.style.transform = 'translate3d(0,0,0)';
-        lastProgressAt = performance.now();
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(tick);
-      };
-      if (force) { doBuild(); }
-      else {
-        resizeT = setTimeout(doBuild, 160);
+        const strips = Array.from(track.children);
+        if (strips.length < 2) return;
+        loopW = strips[0].scrollWidth || 1;
       }
-    }
 
-    window.addEventListener('resize', () => rebuild(false), { passive: true });
-    window.addEventListener('orientationchange', () => rebuild(true), { passive: true });
+      function tick(now) {
+        if (running && loopW > 0 && speed > 0) {
+          x -= speed;
+          if (-x >= loopW) x += loopW;
+          track.style.transform = `translate3d(${x}px,0,0)`;
+          if (x !== lastX) {
+            lastX = x;
+            lastProgressAt = now || performance.now();
+          }
+        }
+        if ((now || performance.now()) - lastProgressAt > 1500) {
+          rebuild(true);
+          return;
+        }
+        rafId = requestAnimationFrame(tick);
+      }
 
-    // ---- Init (slight delay helps Edge/iOS layout settle) ----------------
-    window.addEventListener('load', () => {
-      setTimeout(() => { rebuild(true); }, 60);
-    });
-  })();
-</script>
+      const finePtr = window.matchMedia('(pointer: fine)').matches;
+      if (finePtr) {
+        viewport.addEventListener('mouseenter', () => running = false);
+        viewport.addEventListener('mouseleave', () => { running = true; lastProgressAt = performance.now(); });
+        viewport.addEventListener('focusin', () => running = false);
+        viewport.addEventListener('focusout', () => { running = true; lastProgressAt = performance.now(); });
+      }
+
+      ['touchstart','pointerdown','scroll'].forEach(ev =>
+        window.addEventListener(ev, () => { running = true; lastProgressAt = performance.now(); }, { passive: true })
+      );
+
+      document.addEventListener('visibilitychange', () => {
+        running = !document.hidden;
+        lastProgressAt = performance.now();
+      });
+
+      let resizeT;
+      function rebuild(force = false) {
+        clearTimeout(resizeT);
+        const run = () => {
+          build();
+          lastProgressAt = performance.now();
+          cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(tick);
+        };
+        if (force) run();
+        else resizeT = setTimeout(run, 160);
+      }
+
+      window.addEventListener('resize', () => rebuild(false), { passive: true });
+      window.addEventListener('orientationchange', () => rebuild(true), { passive: true });
+      window.addEventListener('load', () => setTimeout(() => rebuild(true), 60));
+    })();
+  </script>
+  <script>
+    (function(){
+      var btn = document.getElementById('mobile-menu-btn');
+      var menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function(){
+        var open = menu.hidden;
+        menu.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+      menu.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){
+          menu.hidden = true;
+          btn.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-label', 'Open menu');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
