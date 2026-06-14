@@ -1,0 +1,8 @@
+# local Claude config
+.claude/
+
+# local backups
+*.bak
+
+# large media — host video externally (Google Drive, YouTube, etc.); GitHub rejects files >100 MB
+*.mp4
