@@ -54,19 +54,25 @@
     }
     /* ---- Mobile: events swipe deck + header strip ---- */
     .tmo-evt-deck { display: none; }
-    #tmo-evt-stack { position: relative; width: 100%; max-width: 460px; height: calc(min(70vw, 300px) * 4 / 3); margin: 0 auto; overflow: hidden; touch-action: none; }
-    .tmo-evt-card { position: absolute; left: 50%; top: 50%; width: min(70vw, 300px); height: 100%; transform: translate(-50%, -50%); -webkit-user-select: none; user-select: none; }
+    #tmo-evt-stack { position: relative; width: 100%; max-width: 460px; height: calc(min(78vw, 330px) * 4 / 3); margin: 0 auto; overflow: hidden; touch-action: none; }
+    .tmo-evt-card { position: absolute; left: 50%; top: 50%; width: min(78vw, 330px); height: 100%; transform: translate(-50%, -50%); -webkit-user-select: none; user-select: none; }
     .tmo-evt-card img { -webkit-user-drag: none; }
+    .tmo-bkg-deck { display: none; }
+    #tmo-bkg-stack { position: relative; width: 100%; max-width: 460px; height: calc(min(78vw, 330px) * 1.68); margin: 0 auto; overflow: hidden; touch-action: none; }
+    .tmo-bkg-card { position: absolute; left: 50%; top: 50%; width: min(78vw, 330px); height: 100%; transform: translate(-50%, -50%); -webkit-user-select: none; user-select: none; }
+    .tmo-bkg-card img { -webkit-user-drag: none; }
     @media (max-width: 900px) {
       .tmo-evt-grid { display: none !important; }
       .tmo-evt-deck { display: flex !important; }
+      .tmo-bkg-grid { display: none !important; }
+      .tmo-bkg-deck { display: flex !important; }
     }
     @media (max-width: 700px) {
       .tmo-hdr-inner { flex-direction: column; align-items: stretch; gap: 10px; }
       .tmo-hdr-right { width: 100%; justify-content: space-between; gap: 12px; }
       .tmo-tabs { min-width: 0; flex: 1 1 auto; overflow-x: auto; flex-wrap: nowrap !important; scrollbar-width: none; }
       .tmo-tabs::-webkit-scrollbar { display: none; }
-      section[data-screen-label="Events"] { padding-top: 26px !important; padding-bottom: 26px !important; }
+      section[data-screen-label="Events"], section[data-screen-label="Bookings"] { padding-top: 26px !important; padding-bottom: 26px !important; }
     }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   </style>
@@ -213,7 +219,6 @@
                 </div>
                 <button onClick="{{ evtNext }}" aria-label="Next event" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #3a342c; background: rgba(5,4,3,0.4); color: #f2ede6; font-size: 20px; line-height: 1; cursor: pointer;" style-hover="border-color: #ff4d00; color: #ff4d00;">›</button>
               </div>
-              <p style="margin: 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #6b645c;">Swipe to flip through what's on ↔</p>
             </div>
             <div class="tmo-evt-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 26px;">
               <a href="https://www.instagram.com/thefrontroom_adelaide/" target="_blank" rel="noopener" style="display: block; transform: rotate(0deg); transition: transform 0.25s ease;" style-hover="transform: translateY(-6px);">
@@ -250,7 +255,74 @@
               <p style="margin: 0 0 10px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase; color: #ff4d00;">02 / Bookings</p>
               <p style="margin: 0; max-width: 34em; color: #c9c1b5; font-size: 15px; line-height: 1.6; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Sharpen your skills, record content, or zone out and mix. The room is yours.</p>
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; position: relative">
+            <div class="tmo-bkg-deck" style="flex-direction: column; align-items: center; gap: 20px; width: 100%;">
+              <div id="tmo-bkg-stack">
+                <div class="tmo-bkg-card" data-idx="0">
+                  <article style="position: absolute; inset: 0; border: 1px solid #2b2620; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)); display: flex; flex-direction: column; transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;" style-hover="transform: translateY(-6px); border-color: rgba(255,77,0,0.65); box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 36px rgba(255,77,0,0.14);">
+                <img src="assets/solo.webp" alt="Solo booth hire — the main booth" style="display: block; width: 100%; height: 150px; object-fit: cover; border-bottom: 1px solid #2b2620;">
+                <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1;">
+                  <div style="font-family: 'BenguiatProITC', Georgia, serif; font-size: clamp(1.5rem, 2.2vw, 1.9rem); color: #ff4d00; line-height: 1;">A$50<span style="font-size: 0.55em; color: #c9c1b5;"> /hr</span> <span style="font-size: 0.55em; color: #c9c1b5;">· A$80 /2hrs</span></div>
+                  <h3 style="margin: 12px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 14px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;">Solo booth hire</h3>
+                  <p style="margin: 10px 0 0; color: #c9c1b5; font-size: 13.5px; line-height: 1.55; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Your own private DJ booth — sharpen your skills, create content, or just zone out and mix.</p>
+                  <ul style="list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; letter-spacing: 0.03em; color: #e6dfd4;">
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>CDJ-3000s + DJM-V5 + Technics turntables</span></li>
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>Ambience lighting &amp; climate control</span></li>
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>Content-friendly setup</span></li>
+                  </ul>
+                  <div style="margin-top: auto; padding-top: 20px;">
+                    <a href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/FIGQ5RM6PAIIVYDHYSQTCNSX" target="_blank" rel="noopener" style="display: inline-flex; background: #ff4d00; color: #050403; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 20px; border-radius: 6px;" style-hover="background: #f2ede6; color: #050403;">Book solo →</a>
+                  </div>
+                </div>
+              </article>
+                </div>
+                <div class="tmo-bkg-card" data-idx="1">
+                  <article style="position: absolute; inset: 0; border: 1px solid #2b2620; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)); display: flex; flex-direction: column; transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;" style-hover="transform: translateY(-6px); border-color: rgba(255,77,0,0.65); box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 36px rgba(255,77,0,0.14);">
+                <img src="assets/group.webp" alt="Group booth hire — crew session" style="display: block; width: 100%; height: 150px; object-fit: cover; border-bottom: 1px solid #2b2620;">
+                <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1;">
+                  <div style="font-family: 'BenguiatProITC', Georgia, serif; font-size: clamp(1.5rem, 2.2vw, 1.9rem); color: #ff4d00; line-height: 1;">A$200<span style="font-size: 0.55em; color: #c9c1b5;"> /4hrs</span> <span style="font-size: 0.55em; color: #c9c1b5;">· up to 5</span></div>
+                  <h3 style="margin: 12px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 14px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;">Group booth hire</h3>
+                  <p style="margin: 10px 0 0; color: #c9c1b5; font-size: 13.5px; line-height: 1.55; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Grab your crew and take over the office — record, practice, vibe, and build content together.</p>
+                  <ul style="list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; letter-spacing: 0.03em; color: #e6dfd4;">
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>Private access for up to 5 people</span></li>
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>CDJ-3000s + pro monitoring</span></li>
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>Lights, lounge &amp; fridge access</span></li>
+                  </ul>
+                  <div style="margin-top: auto; padding-top: 20px;">
+                    <a href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/RIYKGVSGXXIY6O4LX4EVX7WV" target="_blank" rel="noopener" style="display: inline-flex; background: #ff4d00; color: #050403; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 20px; border-radius: 6px;" style-hover="background: #f2ede6; color: #050403;">Book group →</a>
+                  </div>
+                </div>
+              </article>
+                </div>
+                <div class="tmo-bkg-card" data-idx="2">
+                  <article style="position: absolute; inset: 0; border: 1px solid #2b2620; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)); display: flex; flex-direction: column; transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;" style-hover="transform: translateY(-6px); border-color: rgba(255,77,0,0.65); box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 36px rgba(255,77,0,0.14);">
+                <img src="assets/rx3.png" alt="RX3 booth hire — Pioneer XDJ-RX3 all-in-one" style="display: block; width: 100%; height: 150px; object-fit: cover; object-position: 50% 42%; border-bottom: 1px solid #2b2620;">
+                <div style="padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1;">
+                  <div style="font-family: 'BenguiatProITC', Georgia, serif; font-size: clamp(1.5rem, 2.2vw, 1.9rem); color: #ff4d00; line-height: 1;">A$30<span style="font-size: 0.55em; color: #c9c1b5;"> /hr</span> <span style="font-size: 0.55em; color: #c9c1b5;">· A$100 /3hrs</span></div>
+                  <h3 style="margin: 12px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 14px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;">RX3 booth hire</h3>
+                  <p style="margin: 10px 0 0; color: #c9c1b5; font-size: 13.5px; line-height: 1.55; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">The XDJ-RX3 all-in-one — practice, record mixes, or prep for gigs without a full club setup.</p>
+                  <ul style="list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; letter-spacing: 0.03em; color: #e6dfd4;">
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>Pioneer XDJ-RX3 all-in-one</span></li>
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>Practice, record mixes &amp; prep for gigs</span></li>
+                    <li style="display: flex; gap: 10px;"><span style="color: #ff4d00; font-weight: 700;">✓</span><span>Limited-time — limited slots</span></li>
+                  </ul>
+                  <div style="margin-top: auto; padding-top: 20px;">
+                    <a href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z/services/T3UD6LDXWY2LOPXHRBB2XC2D" target="_blank" rel="noopener" style="display: inline-flex; background: #ff4d00; color: #050403; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 20px; border-radius: 6px;" style-hover="background: #f2ede6; color: #050403;">Book RX3 →</a>
+                  </div>
+                </div>
+              </article>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <button onClick="{{ bkgPrev }}" aria-label="Previous option" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #3a342c; background: rgba(5,4,3,0.4); color: #f2ede6; font-size: 20px; line-height: 1; cursor: pointer;" style-hover="border-color: #ff4d00; color: #ff4d00;">‹</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span data-bkg-dot onClick="{{ bkgGo0 }}" style="cursor: pointer; height: 8px; width: 22px; border-radius: 99px; background: #ff4d00; transition: all 0.25s ease;"></span>
+                  <span data-bkg-dot onClick="{{ bkgGo1 }}" style="cursor: pointer; height: 8px; width: 8px; border-radius: 99px; background: #4a443c; transition: all 0.25s ease;"></span>
+                  <span data-bkg-dot onClick="{{ bkgGo2 }}" style="cursor: pointer; height: 8px; width: 8px; border-radius: 99px; background: #4a443c; transition: all 0.25s ease;"></span>
+                </div>
+                <button onClick="{{ bkgNext }}" aria-label="Next option" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #3a342c; background: rgba(5,4,3,0.4); color: #f2ede6; font-size: 20px; line-height: 1; cursor: pointer;" style-hover="border-color: #ff4d00; color: #ff4d00;">›</button>
+              </div>
+            </div>
+            <div class="tmo-bkg-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; position: relative">
 
               <article style="border: 1px solid #2b2620; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015)); display: flex; flex-direction: column; transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;" style-hover="transform: translateY(-6px); border-color: rgba(255,77,0,0.65); box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 36px rgba(255,77,0,0.14);">
                 <img src="assets/solo.webp" alt="Solo booth hire — the main booth" style="display: block; width: 100%; height: 150px; object-fit: cover; border-bottom: 1px solid #2b2620;">
@@ -425,10 +497,11 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;rail&quot;,&quot;tabs&quot;],&quot;default&quot;:&quot;rail&quot;,&quot;tsType&quot;:&quot;'rail'|'tabs'&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;showTicker&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showLive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showEasterEgg&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', mixOpen: false, evt: 0 };
+  state = { page: 'home', mixOpen: false, evt: 0, bkg: 0 };
   _evt = { down: false, moved: false, startX: 0, startY: 0, dx: 0 };
-  componentDidMount() { this._applyNav(); this._paint(); this._bindDeck(); this._paintEvents(true); }
-  componentDidUpdate() { this._applyNav(); this._paint(); this._paintEvents(true); }
+  _bkg = { down: false, moved: false, startX: 0, startY: 0, dx: 0 };
+  componentDidMount() { this._applyNav(); this._paint(); this._bindDeck(); this._paintEvents(true); this._paintBkg(true); }
+  componentDidUpdate() { this._applyNav(); this._paint(); this._paintEvents(true); this._paintBkg(true); }
   _applyNav() { try { document.body.setAttribute('data-navstyle', this.props.navStyle ?? 'rail'); } catch (e) {} }
   _paint() {
     const page = this.state.page;
@@ -458,12 +531,12 @@ class Component extends DCLogic {
     const cur = ((this.state.evt || 0) % n + n) % n;
     const dx = (this._evt && this._evt.dx) || 0;
     const cw = cards[0].offsetWidth || 260;
-    const OFF = cw * 0.9;
+    const OFF = cw * 0.72;
     cards.forEach(card => {
       const i = +card.dataset.idx;
       let d = i - cur; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
       const x = d * OFF + dx;
-      const sc = d === 0 ? 1 : 0.82;
+      const sc = d === 0 ? 1 : 0.6;
       const op = Math.abs(d) >= 2 ? 0 : (d === 0 ? 1 : 0.5);
       card.style.transition = animate ? 'transform .4s cubic-bezier(.22,.7,.2,1), opacity .4s ease' : 'none';
       card.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) scale(' + sc + ')';
@@ -484,6 +557,41 @@ class Component extends DCLogic {
     this.setState(st => ({ evt: (((st.evt || 0) + dir) % n + n) % n }));
   }
   _evtGo(i) { this._evt.dx = 0; this.setState({ evt: i }); }
+  _paintBkg(animate) {
+    const stack = document.getElementById('tmo-bkg-stack');
+    if (!stack) return;
+    if (!stack.dataset.init) { animate = false; stack.dataset.init = '1'; }
+    const cards = Array.prototype.slice.call(stack.querySelectorAll('.tmo-bkg-card'));
+    const n = cards.length; if (!n) return;
+    const cur = ((this.state.bkg || 0) % n + n) % n;
+    const dx = (this._bkg && this._bkg.dx) || 0;
+    const cw = cards[0].offsetWidth || 260;
+    const OFF = cw * 0.72;
+    cards.forEach(card => {
+      const i = +card.dataset.idx;
+      let d = i - cur; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
+      const x = d * OFF + dx;
+      const sc = d === 0 ? 1 : 0.6;
+      const op = Math.abs(d) >= 2 ? 0 : (d === 0 ? 1 : 0.5);
+      card.style.transition = animate ? 'transform .4s cubic-bezier(.22,.7,.2,1), opacity .4s ease' : 'none';
+      card.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) scale(' + sc + ')';
+      card.style.opacity = String(op);
+      card.style.zIndex = String(d === 0 ? 5 : 2);
+      card.dataset.role = d === 0 ? 'front' : '';
+      card.style.pointerEvents = d === 0 ? 'auto' : 'none';
+    });
+    const dots = document.querySelectorAll('[data-bkg-dot]');
+    dots.forEach((dot, i) => {
+      const on = i === cur;
+      dot.style.background = on ? '#ff4d00' : '#4a443c';
+      dot.style.width = on ? '22px' : '8px';
+    });
+  }
+  _advanceBkg(dir) {
+    const n = 3; this._bkg.dx = 0;
+    this.setState(st => ({ bkg: (((st.bkg || 0) + dir) % n + n) % n }));
+  }
+  _bkgGo(i) { this._bkg.dx = 0; this.setState({ bkg: i }); }
   _bindDeck() {
     if (this._deckBound) return; this._deckBound = true;
     const self = this;
@@ -517,6 +625,36 @@ class Component extends DCLogic {
     window.addEventListener('click', (e) => {
       if (self._evtDragged && inStack(e.target)) { e.preventDefault(); e.stopPropagation(); }
     }, true);
+    const inBkg = (t) => t && t.closest && t.closest('#tmo-bkg-stack');
+    window.addEventListener('pointerdown', (e) => {
+      const stack = document.getElementById('tmo-bkg-stack');
+      if (!stack || !inBkg(e.target)) return;
+      if (!stack.querySelector('.tmo-bkg-card[data-role="front"]')) return;
+      self._bkg.down = true; self._bkg.moved = false;
+      self._bkg.startX = e.clientX; self._bkg.startY = e.clientY; self._bkg.dx = 0;
+    }, true);
+    window.addEventListener('pointermove', (e) => {
+      if (!self._bkg.down) return;
+      const dx = e.clientX - self._bkg.startX;
+      const dy = e.clientY - self._bkg.startY;
+      if (!self._bkg.moved && Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 12) { self._bkg.down = false; return; }
+      if (Math.abs(dx) > 5) self._bkg.moved = true;
+      self._bkg.dx = dx;
+      self._paintBkg(false);
+    }, { passive: true });
+    const finishBkg = () => {
+      if (!self._bkg.down) return;
+      self._bkg.down = false;
+      const dx = self._bkg.dx;
+      if (Math.abs(dx) > 60) { self._advanceBkg(dx < 0 ? 1 : -1); }
+      else { self._bkg.dx = 0; self._paintBkg(true); }
+      if (self._bkg.moved) { self._bkgDragged = true; setTimeout(() => { self._bkgDragged = false; }, 60); }
+    };
+    window.addEventListener('pointerup', finishBkg, true);
+    window.addEventListener('pointercancel', finishBkg, true);
+    window.addEventListener('click', (e) => {
+      if (self._bkgDragged && inBkg(e.target)) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
   }
   renderVals() {
     const motion = this.props.motion ?? true;
@@ -543,6 +681,11 @@ class Component extends DCLogic {
       evtGo0: () => this._evtGo(0),
       evtGo1: () => this._evtGo(1),
       evtGo2: () => this._evtGo(2),
+      bkgPrev: () => this._advanceBkg(-1),
+      bkgNext: () => this._advanceBkg(1),
+      bkgGo0: () => this._bkgGo(0),
+      bkgGo1: () => this._bkgGo(1),
+      bkgGo2: () => this._bkgGo(2),
     };
   }
 }
