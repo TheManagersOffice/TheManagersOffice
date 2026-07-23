@@ -52,18 +52,34 @@
       body[data-navstyle="tabs"] .tmo-rail { display: none; }
       body[data-navstyle="tabs"] .tmo-tabs { display: flex; }
     }
+    /* ---- Mobile: events swipe deck + header strip ---- */
+    .tmo-evt-deck { display: none; }
+    #tmo-evt-stack { position: relative; width: 100%; max-width: 460px; height: calc(min(70vw, 300px) * 4 / 3); margin: 0 auto; overflow: hidden; touch-action: none; }
+    .tmo-evt-card { position: absolute; left: 50%; top: 50%; width: min(70vw, 300px); height: 100%; transform: translate(-50%, -50%); -webkit-user-select: none; user-select: none; }
+    .tmo-evt-card img { -webkit-user-drag: none; }
+    @media (max-width: 900px) {
+      .tmo-evt-grid { display: none !important; }
+      .tmo-evt-deck { display: flex !important; }
+    }
+    @media (max-width: 700px) {
+      .tmo-hdr-inner { flex-direction: column; align-items: stretch; gap: 10px; }
+      .tmo-hdr-right { width: 100%; justify-content: space-between; gap: 12px; }
+      .tmo-tabs { min-width: 0; flex: 1 1 auto; overflow-x: auto; flex-wrap: nowrap !important; scrollbar-width: none; }
+      .tmo-tabs::-webkit-scrollbar { display: none; }
+      section[data-screen-label="Events"] { padding-top: 26px !important; padding-bottom: 26px !important; }
+    }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
   </style>
 </helmet>
 
-<div style="height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #050403;">
+<div style="height: 100dvh; display: flex; flex-direction: column; overflow: hidden; background: #050403;">
 
   <header data-screen-label="Header" style="flex: 0 0 auto; background: #fbfaf7; color: #0a0806; border-bottom: 1px solid #e6e1d8; z-index: 40;">
-    <div style="max-width: 1440px; margin: 0 auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap;">
+    <div class="tmo-hdr-inner" style="max-width: 1440px; margin: 0 auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap;">
       <button data-navbtn="home" onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 12px; background: none; border: 0; cursor: pointer; padding: 0;">
         <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #6b645c;">The Manager's Office</span>
       </button>
-      <div style="display: flex; align-items: center; gap: 18px;">
+      <div class="tmo-hdr-right" style="display: flex; align-items: center; gap: 18px;">
         <nav class="tmo-tabs" style="align-items: center; gap: 6px; flex-wrap: wrap; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">
           <button data-navbtn="home" onClick="{{ goHome }}" style="background: none; border: 0; cursor: pointer; color: #0a0806; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Home</button>
           <button data-navbtn="events" onClick="{{ goEvents }}" style="background: none; border: 0; cursor: pointer; color: #0a0806; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Events</button>
@@ -152,7 +168,54 @@
               </div>
               
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 26px;">
+            <div class="tmo-evt-deck" style="flex-direction: column; align-items: center; gap: 20px; width: 100%;">
+              <div id="tmo-evt-stack">
+                <div class="tmo-evt-card" data-idx="0">
+                  <a href="https://www.instagram.com/thefrontroom_adelaide/" target="_blank" rel="noopener" style="display: block; position: absolute; inset: 0; border-radius: 16px; overflow: hidden; border: 1px solid #2b2620; box-shadow: 0 30px 70px rgba(0,0,0,0.6); background: #0a0705;">
+                    <img src="assets/basement02_lauraking.jpg" alt="The Basement 02 — Laura King (Melb) at Electric Circus, 31 July" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+                    <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 16px 20px; background: linear-gradient(180deg, rgba(5,4,3,0) 0%, rgba(5,4,3,0.55) 55%, rgba(5,4,3,0.94) 100%);">
+                      <p style="margin: 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #ff4d00;">Front Room + TMO</p>
+                      <p style="margin: 6px 0 0; font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.25rem; line-height: 1.15; color: #f2ede6;">The Basement 02 — Laura King</p>
+                      <p style="margin: 6px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; letter-spacing: 0.1em; color: #c9c1b5;">31 July · Electric Circus <span style="color: #ff4d00;">↗</span></p>
+                    </div>
+                  </a>
+                </div>
+                <div class="tmo-evt-card" data-idx="1">
+                  <a href="https://www.instagram.com/nevermind.adl/" target="_blank" rel="noopener" style="display: block; position: absolute; inset: 0; border-radius: 16px; overflow: hidden; border: 1px solid #2b2620; box-shadow: 0 30px 70px rgba(0,0,0,0.6); background: #0a0705;">
+                    <img src="assets/opendecks_poster.png" alt="NVM × TMO Open Decks — Thursdays at Nevermind, Leigh Street" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+                    <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 16px 20px; background: linear-gradient(180deg, rgba(5,4,3,0) 0%, rgba(5,4,3,0.55) 55%, rgba(5,4,3,0.94) 100%);">
+                      <p style="margin: 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #ff4d00;">NVM × TMO · Weekly</p>
+                      <p style="margin: 6px 0 0; font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.25rem; line-height: 1.15; color: #f2ede6;">Open Decks — Thursdays</p>
+                      <p style="margin: 6px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; letter-spacing: 0.1em; color: #c9c1b5;">Nevermind, Leigh St <span style="color: #ff4d00;">↗</span></p>
+                    </div>
+                  </a>
+                </div>
+                <div class="tmo-evt-card" data-idx="2">
+                  <a href="https://book.squareup.com/appointments/yvse7dh3u88bcq/location/LSSDAXPR1VS9Z" target="_blank" rel="noopener" style="display: block; position: absolute; inset: 0; border-radius: 16px; overflow: hidden; border: 1px solid #2b2620; box-shadow: 0 30px 70px rgba(0,0,0,0.6); background: radial-gradient(ellipse 90% 60% at 50% 42%, #1a120b 0%, #0a0705 62%, #050403 100%);">
+                    <div aria-hidden="true" style="position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 1px, transparent 1px, transparent 4px); opacity: 0.6;"></div>
+                    <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; padding: 24px;">
+                      <img src="assets/tmo_logo.png" alt="TMO" style="width: 56%; height: auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6)); pointer-events: none;">
+                      <div>
+                        <p style="margin: 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #c9c1b5;">Want to play here?</p>
+                        <p style="margin: 8px 0 0; font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.2rem; color: #f2ede6;">Book the booth</p>
+                      </div>
+                      <span style="display: inline-flex; align-items: center; gap: 8px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #ff4d00; border: 1px solid rgba(255,77,0,0.5); border-radius: 6px; padding: 10px 16px;">Reserve a slot ↗</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <button onClick="{{ evtPrev }}" aria-label="Previous event" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #3a342c; background: rgba(5,4,3,0.4); color: #f2ede6; font-size: 20px; line-height: 1; cursor: pointer;" style-hover="border-color: #ff4d00; color: #ff4d00;">‹</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span data-evt-dot onClick="{{ evtGo0 }}" style="cursor: pointer; height: 8px; width: 22px; border-radius: 99px; background: #ff4d00; transition: all 0.25s ease;"></span>
+                  <span data-evt-dot onClick="{{ evtGo1 }}" style="cursor: pointer; height: 8px; width: 8px; border-radius: 99px; background: #4a443c; transition: all 0.25s ease;"></span>
+                  <span data-evt-dot onClick="{{ evtGo2 }}" style="cursor: pointer; height: 8px; width: 8px; border-radius: 99px; background: #4a443c; transition: all 0.25s ease;"></span>
+                </div>
+                <button onClick="{{ evtNext }}" aria-label="Next event" style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #3a342c; background: rgba(5,4,3,0.4); color: #f2ede6; font-size: 20px; line-height: 1; cursor: pointer;" style-hover="border-color: #ff4d00; color: #ff4d00;">›</button>
+              </div>
+              <p style="margin: 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #6b645c;">Swipe to flip through what's on ↔</p>
+            </div>
+            <div class="tmo-evt-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 26px;">
               <a href="https://www.instagram.com/thefrontroom_adelaide/" target="_blank" rel="noopener" style="display: block; transform: rotate(0deg); transition: transform 0.25s ease;" style-hover="transform: translateY(-6px);">
                 <img src="assets/basement02_lauraking.jpg" alt="Front Room + TMO presents The Basement 02 — Laura King (Melb), Electric Circus, 31 July" style="display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border: 1px solid #2b2620; border-radius: 10px; box-shadow: 0 24px 50px rgba(0,0,0,0.5); transition: border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="border-color: #ff4d00; box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 44px rgba(255,77,0,0.28);">
                 <p style="margin: 14px 2px 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #c9c1b5;"><span style="color: #ff4d00;">↗</span> The Basement 02 — Laura King · 31 July</p>
@@ -264,20 +327,20 @@
             <div style="position: relative; overflow: hidden;">
               <div style="display: flex; width: max-content; animation: tmoTicker 48s linear infinite; animation-play-state: {{ play }};" style-hover="animation-play-state: paused;">
                 <div style="display: flex; gap: 18px; padding-right: 18px;">
-                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/SOFAR.webp" alt="The Story So Far — A Journey of Sound" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">The Story So Far</span></a>
-                  <a href="https://ra.co/events/2425415" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/EC1.jpeg" alt="Electric Circus" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Electric Circus</span></a>
-                  <a href="https://www.instagram.com/wickid_lickwid/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/WKD.png" alt="WKD" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Wickid Lickwid</span></a>
-                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/REVOLUTION_.png" alt="Nightshade — La Revolution" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">La Revolution</span></a>
-                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/nightshade.webp" alt="Nightshade Takeover — Floating Castle b2b Ketracel" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Nightshade Takeover</span></a>
-                  <a href="https://www.twitch.tv/videos/2595813136" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/expressions.webp" alt="Expressions — livestream" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Expressions — Live</span></a>
+                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/SOFAR.webp" alt="The Story So Far — A Journey of Sound" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">The Story So Far</span></a>
+                  <a href="https://ra.co/events/2425415" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/EC1.jpeg" alt="Electric Circus" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Electric Circus</span></a>
+                  <a href="https://www.instagram.com/wickid_lickwid/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/WKD.png" alt="WKD" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Wickid Lickwid</span></a>
+                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/REVOLUTION_.png" alt="Nightshade — La Revolution" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">La Revolution</span></a>
+                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/nightshade.webp" alt="Nightshade Takeover — Floating Castle b2b Ketracel" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Nightshade Takeover</span></a>
+                  <a href="https://www.twitch.tv/videos/2595813136" target="_blank" rel="noopener" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;" style-hover="transform: translateY(-6px); border-color: #ff4d00; box-shadow: 0 18px 44px rgba(0,0,0,0.55), 0 0 30px rgba(255,77,0,0.25);"><img src="assets/expressions.webp" alt="Expressions — livestream" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"><span style="position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12px; background: linear-gradient(180deg, rgba(5,4,3,0) 55%, rgba(5,4,3,0.92) 100%); opacity: 0; transition: opacity 0.25s ease; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f2ede6;" style-hover="opacity: 1;">Expressions — Live</span></a>
                 </div>
                 <div aria-hidden="true" style="display: flex; gap: 18px; padding-right: 18px;">
-                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/SOFAR.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
-                  <a href="https://ra.co/events/2425415" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/EC1.jpeg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
-                  <a href="https://www.instagram.com/wickid_lickwid/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/WKD.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
-                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/REVOLUTION_.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
-                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/nightshade.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
-                  <a href="https://www.twitch.tv/videos/2595813136" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(190px, 21vw, 270px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/expressions.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
+                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/SOFAR.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
+                  <a href="https://ra.co/events/2425415" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/EC1.jpeg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
+                  <a href="https://www.instagram.com/wickid_lickwid/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/WKD.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
+                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/REVOLUTION_.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
+                  <a href="https://www.instagram.com/themanagersoffice_/" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/nightshade.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
+                  <a href="https://www.twitch.tv/videos/2595813136" target="_blank" rel="noopener" tabindex="-1" style="display: block; position: relative; flex: 0 0 auto; width: clamp(240px, 66vw, 380px); aspect-ratio: 3 / 4; border-radius: 10px; overflow: hidden; border: 1px solid #2b2620;"><img src="assets/expressions.webp" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></a>
                 </div>
               </div>
             </div>
@@ -362,9 +425,10 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;rail&quot;,&quot;tabs&quot;],&quot;default&quot;:&quot;rail&quot;,&quot;tsType&quot;:&quot;'rail'|'tabs'&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;showTicker&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showLive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;},&quot;showEasterEgg&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sections&quot;}}">
 class Component extends DCLogic {
-  state = { page: 'home', mixOpen: false };
-  componentDidMount() { this._applyNav(); this._paint(); }
-  componentDidUpdate() { this._applyNav(); this._paint(); }
+  state = { page: 'home', mixOpen: false, evt: 0 };
+  _evt = { down: false, moved: false, startX: 0, startY: 0, dx: 0 };
+  componentDidMount() { this._applyNav(); this._paint(); this._bindDeck(); this._paintEvents(true); }
+  componentDidUpdate() { this._applyNav(); this._paint(); this._paintEvents(true); }
   _applyNav() { try { document.body.setAttribute('data-navstyle', this.props.navStyle ?? 'rail'); } catch (e) {} }
   _paint() {
     const page = this.state.page;
@@ -384,6 +448,75 @@ class Component extends DCLogic {
     this.setState({ page: p });
     const m = document.getElementById('tmo-main');
     if (m) m.scrollTop = 0;
+  }
+  _paintEvents(animate) {
+    const stack = document.getElementById('tmo-evt-stack');
+    if (!stack) return;
+    if (!stack.dataset.init) { animate = false; stack.dataset.init = '1'; }
+    const cards = Array.prototype.slice.call(stack.querySelectorAll('.tmo-evt-card'));
+    const n = cards.length; if (!n) return;
+    const cur = ((this.state.evt || 0) % n + n) % n;
+    const dx = (this._evt && this._evt.dx) || 0;
+    const cw = cards[0].offsetWidth || 260;
+    const OFF = cw * 0.9;
+    cards.forEach(card => {
+      const i = +card.dataset.idx;
+      let d = i - cur; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
+      const x = d * OFF + dx;
+      const sc = d === 0 ? 1 : 0.82;
+      const op = Math.abs(d) >= 2 ? 0 : (d === 0 ? 1 : 0.5);
+      card.style.transition = animate ? 'transform .4s cubic-bezier(.22,.7,.2,1), opacity .4s ease' : 'none';
+      card.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) scale(' + sc + ')';
+      card.style.opacity = String(op);
+      card.style.zIndex = String(d === 0 ? 5 : 2);
+      card.dataset.role = d === 0 ? 'front' : '';
+      card.style.pointerEvents = d === 0 ? 'auto' : 'none';
+    });
+    const dots = document.querySelectorAll('[data-evt-dot]');
+    dots.forEach((dot, i) => {
+      const on = i === cur;
+      dot.style.background = on ? '#ff4d00' : '#4a443c';
+      dot.style.width = on ? '22px' : '8px';
+    });
+  }
+  _advanceEvt(dir) {
+    const n = 3; this._evt.dx = 0;
+    this.setState(st => ({ evt: (((st.evt || 0) + dir) % n + n) % n }));
+  }
+  _evtGo(i) { this._evt.dx = 0; this.setState({ evt: i }); }
+  _bindDeck() {
+    if (this._deckBound) return; this._deckBound = true;
+    const self = this;
+    const inStack = (t) => t && t.closest && t.closest('#tmo-evt-stack');
+    window.addEventListener('pointerdown', (e) => {
+      const stack = document.getElementById('tmo-evt-stack');
+      if (!stack || !inStack(e.target)) return;
+      if (!stack.querySelector('.tmo-evt-card[data-role="front"]')) return;
+      self._evt.down = true; self._evt.moved = false;
+      self._evt.startX = e.clientX; self._evt.startY = e.clientY; self._evt.dx = 0;
+    }, true);
+    window.addEventListener('pointermove', (e) => {
+      if (!self._evt.down) return;
+      const dx = e.clientX - self._evt.startX;
+      const dy = e.clientY - self._evt.startY;
+      if (!self._evt.moved && Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 12) { self._evt.down = false; return; }
+      if (Math.abs(dx) > 5) self._evt.moved = true;
+      self._evt.dx = dx;
+      self._paintEvents(false);
+    }, { passive: true });
+    const finish = () => {
+      if (!self._evt.down) return;
+      self._evt.down = false;
+      const dx = self._evt.dx;
+      if (Math.abs(dx) > 60) { self._advanceEvt(dx < 0 ? 1 : -1); }
+      else { self._evt.dx = 0; self._paintEvents(true); }
+      if (self._evt.moved) { self._evtDragged = true; setTimeout(() => { self._evtDragged = false; }, 60); }
+    };
+    window.addEventListener('pointerup', finish, true);
+    window.addEventListener('pointercancel', finish, true);
+    window.addEventListener('click', (e) => {
+      if (self._evtDragged && inStack(e.target)) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
   }
   renderVals() {
     const motion = this.props.motion ?? true;
@@ -405,6 +538,11 @@ class Component extends DCLogic {
       showEasterEgg: this.props.showEasterEgg ?? true,
       mixOpen: this.state.mixOpen,
       toggleMix: () => this.setState(s => ({ mixOpen: !s.mixOpen })),
+      evtPrev: () => this._advanceEvt(-1),
+      evtNext: () => this._advanceEvt(1),
+      evtGo0: () => this._evtGo(0),
+      evtGo1: () => this._evtGo(1),
+      evtGo2: () => this._evtGo(2),
     };
   }
 }
