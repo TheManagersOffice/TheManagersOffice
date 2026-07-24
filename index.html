@@ -64,8 +64,9 @@
     [data-deck-card] a { -webkit-user-drag: none; }
     [data-deck-stack="evt"] { height: calc(min(80vw, 340px) * 4 / 3); }
     [data-deck-stack="evt"] [data-deck-card] { width: min(80vw, 340px); height: 100%; }
-    [data-deck-stack="bkg"] { min-height: 320px; }
-    [data-deck-stack="bkg"] [data-deck-card] { width: min(82vw, 330px); }
+    [data-deck-stack="bkg"] { height: 440px; }
+    [data-deck-stack="bkg"] [data-deck-card] { width: min(82vw, 330px); height: 100%; }
+    [data-deck-stack="bkg"] article { height: 100%; box-sizing: border-box; }
     [data-deck-stack="mgr"] { height: min(78vw, 420px); max-width: 760px; }
     [data-deck-stack="mgr"] [data-deck-card] { width: min(78vw, 420px); height: 100%; }
     @media (max-width: 900px) {
@@ -74,6 +75,11 @@
       section[data-screen-label] { justify-content: flex-start !important; }
       .tmo-social-col { width: 100%; align-items: center !important; }
       .tmo-social-row { justify-content: center !important; }
+      section[data-screen-label="Home"] .tmo-hero-block { text-align: center; }
+      section[data-screen-label="Home"] .tmo-hero-block > div { margin-left: auto; margin-right: auto; }
+      section[data-screen-label="Home"] h1 { margin-left: auto !important; margin-right: auto !important; }
+      section[data-screen-label="Home"] .tmo-hero-cta { justify-content: center; }
+      section[data-screen-label="Bookings"] { padding-top: 26px !important; }
     }
     @media (max-width: 700px) {
       .tmo-hdr-inner { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -149,7 +155,7 @@
           <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,4,3,0.5) 0%, rgba(5,4,3,0) 34%, rgba(5,4,3,0.2) 72%, rgba(5,4,3,0.96) 100%);"></div>
           <div style="position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 1px, transparent 1px, transparent 4px); pointer-events: none; opacity: 0.5;"></div>
           <div data-inner="" style="position: relative; flex: 1; max-width: 1180px; width: 100%; margin: 0 auto; padding: 0 40px; display: flex; flex-direction: column; justify-content: flex-end;">
-            <div style="padding: 60px 0 34px;">
+            <div class="tmo-hero-block" style="padding: 60px 0 34px;">
               <p style="margin: 0 0 20px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; letter-spacing: 0.45em; text-transform: uppercase; color: #ff2222;">Creative Studio — Adelaide, SA</p>
               <div style="position: relative; width: clamp(250px, 30vw, 470px);">
                 <img src="assets/tmo_logo.png" alt="TMO — The Manager's Office" style="display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 40px rgba(0,0,0,0.6));">
@@ -270,11 +276,11 @@
               <p style="margin: 12px 0 0; max-width: 34em; color: #c9c1b5; font-size: 15px; line-height: 1.6; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Sharpen your skills, record content, or zone out and mix. The room is yours.</p>
             </div>
                         <div class="tmo-deck" style="flex-direction: column; align-items: center; gap: 18px; width: 100%;">
-              <div data-deck-stack="bkg" data-auto-height="1">
+              <div data-deck-stack="bkg">
                 <div data-deck-card="" data-idx="0">
                   <article style="border: 1px solid #2b2620; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, #14100c, #0c0906); display: flex; flex-direction: column; box-shadow: 0 30px 70px rgba(0,0,0,0.6);">
-                    <img src="assets/solo.webp" alt="Solo booth hire — the main booth" style="display: block; width: 100%; height: 140px; object-fit: cover; border-bottom: 1px solid #2b2620;">
-                    <div style="padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1;">
+                    <img src="assets/solo.webp" alt="Solo booth hire — the main booth" style="display: block; width: 100%; height: 112px; object-fit: cover; border-bottom: 1px solid #2b2620;">
+                    <div style="padding: 16px 18px 16px; display: flex; flex-direction: column; flex: 1;">
                       <div style="font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.5rem; color: #ff2222; line-height: 1;">A$50<span style="font-size: 0.55em; color: #c9c1b5;"> /hr · A$80 /2hrs</span></div>
                       <h3 style="margin: 12px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;">Solo booth hire</h3>
                       <p style="margin: 10px 0 0; color: #c9c1b5; font-size: 13px; line-height: 1.5; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Your own private DJ booth — sharpen your skills, create content, or just zone out and mix.</p>
@@ -291,8 +297,8 @@
                 </div>
                 <div data-deck-card="" data-idx="1">
                   <article style="border: 1px solid #2b2620; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, #14100c, #0c0906); display: flex; flex-direction: column; box-shadow: 0 30px 70px rgba(0,0,0,0.6);">
-                    <img src="assets/group.webp" alt="Group booth hire — crew session" style="display: block; width: 100%; height: 140px; object-fit: cover; border-bottom: 1px solid #2b2620;">
-                    <div style="padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1;">
+                    <img src="assets/group.webp" alt="Group booth hire — crew session" style="display: block; width: 100%; height: 112px; object-fit: cover; border-bottom: 1px solid #2b2620;">
+                    <div style="padding: 16px 18px 16px; display: flex; flex-direction: column; flex: 1;">
                       <div style="font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.5rem; color: #ff2222; line-height: 1;">A$200<span style="font-size: 0.55em; color: #c9c1b5;"> /4hrs · up to 5</span></div>
                       <h3 style="margin: 12px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;">Group booth hire</h3>
                       <p style="margin: 10px 0 0; color: #c9c1b5; font-size: 13px; line-height: 1.5; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Grab your crew and take over the office — record, practice, vibe, and build content together.</p>
@@ -309,8 +315,8 @@
                 </div>
                 <div data-deck-card="" data-idx="2">
                   <article style="border: 1px solid #2b2620; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, #14100c, #0c0906); display: flex; flex-direction: column; box-shadow: 0 30px 70px rgba(0,0,0,0.6);">
-                    <img src="assets/rx3.png" alt="RX3 booth hire — Pioneer XDJ-RX3 all-in-one" style="display: block; width: 100%; height: 140px; object-fit: cover; border-bottom: 1px solid #2b2620;">
-                    <div style="padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1;">
+                    <img src="assets/rx3.png" alt="RX3 booth hire — Pioneer XDJ-RX3 all-in-one" style="display: block; width: 100%; height: 112px; object-fit: cover; border-bottom: 1px solid #2b2620;">
+                    <div style="padding: 16px 18px 16px; display: flex; flex-direction: column; flex: 1;">
                       <div style="font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.5rem; color: #ff2222; line-height: 1;">A$30<span style="font-size: 0.55em; color: #c9c1b5;"> /hr · A$100 /3hrs</span></div>
                       <h3 style="margin: 12px 0 0; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;">RX3 booth hire</h3>
                       <p style="margin: 10px 0 0; color: #c9c1b5; font-size: 13px; line-height: 1.5; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">The XDJ-RX3 all-in-one — practice, record mixes, or prep for gigs without a full club setup.</p>
