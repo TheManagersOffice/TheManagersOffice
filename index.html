@@ -6,6 +6,11 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preload" href="assets/BenguiatProITC-Medium.otf" as="font" type="font/otf" crossorigin>
+<style>
+@font-face{font-family:"BenguiatProITC";src:url("assets/BenguiatProITC-Medium.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+</style>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -102,21 +107,21 @@
 
 <div style="height: 100dvh; display: flex; flex-direction: column; overflow: hidden; background: #050403;">
 
-  <header data-screen-label="Header" style="flex: 0 0 auto; background: #fbfaf7; color: #0a0806; border-bottom: 1px solid #e6e1d8; z-index: 40;">
+  <header data-screen-label="Header" style="flex: 0 0 auto; background: #070503; color: #f2ede6; border-bottom: 1px solid #211c17; z-index: 40;">
     <div class="tmo-hdr-inner" style="max-width: 1440px; margin: 0 auto; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap;">
       <button data-navbtn="home" onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 12px; background: none; border: 0; cursor: pointer; padding: 0;">
-        <span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #6b645c;">The Manager's Office</span>
+        <img src="assets/tmo_logo.png" alt="TMO" width="46" height="20" style="display: block; height: 20px; width: 46px;"><span style="font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #8a827a;">The Manager's Office</span>
       </button>
       <div class="tmo-hdr-right" style="display: flex; align-items: center; gap: 18px;">
         <nav class="tmo-tabs" style="align-items: center; gap: 6px; flex-wrap: wrap; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">
-          <button data-navbtn="home" onClick="{{ goHome }}" style="background: none; border: 0; cursor: pointer; color: #0a0806; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Home</button>
-          <button data-navbtn="events" onClick="{{ goEvents }}" style="background: none; border: 0; cursor: pointer; color: #0a0806; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Events</button>
-          <button data-navbtn="bookings" onClick="{{ goBookings }}" style="background: none; border: 0; cursor: pointer; color: #0a0806; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Bookings</button>
-          <button data-navbtn="archive" onClick="{{ goArchive }}" style="background: none; border: 0; cursor: pointer; color: #0a0806; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Archive</button>
-          <button data-navbtn="contact" onClick="{{ goContact }}" style="background: none; border: 0; cursor: pointer; color: #0a0806; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Contact</button>
+          <button data-navbtn="home" onClick="{{ goHome }}" style="background: none; border: 0; cursor: pointer; color: #8a827a; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Home</button>
+          <button data-navbtn="events" onClick="{{ goEvents }}" style="background: none; border: 0; cursor: pointer; color: #8a827a; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Events</button>
+          <button data-navbtn="bookings" onClick="{{ goBookings }}" style="background: none; border: 0; cursor: pointer; color: #8a827a; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Bookings</button>
+          <button data-navbtn="archive" onClick="{{ goArchive }}" style="background: none; border: 0; cursor: pointer; color: #8a827a; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Archive</button>
+          <button data-navbtn="contact" onClick="{{ goContact }}" style="background: none; border: 0; cursor: pointer; color: #8a827a; padding: 6px 8px; letter-spacing: 0.12em; text-transform: uppercase; font-family: inherit; font-size: inherit; font-weight: 700;">Contact</button>
         </nav>
         <sc-if value="{{ showLive }}" hint-placeholder-val="{{ true }}">
-          <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 9px; font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.15rem; letter-spacing: 0.05em; color: #ff2222; animation: tmoGlow 3.2s ease-in-out infinite; padding: 2px 4px;" style-hover="color: #0a0806;">
+          <a href="https://www.twitch.tv/the_managers_office" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 9px; font-family: 'BenguiatProITC', Georgia, serif; font-size: 1.15rem; letter-spacing: 0.05em; color: #ff2222; animation: tmoGlow 3.2s ease-in-out infinite; padding: 2px 4px;" style-hover="color: #f2ede6;">
             <span style="width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: tmoPulse 1.6s ease-in-out infinite;"></span>
             <span>ON AIR</span>
           </a>
@@ -549,7 +554,7 @@ class Component extends DCLogic {
         bar.style.width = on ? '22px' : '8px';
         bar.style.background = on ? '#ff2222' : '#4a443c';
       } else {
-        b.style.color = on ? '#ff2222' : '#0a0806';
+        b.style.color = on ? '#ff2222' : '#8a827a';
       }
     });
   }
